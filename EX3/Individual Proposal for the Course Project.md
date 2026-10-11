@@ -109,3 +109,86 @@ The system provides users with:
 ## 4. Design principles
 
 The system combines **testable calculation algorithms**, **a food and pricing database**, **an information retrieval mechanism**, and **an AI assistant** to interact with users. The goal is to create a plan that can be explained, verified, and adjusted, rather than simply providing generic suggestions.
+---
+
+# Lê Minh Trí
+
+## Vietnamese:  
+#### Đồ án của tôi sẽ về một Hệ thống Trợ lý Đăng ký Môn học & Quy chế Sinh viên (Smart Course Registration & Regulation Assistant) hỗ trợ sinh viên lập lộ trình học tập, kiểm tra điều kiện môn học, xếp thời khóa biểu và tra cứu quy chế đào tạo.
+
+#### Cách hoạt động
+
+### Bước 1: Tiếp nhận thông tin và nhu cầu của sinh viên
+
+Trợ lý tương tác với sinh viên để thu thập các thông tin cần thiết, bao gồm:
+
+- Danh sách các môn học mong muốn đăng ký trong học kỳ.
+- Lịch rảnh, khung giờ ưu tiên và các khoảng thời gian bận.
+- Lịch sử học tập, bảng điểm hiện tại và mục tiêu GPA.
+- Các thắc mắc về quy chế đào tạo (học bù, tạm ngưng, điểm rèn luyện...).
+
+### Bước 2: Phân tích điều kiện môn học và kiểm tra xung đột thời khóa biểu
+
+Hệ thống áp dụng thuật toán duyệt đồ thị (DAG) để kiểm tra cây môn học tiên quyết và môn song hành. Sau đó, thuật toán kiểm tra ràng buộc (Constraint Checking) phân tích lịch học/lịch thi để phát hiện các điểm trùng lặp. Đồng thời, công thức toán học được sử dụng để tính toán GPA dự kiến.
+
+### Bước 3: Tra cứu quy chế đào tạo và giải đáp thắc mắc
+
+Đối với các thắc mắc về quy chế học tập, hệ thống truy xuất dữ liệu RAG (LangChain, Vector DB) từ file PDF Sổ tay sinh viên và Quy chế đào tạo chính thức. Hệ thống trích xuất thông tin chính xác kèm theo nguồn trích dẫn thay vì tự tạo câu trả lời.
+
+### Bước 4: Tự động xếp lịch và đề xuất lộ trình tối ưu
+
+Hệ thống tổng hợp dữ liệu, áp dụng AI để đề xuất thời khóa biểu tối ưu không bị xung đột lịch và gợi ý lộ trình học tập cá nhân hóa phù hợp với năng lực học tập của từng sinh viên.
+
+## 3. Kết quả đầu ra
+
+Hệ thống cung cấp cho người dùng:
+
+- Lộ trình học tập cá nhân hóa và các phương án thời khóa biểu đề xuất không bị xung đột.
+- Bảng kiểm tra điều kiện tiên quyết/song hành của các môn học.
+- Bảng dự báo GPA theo các kịch bản điểm số.
+- Câu trả lời thắc mắc quy chế chính xác kèm trích dẫn từ Sổ tay sinh viên.
+- Cảnh báo khi môn học không đủ điều kiện đăng ký hoặc vượt quá giới hạn tín chỉ.
+
+## 4. Nguyên tắc thiết kế
+
+Hệ thống kết hợp **thuật toán đồ thị và kiểm tra ràng buộc (Graph / Constraint Checking)** để đảm bảo tính chính xác tuyệt đối trong việc kiểm tra môn tiên quyết và xếp lịch, **cơ chế tìm kiếm thông tin RAG (LangChain, Vector DB)** để tra cứu chính xác quy chế đào tạo, và **trợ lý AI** để tư vấn, hỗ trợ định hướng học tập cho sinh viên.
+
+## English:  
+#### My project will be about a Smart Course Registration & Regulation Assistant system that supports students in creating personalized study roadmaps, checking course prerequisites, arranging class schedules, and looking up academic regulations.
+
+#### How it works
+
+### Step 1: Collecting student input and request
+
+The assistant interacts with the student to collect necessary information, including:
+
+- List of desired courses for the semester.
+- Preferred study hours, availability, and busy time slots.
+- Academic history, current transcript, and GPA target.
+- Inquiries regarding academic regulations (make-up classes, leave of absence, training points, etc.).
+
+### Step 2: Analyzing prerequisite graph and schedule constraint checking
+
+The system applies directed acyclic graph (DAG) algorithms to verify prerequisite and co-requisite course conditions. Next, a constraint checking algorithm detects schedule and exam conflicts, while mathematical formulas calculate projected GPAs.
+
+### Step 3: Information retrieval for regulations and policy Q&A
+
+For questions regarding academic policies, the system retrieves relevant information using RAG (LangChain, Vector DB) from official PDF documents like the Student Handbook and Academic Regulations. It extracts precise information with clear citations.
+
+### Step 4: Schedule optimization and personalized roadmap recommendation
+
+The system synthesizes data and uses AI to suggest optimal conflict-free timetables and personalized learning roadmaps tailored to each student's academic standing.
+
+## 3. Output
+
+The system provides users with:
+
+- A personalized academic roadmap and conflict-free recommended timetables.
+- A prerequisite and co-requisite validation report.
+- GPA projections under various performance scenarios.
+- Accurate regulation answers directly cited from the Student Handbook.
+- Warnings when courses fail registration criteria or exceed credit limits.
+
+## 4. Design principles
+
+The system combines **graph algorithms and constraint checking** to guarantee absolute accuracy in prerequisite verification and scheduling, a **RAG retrieval framework (LangChain, Vector DB)** for precise policy search, and an **AI assistant** to provide personalized academic guidance.
