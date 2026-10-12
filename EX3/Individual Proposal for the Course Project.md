@@ -395,3 +395,176 @@ The system provides users with:
 ## 4. Design principles
 
 The system combines **speech recognition with speaker diarization** to produce reliable text, **a large language model with a fixed output schema** for information extraction, **deterministic rules for temporal normalization and a state machine** to keep results testable, and **user confirmation** for uncertain cases. Evaluation uses a labeled set of meeting recordings, measuring precision and recall per entity type, accuracy of inferred dates, and correctness of state transitions over time.
+
+# Trương Tấn Phúc
+## Vietnamese:  
+#### Đồ án của tôi sẽ về một Hệ thống Trợ lý Ảo Theo dõi & Tư vấn Sức khỏe Toàn diện Sinh viên (Student Daily Holistic Health & Mental Well-being Assistant) hỗ trợ sinh viên theo dõi chế độ ngủ nghỉ chi tiết (giờ/phút), phân tích dinh dưỡng bữa ăn (calo, đa lượng, vi chất) và sàng lọc, hỗ trợ chăm sóc sức khỏe tinh thần hàng ngày.
+
+**Phạm vi bài toán & Bối cảnh (R1):**
+- **Người dùng mục tiêu:** Sinh viên đại học thường xuyên đối mặt với thói quen sinh hoạt xáo trộn, thức khuya cày deadline, ăn uống thiếu chất (mì gói, thức ăn nhanh) và chịu áp lực thi cử kéo dài.
+- **Điểm đau (Pain points):**
+  1. Thiếu ngủ tích lũy (nợ ngủ) dẫn đến suy giảm nhận thức, mệt mỏi nhưng không tự định lượng được mức độ thâm hụt.
+  2. Bữa ăn sinh viên nghèo dinh dưỡng, thiếu vi chất và chất xơ, thừa dầu mỡ nhưng khó tự tính toán khẩu phần chuẩn.
+  3. Áp lực tâm lý, stress học tập và dấu hiệu kiệt sức (burnout) không được phát hiện sớm; e ngại hoặc thiếu kênh giãi bày, chia sẻ an toàn.
+- **Các phi mục tiêu (Non-goals):** Hệ thống KHÔNG đưa ra chẩn đoán bệnh lý y khoa lâm sàng hay kê đơn thuốc; KHÔNG thay thế bác sĩ/chuyên gia tâm lý chuyên nghiệp; KHÔNG phải là ứng dụng tán gẫu tự do ngoài chủ đề sức khỏe lối sống.
+- **Ràng buộc (Constraints):** Tuyệt đối bảo mật dữ liệu sức khỏe cá nhân (ẩn danh hóa); thời gian phản hồi $\le 2$ giây; tuân thủ nghiêm ngặt các ngưỡng an toàn y tế và quy trình chuyển tuyến khẩn cấp.
+- **Tiêu chí thành công đo lường được:** Tính toán thâm hụt giấc ngủ và dinh dưỡng chính xác 100% (không sai số); 100% trường hợp phát hiện dấu hiệu khủng hoảng tâm lý nghiêm trọng được kích hoạt quy trình bảo vệ khẩn cấp; tỷ lệ sinh viên duy trì check-in đều đặn đạt $\ge 70\%$.
+
+#### Cách hoạt động
+
+### Bước 1: Tiếp nhận thông tin của sinh viên
+
+Trợ lý tương tác với sinh viên để thu thập các thông tin cần thiết hàng ngày qua hội thoại tự nhiên hoặc biểu mẫu nhanh, bao gồm:
+
+- **Dữ liệu giấc ngủ:** Giờ bắt đầu ngủ, giờ thức dậy (chi tiết theo giờ và phút), số lần thức giấc giữa đêm, mức độ tỉnh táo khi thức dậy (thang điểm 1–5).
+- **Dữ liệu dinh dưỡng & ăn uống:** Mô tả các bữa ăn trong ngày (sáng, trưa, tối, ăn vặt, nước ngọt/cà phê), lượng nước đã uống (ml/lít), thời gian ăn và tình trạng bỏ bữa.
+- **Dữ liệu sức khỏe tinh thần & cảm xúc:** Nhật ký cảm xúc ngắn hàng ngày, mức độ căng thẳng/áp lực (thang đo 1–10), các triệu chứng thể chất liên quan đến stress (đau đầu, lo âu, mất tập trung).
+- **Bối cảnh học tập đi kèm:** Lịch thi, thời hạn deadline trong tuần, lịch học thực hành/lý thuyết để đối chiếu nguyên nhân gây căng thẳng.
+- **Định tuyến tường minh (R5):** Bộ định tuyến (Intent Router) phân loại yêu cầu vào 3 nhánh chức năng: *Giấc ngủ*, *Dinh dưỡng*, *Tâm lý/Căng thẳng*, hoặc *Đánh giá sức khỏe tổng hợp*. Có nhánh hỏi lại (Clarification) khi sinh viên cung cấp thiếu thông tin (ví dụ: chỉ nói "ngủ ít" mà không nêu giờ giấc cụ thể).
+
+### Bước 2: Phân tích định lượng bằng các thuật toán xác định (Deterministic Computation - R2)
+
+Dữ liệu sau khi tiếp nhận được chuyển giao cho các thuật toán tất định, minh bạch và kiểm thử được để tính toán chính xác, tuyệt đối không để AI tính nhẩm:
+
+- **Thuật toán tính toán chu kỳ & nợ ngủ (Sleep Debt Calculator):**
+  $$\text{Thời gian ngủ thực tế} = \text{Giờ thức} - \text{Giờ ngủ}$$
+  $$\text{Nợ ngủ tích lũy (Sleep Debt)} = \sum_{i=1}^{7} (\text{Thời lượng mục tiêu} - \text{Thời lượng thực tế}_i)$$
+  Đánh giá mức độ thiếu ngủ dựa trên chu kỳ ngủ (chu kỳ 90 phút) và khuyến nghị của Tổ chức Giấc ngủ Quốc gia (7–9 tiếng/ngày).
+- **Thuật toán phân tích dinh dưỡng & Năng lượng (Nutritional Math):**
+  Tính toán năng lượng tiêu hao cơ bản (BMR theo công thức Mifflin-St Jeor), nhu cầu năng lượng hàng ngày (TDEE) theo mức độ vận động của sinh viên; đối soát lượng calo nạp vào và tỷ lệ đa lượng chuẩn: Đạm (Protein: 15–20%), Đường bột (Carb: 50–60%), Chất béo (Fat: 20–25%) và lượng nước tối thiểu ($35\text{ ml/kg}$ thể trọng).
+- **Thuật toán chấm điểm sàng lọc tâm lý (Standardized Psychological Screening):**
+  Tự động tính điểm chuẩn hóa từ các bộ câu hỏi sàng lọc sức khỏe tâm thần lâm sàng đã được quốc tế công nhận: thang đo lo âu/trầm cảm nhanh PHQ-4 (hoặc GAD-7 / PHQ-9) theo bảng điểm ranh giới (cut-off thresholds) định sẵn.
+
+### Bước 3: Tra cứu tri thức chuẩn y khoa và dinh dưỡng (Data & Retrieval Capability - R3)
+
+Hệ thống truy xuất dữ liệu từ các kho thông tin chính thống có nguồn gốc (provenance) và siêu dữ liệu (metadata) rõ ràng:
+
+- **Dữ liệu có cấu trúc:** Bảng thành phần thực phẩm Việt Nam (Viện Dinh Dưỡng Quốc gia), lưu trữ chi tiết calo, protein, lipit, glucid, chất xơ và các vi chất của hơn 500 món ăn phổ biến của sinh viên (cơm tấm, hủ tiếu, bánh mì, mì tôm, thức ăn canteen).
+- **Dữ liệu phi cấu trúc (RAG):** Cẩm nang vệ sinh giấc ngủ (Sleep Hygiene Guidelines - CDC/WHO), tài liệu sơ cứu tâm lý học đường (Psychological First Aid), kỹ thuật điều hòa cảm xúc và bài tập thở.
+- **Trích dẫn nguồn minh bạch:** Mọi hướng dẫn dinh dưỡng và lối sống đều được gắn mã trích dẫn cụ thể (ví dụ: `[Nguồn: Bảng thành phần thực phẩm Việt Nam, Viện Dinh Dưỡng, Nhóm 4, Mã 04012]` hoặc `[Nguồn: Hướng dẫn chăm sóc sức khỏe giấc ngủ CDC 2023]`).
+
+### Bước 4: Tổng hợp lý luận AI, tư vấn cá nhân hóa và phòng vệ an toàn (AI Reasoning & Safeguards - R4, R7)
+
+- **Biện minh kỹ thuật cho việc dùng AI:** Sử dụng LLM để hiểu ngôn ngữ tự nhiên giàu tính cảm xúc và tiếng lóng của sinh viên, bóc tách thực thể món ăn phức tạp từ câu văn ngắn, đóng vai người bạn đồng hành thấu cảm (empathetic companion) để phân tích nguyên nhân gốc rễ gây stress mà các công thức toán học không biểu đạt được.
+- **Đề xuất cá nhân hóa:** Đề xuất giải pháp ngủ bù khoa học (không ngủ quá nhiều vào ban ngày gây rối loạn nhịp sinh học), gợi ý món ăn lành mạnh bình dân quanh khu vực trường học để bù đắp nhóm chất bị thiếu hụt, và hướng dẫn bài tập thả lỏng (kỹ thuật thở 4-7-8, bài tập giải tỏa căng thẳng cơ bắp).
+- **Cơ chế phòng vệ khẩn cấp (Crisis Escalation & Safeguards - R7):** 
+  - Tách biệt prompt để chống tấn công chèn lệnh (Prompt Injection).
+  - Khước từ đưa ra chẩn đoán bệnh lý (Medical Disclaimer).
+  - Khi phát hiện các từ khóa/dấu hiệu nguy cấp (ý nghĩ tự hại, tuyệt vọng cùng cực, PHQ-4 đạt mức báo động đỏ) $\to$ Ngắt mọi phản hồi thông thường, kích hoạt ngay luồng hỗ trợ khẩn cấp: hiển thị số điện thoại đường dây nóng hỗ trợ tâm lý sinh viên (111 / Đường dây nóng Ngày Mai / Trung tâm hỗ trợ sinh viên của trường).
+
+## 3. Kết quả đầu ra
+
+Hệ thống cung cấp cho người dùng qua giao diện ứng dụng Web/Chatbot tương tác (End-to-End Interface - R6):
+
+- **10 Ca sử dụng (Use Cases) được hỗ trợ hoàn chỉnh:**
+  1. *UC01:* Check-in và phân tích thời lượng ngủ hàng ngày (ghi nhận chính xác số giờ, phút và tính toán nợ ngủ tích lũy).
+  2. *UC02:* Phân tích thành phần dinh dưỡng bữa ăn sinh viên (định lượng calo, phát hiện thiếu chất đạm/chất xơ/uống thiếu nước).
+  3. *UC03:* Check-in cảm xúc hàng ngày và chấm điểm mức độ căng thẳng tâm lý (PHQ-4 / GAD-2).
+  4. *UC04:* Cảnh báo sớm hội chứng kiệt sức học tập (burnout) khi có sự kết hợp giữa thức khuya kéo dài và lịch thi dày đặc.
+  5. *UC05:* Gợi ý thực đơn bổ sung dưỡng chất giá rẻ, dễ tìm quanh ký túc xá / trường học cho sinh viên ăn thiếu chất.
+  6. *UC06:* Hướng dẫn kỹ thuật vệ sinh giấc ngủ (Sleep Hygiene) và lịch ngủ bù khoa học sau các đợt deadline.
+  7. *UC07:* Hướng dẫn tương tác bài tập giảm stress nhanh (thở hộp Box Breathing, kỹ thuật tiếp đất 5-4-3-2-1).
+  8. *UC08:* Xuất báo cáo tổng kết sức khỏe tuần (Weekly Health Report) với biểu đồ xu hướng ngủ - ăn - cảm xúc trực quan.
+  9. *UC09:* Nhắc nhở thông minh theo ngữ cảnh (nhắc uống nước, nhắc nghỉ mắt sau 2 giờ học liên tục).
+  10. *UC10:* Kích hoạt cảnh báo và quy trình hỗ trợ can thiệp tâm lý khẩn cấp (Crisis Escalation) khi phát hiện nguy cơ cao.
+- **Bảng điều khiển sức khỏe (Health Dashboard Artifacts):** Vòng tròn mục tiêu giấc ngủ (Sleep Ring), biểu đồ Radar phân bổ dinh dưỡng (Macro Radar Chart), và nhật ký tâm trạng dạng lịch (Mood Calendar).
+
+## 4. Nguyên tắc thiết kế
+
+Hệ thống tuân thủ chặt chẽ các nguyên tắc Tư duy tính toán (Computational Thinking) và yêu cầu kỹ thuật:
+
+- **Phân tách rạch ròi giữa Năng lực xác định và Năng lực AI:** Tuyệt đối không để AI làm toán hay tự chấm điểm sàng lọc tâm lý. Các bài toán tính calo, tính nợ ngủ, và ngưỡng điểm PHQ-4/GAD-7 được thực thi bởi các module giải thuật độc lập, minh bạch và có thể viết unit test kiểm thử 100%. AI chỉ đóng vai trò phân tích ngôn ngữ, trích xuất thực thể và giao tiếp thấu cảm.
+- **RAG chuẩn xác với độ tin cậy nguồn cao (High Provenance):** Mọi lời khuyên về thói quen ngủ và ăn uống đều được tham chiếu từ cơ sở dữ liệu dinh dưỡng quốc gia và các hướng dẫn y tế công cộng chính thống, loại bỏ tình trạng ảo giác (hallucination).
+- **An toàn, Quyền riêng tư & Đạo đức AI:** Dữ liệu sinh viên được bảo vệ nghiêm ngặt; luôn đi kèm tuyên bố từ chối trách nhiệm y tế; tích hợp chốt chặn an toàn (safety guardrails) tự động chuyển tuyến khẩn cấp khi phát hiện dấu hiệu khủng hoảng tinh thần.
+- **Khung kiểm thử và đánh giá lặp lại (Evaluation Framework - R8):**
+  - **Bộ Benchmark 100 ca kiểm thử:** 40 ca bóc tách món ăn và tính calo, 30 ca tính toán giờ ngủ qua đêm (cross-midnight calculation) và nợ ngủ, 30 ca phản hồi tâm trạng (bao gồm cả các ca an toàn và ca khủng hoảng tâm lý).
+  - **Chỉ số đo lường:** Sai số tính toán Calo/Giờ ngủ = 0%; Độ nhạy phát hiện khủng hoảng tâm lý (Crisis Recall) = 100%; Độ chính xác trích xuất thực thể món ăn (F1-score) $\ge 90\%$.
+  - **Phân loại lỗi (Error Taxonomy):** Phân chia 4 loại lỗi: *Lỗi bóc tách thiếu khẩu phần*; *Lỗi tính giờ ngủ xuyên đêm*; *Lỗi trích dẫn sai bảng dinh dưỡng*; *Lỗi nhận diện chậm cảm xúc tiêu cực*.
+  - **Minh chứng chu kỳ cải tiến:** Phiên bản thử nghiệm (Baseline) gặp lỗi bóc tách sai các món ăn ghép của sinh viên (như "cơm sườn trứng ốp la") $\to$ Cải tiến bằng cách kết hợp từ điển danh mục món ăn địa phương + trích xuất Few-shot Prompting giúp nâng F1-score từ 71% lên 93.5%.
+
+---
+
+## English:  
+#### My project will be about a Student Daily Holistic Health & Mental Well-being Assistant that empowers university students to track granular sleep patterns (hours and minutes), evaluate dietary nutritional adequacy (calories, macronutrients, micronutrients), and receive daily mental health screening and supportive care.
+
+**Problem Boundary & Context (R1):**
+- **Target Users:** College students frequently dealing with irregular circadian habits, all-night deadline cramming, nutrient-deficient diets (instant noodles, fast food), and sustained academic stress.
+- **Pain Points:**
+  1. Accumulated sleep debt leading to cognitive impairment and exhaustion without students being able to quantify their actual deficit.
+  2. Nutrient-poor student diets lacking essential micronutrients and fiber while high in refined fats, paired with the difficulty of manual portion tracking.
+  3. Unaddressed academic anxiety, chronic stress, and early burnout symptoms left unchecked due to the lack of safe, non-judgmental daily outlets.
+- **Explicit Non-Goals:** The system will NOT perform medical diagnoses or prescribe pharmaceuticals; will NOT replace licensed healthcare or clinical psychiatric professionals; and will NOT operate as an unrestricted open-domain chatbot unrelated to lifestyle well-being.
+- **Constraints:** Strict compliance with personal health data privacy (anonymization); response latency $\le 2$ seconds; absolute compliance with clinical safety thresholds and crisis escalation protocols.
+- **Measurable Success Criteria:** Sleep debt and nutritional calculation error margin = 0%; 100% recall on detecting severe psychological crisis indicators to trigger emergency hotlines; student daily check-in retention rate $\ge 70\%$.
+
+#### How it works
+
+### Step 1: Collecting student input and request
+
+The assistant interacts with students to collect daily inputs via natural language conversational check-ins or lightweight interactive cards, including:
+
+- **Sleep Data:** Bedtime, wake-up time (down to exact hours and minutes), nocturnal awakenings, and post-awakening alertness level (1–5 scale).
+- **Nutritional & Dietary Data:** Descriptions of daily meals (breakfast, lunch, dinner, snacks, sugary beverages/caffeine), fluid intake (ml/liters), meal timings, and skipped meals.
+- **Mental & Emotional Well-being Data:** Daily emotional logs, subjective stress scores (1–10 scale), and stress-related somatic cues (headaches, tension, loss of focus).
+- **Academic Context:** Upcoming exam schedules, project deadlines, and lab commitments to contextualize stress drivers.
+- **Explicit Orchestration & Routing (R5):** An Intent Router dispatches user queries into 3 specialized pipelines: *Sleep*, *Nutrition*, *Mental Health / Stress*, or *Holistic Daily Synthesis*. It includes a Clarification Path when inputs are incomplete (e.g., asking for specific bedtimes when a student only remarks "I slept very little").
+
+### Step 2: Deterministic calculation of sleep debt, nutritional adequacy, and clinical scores (R2)
+
+Structured data is channeled into transparent, fully testable deterministic algorithms rather than relying on LLM guesswork:
+
+- **Sleep Debt & Circadian Cycle Algorithm:**
+  $$\text{Actual Sleep Duration} = \text{Wake Time} - \text{Bedtime}$$
+  $$\text{Cumulative Sleep Debt} = \sum_{i=1}^{7} (\text{Target Sleep Duration} - \text{Actual Sleep Duration}_i)$$
+  Evaluates sleep sufficiency against 90-minute sleep cycles and National Sleep Foundation benchmarks (7–9 hours/night).
+- **Nutritional & Energy Computation Engine:**
+  Calculates Basal Metabolic Rate (BMR via the Mifflin-St Jeor equation) and Total Daily Energy Expenditure (TDEE) based on student physical activity; validates caloric intake and balances against standard macronutrient distributions: Protein (15–20%), Carbohydrates (50–60%), Fat (20–25%), and hydration targets ($35\text{ ml/kg}$ body weight).
+- **Standardized Mental Health Screening Engine:**
+  Automatically evaluates validated clinical screening instruments: Patient Health Questionnaire-4 (PHQ-4), GAD-7, and PHQ-9 using deterministic cutoff threshold rules.
+
+### Step 3: Medical and nutritional knowledge retrieval with provenance (Data & Retrieval - R3)
+
+The system queries authenticated knowledge repositories with documented provenance and metadata:
+
+- **Structured Knowledge:** The National Institute of Nutrition's Vietnamese Food Composition Database, cataloging caloric values, protein, lipids, carbohydrates, fiber, and micronutrients for over 500 staple student dishes (broken rice, noodle soup, banh mi, instant noodles, canteen meals).
+- **Unstructured Knowledge (RAG):** Official Sleep Hygiene Guidelines (CDC/WHO), campus Psychological First Aid protocols, and evidence-based relaxation guides.
+- **Verifiable Provenance:** Every nutritional recommendation and lifestyle suggestion references exact source documentation (e.g., `[Source: Vietnamese Food Composition Database, Group 4, ID 04012]` or `[Source: CDC Sleep Hygiene Guidelines 2023]`).
+
+### Step 4: AI synthesis, personalized behavioral nudges, and safety guardrails (R4, R7)
+
+- **Technical Justification for AI:** Utilizes LLMs strictly where unstructured conversational parsing, empathetic natural language dialogues, and holistic behavioral synthesis justify it—transforming colloquial descriptions into structured variables and offering non-judgmental guidance for academic burnout.
+- **Personalized Recommendations:** Proposes restorative sleep debt repayment strategies (preventing disruptive prolonged daytime napping), recommends budget-friendly nutritious meal alternatives around campus, and guides interactive relaxation routines (4-7-8 breathing, progressive muscle relaxation).
+- **Safety Safeguards & Crisis Escalation (R7):**
+  - Prompt delimitation to defend against prompt injection exploits.
+  - Explicit medical disclaimers affirming educational/support boundaries.
+  - Emergency protocol: If suicidal ideation, severe despair, or critical PHQ-4 scores are flagged $\to$ immediately bypass conversational flows and present crisis intervention hotlines (National Child & Youth Helpline 111, Ngay Mai Suicide Prevention Hotline, Campus Psychological Counseling Unit).
+
+## 3. Output
+
+The system delivers actionable deliverables through an end-to-end interactive Web/Chat interface (R6):
+
+- **10 Fully Supported Representative Use Cases:**
+  1. *UC01:* Daily sleep tracking and quantitative analysis (exact hours/minutes and cumulative sleep debt).
+  2. *UC02:* Dietary nutrient breakdown (calories, protein/fiber deficits, dehydration alerts).
+  3. *UC03:* Daily mood check-ins and clinical anxiety/depression screening scores (PHQ-4 / GAD-2).
+  4. *UC04:* Early burnout warning triggered by compounding sleep debt and exam schedules.
+  5. *UC05:* Budget-friendly, campus-accessible meal recommendations to fix identified nutritional deficiencies.
+  6. *UC06:* Post-exam sleep hygiene recovery scheduling.
+  7. *UC07:* Guided in-chat stress reduction exercises (Box Breathing, 5-4-3-2-1 Grounding).
+  8. *UC08:* Weekly holistic health trend reports integrating sleep, diet, and emotional state.
+  9. *UC09:* Context-aware wellness nudges (hydration reminders, screen rest breaks after 2-hour study blocks).
+  10. *UC10:* Automated psychological crisis escalation and emergency helpline routing.
+- **Interactive Health Dashboard Artifacts:** Visual Sleep Debt Ring, Macronutrient Distribution Radar Chart, and an interactive Monthly Mood Calendar.
+
+## 4. Design principles
+
+The system adheres strictly to Computational Thinking principles and engineering criteria:
+
+- **Strict Separation of Deterministic Algorithms and AI:** AI never performs mathematical calculations or clinical score summing. Calorie calculations, sleep debt algorithms, and PHQ-4 scoring are implemented as standalone, transparent, 100% unit-tested code modules. The AI is scoped strictly to conversational understanding, entity extraction, and empathetic dialogue.
+- **High-Provenance RAG Knowledge Grounding:** All lifestyle and nutritional recommendations are grounded in official public health and nutritional databases, eliminating hallucinations.
+- **Safety, Privacy, and Ethical AI:** User data is anonymized; medical disclaimers are persistently enforced; and automated fail-safe guardrails prioritize human life via immediate crisis escalation.
+- **Iterative Evaluation Framework (R8):**
+  - **100-Case Repeatable Benchmark:** 40 food extraction and calorie test cases, 30 cross-midnight sleep duration edge-cases, and 30 emotional interaction scenarios (including benign and severe crisis prompts).
+  - **Metrics:** Calculation Error Margin = 0%; Crisis Escalation Recall = 100%; Food Entity Extraction F1-Score $\ge 90\%$.
+  - **Error Taxonomy:** Classification into 4 failure modes: *Portion size omission*; *Cross-midnight sleep calculation error*; *Nutritional database miscitation*; *Delayed negative emotion recognition*.
+  - **Documented Improvement Cycle:** Baseline prompt extraction frequently misclassified compound local dishes (e.g., "broken rice with pork chop and fried egg") $\to$ resolved by pairing a local food vocabulary gazetteer with few-shot extraction prompts, elevating the F1-score from 71% to 93.5%.
