@@ -192,3 +192,69 @@ The system provides users with:
 ## 4. Design principles
 
 The system combines **graph algorithms and constraint checking** to guarantee absolute accuracy in prerequisite verification and scheduling, a **RAG retrieval framework (LangChain, Vector DB)** for precise policy search, and an **AI assistant** to provide personalized academic guidance.
+
+## Phạm Tiến Đạt
+
+### Vietnamese:
+Đồ án của tôi sẽ về một **Hệ thống Thông minh Hỗ trợ Tổ chức Sự kiện & Tự động Xếp lịch Tuyển chọn (Smart Event & Casting Orchestrator)** nhằm giải quyết bài toán tối ưu hóa thời gian tổ chức sự kiện, tự động phân bổ lịch casting/phỏng vấn giữa ứng viên và ban giám khảo mà không bị trùng lịch học hay lịch cá nhân.
+
+**Cách hoạt động**
+
+**Bước 1: Tiếp nhận yêu cầu và thu thập dữ liệu đăng ký**  
+Hệ thống tiếp nhận nguồn dữ liệu thô (link Google Sheets danh sách đăng ký) cùng các thiết lập cấu hình từ người dùng (ví dụ: thời lượng mỗi lượt, thời gian diễn ra sự kiện, các khung giờ cần tránh). Module AI xử lý ngôn ngữ tự nhiên đảm nhận việc trích xuất các điều kiện ràng buộc (Constraints) như: thời lượng một slot, số lượng ứng viên, và các khung giờ ưu tiên.
+
+**Bước 2: Quét lịch trình khả dụng và thiết lập bài toán ràng buộc**  
+Để đảm bảo tính khả thi thực tế, hệ thống tích hợp API Google Calendar để quét các khung giờ trống của ban tổ chức/ban giám khảo và ứng viên, đồng thời đối chiếu thời khóa biểu trường học để loại bỏ các mốc thời gian vướng lịch cố định.
+
+**Bước 3: Thuật toán tối ưu hóa xếp lịch (Constraint Satisfaction Problem - CSP)**  
+Thay vì để AI tự suy đoán lịch gây sai sót, hệ thống đưa toàn bộ dữ liệu vào tầng tính toán thuật toán xác định. Áp dụng thuật toán thỏa mãn ràng buộc (Constraint Satisfaction - CSP như Backtracking hoặc Greedy) kết hợp đối sánh đồ thị (Bipartite Matching) để tự động khớp từng ứng viên vào các khung giờ trống phù hợp của ban giám khảo với số lượng xung đột lịch bằng 0.
+
+**Bước 4: Tự động hóa soạn thảo thông báo**  
+Sau khi thuật toán tính toán ra timeline chuẩn xác 100%, dữ liệu phân bổ được chuyển sang module AI để tự động tạo mẫu email/tin nhắn thông báo được cá nhân hóa cho từng ứng viên theo ngữ cảnh (thời gian cụ thể, địa điểm, yêu cầu chuẩn bị và liên kết xác nhận tham dự).
+
+**Bước 5: Đồng bộ hóa và thực thi đa kênh**  
+Hệ thống gọi API của Google Sheets để xuất timeline trực tiếp ra bảng tính, tự động tạo các sự kiện hẹn trên Google Calendar và đẩy email thông báo hàng loạt qua Gmail API.
+
+**3. Kết quả đầu ra**  
+Hệ thống cung cấp cho người dùng:
+- Lịch trình casting/phỏng vấn hoàn chỉnh, tối ưu và không bị xung đột lịch giữa các bên.
+- File Google Sheets cập nhật trạng thái khung giờ của từng ứng viên theo thời gian thực.
+- Các sự kiện lịch được tạo tự động trên Google Calendar kèm thông tin chi tiết.
+- Danh sách email thông báo cá nhân hóa đã được chuẩn bị và gửi tự động đến từng ứng viên.
+- Báo cáo thống kê về tỷ lệ lấp đầy lịch và cảnh báo các trường hợp không thể xếp lịch do trùng lịch bất khả kháng.
+
+**4. Nguyên tắc thiết kế**  
+Hệ thống kết hợp **kiến trúc Hybrid** giữa hai tầng xử lý: **Tầng thuật toán xác định (CSP / Graph Matching)** để đảm bảo tính toán xếp lịch chính xác tuyệt đối mà không phụ thuộc vào tính bất định của AI, kết hợp với **Module AI (LLM)** để đọc hiểu văn bản ràng buộc và cá nhân hóa nội dung thông báo, cùng **cơ chế tích hợp External APIs (Sheets, Calendar, Gmail)** để hoàn thiện quy trình tự động hóa.
+
+---
+
+### English:
+My project will be about a **Smart Event & Casting Orchestrator System** designed to resolve schedule coordination bottlenecks, automatically generating optimal casting/interview timetables between applicants and organizers without calendar or academic conflicts.
+
+**How it works**
+
+**Step 1: Ingesting scheduling requests and registration data**  
+The system ingests raw registration datasets (such as a Google Sheets link) alongside user configuration parameters. An AI language processing module extracts structured parameters and constraint requirements, including slot durations, total candidates, and specified time windows.
+
+**Step 2: Availability scanning and constraint mapping**  
+To ensure real-world viability, the system interfaces with the Google Calendar API to scan available free slots across interviewers and candidates, cross-referencing academic timetables to filter out rigid lecture hours.
+
+**Step 3: Constraint Satisfaction Scheduling Algorithm (CSP)**  
+Instead of relying on probabilistic AI generation, the system passes mapped constraints to a deterministic computing layer. By executing Constraint Satisfaction Problem (CSP) algorithms (such as Backtracking Search or Greedy Heuristics) and bipartite matching, the engine assigns candidates to optimal interviewer slots with zero scheduling collisions.
+
+**Step 4: Automated personalized communication**  
+Once a 100% deterministic timeline is generated, the allocation data is passed to the AI module. The model drafts personalized email and message templates for each candidate, specifying allocated time slots, venue instructions, and confirmation links.
+
+**Step 5: Multi-channel synchronization and execution**  
+The system executes external API calls to export the complete schedule back into Google Sheets, populates calendar events via Google Calendar, and triggers automated email notifications via the Gmail API.
+
+**3. Output**  
+The system provides users with:
+- An optimized, fully resolved casting timetable with zero schedule collisions.
+- An updated Google Sheets database displaying slot assignments and candidate statuses in real time.
+- Automated calendar invites and event slots generated within Google Calendar.
+- Personalized confirmation and notification emails dispatched to candidates.
+- Analytical reports detailing slot occupancy rates and alerts for unresolvable schedule constraints.
+
+**4. Design principles**  
+The system adopts a **hybrid architecture** combining a **deterministic computing layer (CSP / Graph Matching)** to ensure mathematical accuracy in conflict resolution, an **AI module (LLM)** for natural language constraint parsing and personalized messaging, and **external API integrations (Sheets, Calendar, Gmail)** to deliver seamless end-to-end event execution.
