@@ -7,6 +7,7 @@
 |:----------:|:---------:|:-----:|:--------------------:|
 |25127031|Nguyễn Hoàng Danh|Phamthanhthuy7797@gmail.com|Zalo,Facebook|
 |25127527|Lê Minh Trí|letri0107@gmail.com|Zalo, Facebook|
+|25127397|Nguyễn Trung Kiên| nkien3142@gmail.com|Zalo, Facebook|
 ## 2.Team Goals and Expectations  
 **Project Objectives:**  The goal is to turn an ambiguous human need 
 into a reliable computational process: understand → decompose → represent → decide → 
