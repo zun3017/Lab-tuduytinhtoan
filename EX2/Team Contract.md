@@ -24,6 +24,12 @@ execute → verify → improve.
 * Role: Feature Developer, Code reviewer
 * Strengths: Good logical thinking, basic understanding of programming algorithms and eager to learn.
 * Weaknesses: Limited experience with advanced Git commands and a bit quiet.
+
+**Nguyễn Trung Kiên:**
+* Role: Feature Developer
+* Strengths: Good logical thinking, basic understanding of programming algorithms and eager to learn.
+* Weaknesses: Limited experience with advanced Git commands and a bit quiet.
+
 ## 4.Communication  
 * Communication Channels: Zalo, facebook,discord  
 * Expected message response time: Around 1 to 2 hours  
@@ -282,5 +288,6 @@ By signing below, all team members confirm that they have read, understood, and 
 |:---:|---|:---:|---|:---:|
 | 1 |Nguyễn Hoàng Danh| 25127031 | Agreed | 2026/10/12 |
 | 2 | Lê Minh Trí | 25127527 | Agreed | 2026/10/12 |
+| 3 | Nguyễn Trung Kiên | 25127397 | Agreed | 2026/10/12 |
 
 
