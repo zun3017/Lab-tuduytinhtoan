@@ -5,7 +5,8 @@
 **Tên đồ án:**  
 |Student ID|Full name|Email|Communication method|  
 |:----------:|:---------:|:-----:|:--------------------:|
-|25127031|Nguyễn Hoàng Danh|Phamthanhthuy7797@gmail.com|Zalo,Facebook|  
+|25127031|Nguyễn Hoàng Danh|Phamthanhthuy7797@gmail.com|Zalo,Facebook|
+|25127527|Lê Minh Trí|letri0107@gmail.com|Zalo, Facebook|
 ## 2.Team Goals and Expectations  
 **Project Objectives:**  The goal is to turn an ambiguous human need 
 into a reliable computational process: understand → decompose → represent → decide → 
@@ -17,6 +18,11 @@ execute → verify → improve.
 * Role: Team Leader, Tester, Presenter, Documentation  
 * Strenths: Has good knowledge of Git, including branch management and resolving merge conflicts, has C++ programming skills, careful, with the ability to test and identify bugs.
 * Weaknesses:  Has limited experience in user interface design, has limited experience in integrating system components  
+
+**Lê Minh Trí:**
+* Role: Feature Developer, Code reviewer
+* Strengths: Good logical thinking, basic understanding of programming algorithms and eager to learn.
+* Weaknesses: Limited experience with advanced Git commands and a bit quiet.
 ## 4.Communication  
 * Communication Channels: Zalo, facebook,discord  
 * Expected message response time: Around 1 to 2 hours  
@@ -274,5 +280,6 @@ By signing below, all team members confirm that they have read, understood, and 
 | No. | Full Name | Student ID | Signature / Confirmation | Date |
 |:---:|---|:---:|---|:---:|
 | 1 |Nguyễn Hoàng Danh| 25127031 | Agreed | 2026/10/12 |
+| 2 | Lê Minh Trí | 25127527 | Agreed | 2026/10/12 |
 
 
