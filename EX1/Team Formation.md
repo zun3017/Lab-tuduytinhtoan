@@ -8,3 +8,4 @@
 |25127304|Hồ Hoàng Tiến Dũng| Feature Developer |
 |25127527|Lê Minh Trí|Code reviewer, Feature Developer|
 |25127467|Trương Tấn Phúc|Feature Developer|
+|25127549|Nguyễn Chí Vĩ|Feature Developer|

@@ -569,7 +569,6 @@ The system adheres strictly to Computational Thinking principles and engineering
   - **Error Taxonomy:** Classification into 4 failure modes: *Portion size omission*; *Cross-midnight sleep calculation error*; *Nutritional database miscitation*; *Delayed negative emotion recognition*.
   - **Documented Improvement Cycle:** Baseline prompt extraction frequently misclassified compound local dishes (e.g., "broken rice with pork chop and fried egg") $\to$ resolved by pairing a local food vocabulary gazetteer with few-shot extraction prompts, elevating the F1-score from 71% to 93.5%.
 
-
 # Hồ Hoàng Tiến Dũng
 
 ## Vietnamese:  
@@ -653,3 +652,84 @@ The system provides users with:
 ## 4. Design principles
 
 The system combines **graph algorithms and constraint satisfaction (Knowledge DAG, CSP, Spaced Repetition algorithms)** to ensure mathematical soundness in knowledge-gap diagnostics and workload scheduling, a **RAG retrieval framework (LangChain, Vector DB)** for strict exam guideline compliance, and an **AI assistant** to adapt curriculum content and provide personalized learning encouragement.
+  # Nguyễn Chí Vĩ
+
+## Vietnamese:  
+#### Trong thời đại thông tin phát triển mạnh mẽ, người học có thể dễ dàng tiếp cận một lượng lớn kiến thức, tài liệu và các nền tảng học tập. Đối với nhiều học sinh, sinh viên và những người có nhu cầu tự học, việc xác định nên học gì, bắt đầu từ đâu, lựa chọn tài liệu nào và xây dựng lộ trình học tập phù hợp vẫn là một thách thức. 
+#### Bên cạnh đó, người học thường gặp khó khăn trong việc chuyển mục tiêu học tập thành những nhiệm vụ cụ thể, duy trì kế hoạch và đánh giá mức độ tiến bộ của bản thân. Việc dành nhiều thời gian tiếp nhận thông tin không đảm bảo rằng họ thực sự hiểu, ghi nhớ hoặc vận dụng được kiến thức. Khi không có cơ chế theo dõi và phản hồi phù hợp, người học có thể tiếp tục học những nội dung đã nắm vững trong khi bỏ sót những phần còn yếu, hoặc mất phương hướng khi kết quả không đạt như mong đợi.
+
+#### Vì vậy, dự án đề xuất xây dựng một AI Study Companion Agent có khả năng tư vấn và hỗ trợ cá nhân hóa quá trình học tập. Agent sẽ giúp người học xác định mục tiêu, đề xuất nội dung và lộ trình phù hợp, chia nhỏ kế hoạch thành các nhiệm vụ có thể thực hiện, theo dõi kết quả thông qua các hoạt động kiểm tra kiến thức, nhận diện những chủ đề cần cải thiện và đề xuất bước học tiếp theo. Mục tiêu là giúp người học chuyển từ trạng thái học tập mơ hồ, thiếu định hướng sang một quá trình học tập có mục tiêu, có kế hoạch, có phản hồi và có thể đánh giá được tiến bộ.
+
+#### Cách hoạt động
+
+### Bước 1: Bước 1 : Hiểu và Định Nghĩa
+- Thu thập mục tiêu, trình độ hiện tại, thời gian, tài liệu và hạn chót. Làm rõ người học muốn đạt được điều gì.
+### Bước 2: Lên kế hoạch và tổ chức
+- Phân rã mục tiêu thành các chủ đề và nhiệm vụ nhỏ, sắp xếp thứ tự học, phân bổ thời gian và xác định tiêu chí hoàn thành.
+### Bước 3:  Học và đánh giá
+- Giải thích kiến thức từ tài liệu, tạo câu hỏi và bài luyện tập, chấm điểm, ghi nhận tiến độ và phát hiện chủ đề người học chưa nắm vững.
+### Bước 4: Thích nghi và Cải thiện
+- So sánh kết quả với mục tiêu, xác định phần cần ôn lại, cập nhật nhiệm vụ và phân bổ lại thời gian nếu người học chậm tiến độ hoặc đã tiến bộ.
+## 3. Kết quả đầu ra
+1. Learning Profile — Hồ sơ học tập
+- Mục tiêu, trình độ ban đầu, thời gian có thể học, hạn chót, tài liệu và những hạn chế của người học.
+
+2. Personalized Study Plan — Kế hoạch học tập
+- Danh sách chủ đề, nhiệm vụ cụ thể, lịch học, thời lượng dự kiến, trạng thái và tiêu chí hoàn thành.
+
+3. Learning Progress Report — Báo cáo tiến độ
+- Nhiệm vụ đã hoàn thành, kết quả bài kiểm tra, chủ đề mạnh/yếu và mức độ tiến gần đến mục tiêu.
+
+4. Next Best Action — Hành động tiếp theo
+- Một đề xuất cụ thể, chẳng hạn ôn lại một khái niệm, làm thêm bài tập hoặc chuyển sang chủ đề mới, kèm lý do và thời lượng dự kiến.
+
+5. Giá trị cuối cùng: Người học biết mình đang hướng đến điều gì, cần làm gì hôm nay, đã tiến bộ đến đâu và nên làm gì tiếp theo.
+
+
+## 4. Nguyên tắc thiết kế
+1. Goal-oriented — Lấy mục tiêu làm trung tâm
+- Mọi đề xuất và nhiệm vụ phải phục vụ mục tiêu học tập đã xác định, không chỉ tạo ra nhiều nội dung hoặc hoạt động.
+2. Personalized — Cá nhân hóa
+- Kế hoạch cần phù hợp với trình độ, thời gian, tài liệu, hạn chót và kết quả của từng người; không áp dụng một lộ trình cố định cho tất cả.
+3. Evidence-based — Dựa trên bằng chứng
+- Đánh giá tiến bộ dựa trên câu trả lời, bài kiểm tra, bài thực hành và lịch sử học tập, không chỉ dựa vào thời gian đã dành ra hoặc lời tự nhận xét.
+
+## English:
+#### In today's rapidly evolving information age, learners have easy access to a vast array of knowledge, resources, and learning platforms. However, for many students and self-learners, determining what to study, where to begin, which materials to select, and how to construct a suitable learning roadmap remains a challenge.
+
+#### Furthermore, learners often struggle to translate learning goals into concrete tasks, stick to a plan, and assess their own progress. Merely spending time consuming information does not guarantee that learners truly understand, retain, or can apply the knowledge. Without appropriate tracking and feedback mechanisms, learners may inadvertently focus on material they have already mastered while neglecting areas of weakness, or lose direction when results fall short of expectations.
+
+#### To address this, the project proposes the development of an AI Study Companion Agent capable of providing personalized guidance and support throughout the learning process. The Agent will assist learners in defining goals, recommending suitable content and roadmaps, breaking plans down into actionable tasks, tracking performance through knowledge assessments, identifying topics requiring improvement, and suggesting subsequent learning steps. The ultimate objective is to help learners transition from a state of vague, undirected study to a structured learning process characterized by clear goals, planning, feedback, and measurable progress.
+
+#### How it works
+
+### Step 1: Understand and Define
+- Gather information on goals, current proficiency, available time, materials, and deadlines. Clarify what the learner aims to achieve.
+### Step 2: Plan and Organize
+- Break down goals into smaller topics and tasks, sequence the learning, allocate time, and define completion criteria.
+### Step 3: Learn and Assess
+- Explain concepts from materials, create questions and practice exercises, grade performance, track progress, and identify topics the learner has not yet mastered.
+### Step 4: Adapt and Improve
+- Compare results against goals, identify areas for review, update tasks, and reallocate time based on whether the learner is lagging behind or making rapid progress.
+## 3. Outputs
+1. Learning Profile
+- Learner's goals, initial proficiency level, available study time, deadlines, materials, and constraints.
+
+2. Personalized Study Plan
+- List of topics, specific tasks, study schedule, estimated duration, status, and completion criteria.
+
+3. Learning Progress Report
+- Completed tasks, test results, strengths and weaknesses, and progress toward the goal.
+
+4. Next Best Action
+- A specific recommendation—such as reviewing a concept, doing extra exercises, or moving to a new topic—along with the rationale and estimated duration.
+
+5. Ultimate Value: The learner knows what they are working toward, what needs to be done today, how much progress has been made, and what the next step should be. 
+## 4. Design Principles
+1. Goal-oriented
+- Every proposal and task must serve the defined learning objectives, rather than simply generating a volume of content or activities.
+2. Personalized
+- Plans must be tailored to each individual's proficiency level, schedule, available materials, deadlines, and desired outcomes; a "one-size-fits-all" roadmap should not be applied.
+3. Evidence-based
+- Progress assessment is based on responses, tests, practical exercises, and learning history, rather than merely on time spent or self-assessment.
+
