@@ -43,6 +43,10 @@ execute → verify → improve.
 * Strengths: Strong logical reasoning, solid foundation in C++ , proactive problem solver with high sense of responsibility.
 * Weaknesses: Needs to be more cautious when managing Git branching workflows and resolving complex merge conflicts.
 
+**Hồ Hoàng Tiến Dũng**
+* Role: Feature Developer
+* Strengths: A solid foundation in C++, has ability to think logically, and a high sense of responsibility.
+* Weaknesses: Limited practical programming experience as well as a tendency to get distracted when doing multiple tasks at once.
 ## 4.Communication  
 * Communication Channels: Zalo, facebook,discord  
 * Expected message response time: Around 1 to 2 hours  
