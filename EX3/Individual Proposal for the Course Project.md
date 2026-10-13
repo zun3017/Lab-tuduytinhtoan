@@ -568,3 +568,88 @@ The system adheres strictly to Computational Thinking principles and engineering
   - **Metrics:** Calculation Error Margin = 0%; Crisis Escalation Recall = 100%; Food Entity Extraction F1-Score $\ge 90\%$.
   - **Error Taxonomy:** Classification into 4 failure modes: *Portion size omission*; *Cross-midnight sleep calculation error*; *Nutritional database miscitation*; *Delayed negative emotion recognition*.
   - **Documented Improvement Cycle:** Baseline prompt extraction frequently misclassified compound local dishes (e.g., "broken rice with pork chop and fried egg") $\to$ resolved by pairing a local food vocabulary gazetteer with few-shot extraction prompts, elevating the F1-score from 71% to 93.5%.
+
+
+# Hồ Hoàng Tiến Dũng
+
+## Vietnamese:  
+#### Đồ án của tôi sẽ về một Hệ thống Trợ lý Lập Lộ trình Ôn tập Thích ứng & Quy chế Khảo thí (Smart Adaptive Exam Preparation & Assessment Assistant) hỗ trợ người học xây dựng kế hoạch học tập cá nhân hóa, phát hiện lỗ hổng kiến thức qua đồ thị tri thức, phân bổ lịch ôn luyện ngắt quãng và tra cứu quy chế thi chính thức.
+
+#### Cách hoạt động
+
+### Bước 1: Tiếp nhận thông tin và mục tiêu của người học
+
+Trợ lý tương tác với người học để thu thập các thông tin cần thiết, bao gồm:
+
+- Điểm số hiện tại, lịch sử làm bài thi thử (mock tests) và mục tiêu điểm số kỳ vọng.
+- Quỹ thời gian học tập khả dụng mỗi ngày, các ngày bận và ngày thi thực tế (deadline).
+- Khả năng tiếp thu, phong cách học tập và các chủ đề cảm thấy còn yếu.
+- Các thắc mắc liên quan đến cấu trúc đề thi, tiêu chí chấm điểm, điều kiện miễn thi hoặc quy chế phòng thi.
+
+### Bước 2: Phân tích đồ thị tri thức và kiểm tra ràng buộc thời gian
+
+Hệ thống áp dụng thuật toán duyệt đồ thị có hướng không chu trình (DAG) trên **Đồ thị tri thức (Knowledge Graph)** để xác định chuỗi khái niệm tiên quyết (prerequisites), từ đó tìm ra chính xác "gốc rễ" của các lỗ hổng kiến thức. Tiếp theo, thuật toán kiểm tra ràng buộc (Constraint Satisfaction Problem - CSP) đối chiếu khối lượng kiến thức cần nạp với quỹ thời gian thực tế để tránh tình trạng học quá tải. Đồng thời, công thức toán học lặp lại ngắt quãng (Spaced Repetition - SM-2/FSRS) được áp dụng để tính toán đường cong lãng quên và lên lịch ôn tập tối ưu trí nhớ dài hạn.
+
+### Bước 3: Tra cứu chuẩn đầu ra và giải đáp quy chế thi
+
+Đối với các thắc mắc về cấu trúc đề, barem điểm và quy định phòng thi, hệ thống truy xuất dữ liệu RAG (LangChain, Vector DB) từ file PDF **Đề cương kỳ thi chính thức (Exam Syllabus)**, **Tiêu chí chấm điểm (Band Descriptors/Rubrics)** và **Quy chế khảo thí**. Hệ thống trích xuất thông tin chuẩn xác kèm số trang và điều khoản cụ thể thay vì để AI tự suy diễn.
+
+### Bước 4: Tự động lập lịch và đề xuất lộ trình học tập thích ứng
+
+Hệ thống tổng hợp dữ liệu, áp dụng AI để đề xuất thời khóa biểu học tập chi tiết từng ngày, tự động điều chỉnh độ khó và phân bổ các bài tập bù đắp kỹ năng yếu theo thời gian thực (Adaptive Learning) dựa trên kết quả luyện tập hàng tuần của người học.
+
+## 3. Kết quả đầu ra
+
+Hệ thống cung cấp cho người dùng:
+
+- Lộ trình ôn tập cá nhân hóa và thời khóa biểu học tập chi tiết theo từng ngày không bị xung đột với lịch bận.
+- Báo cáo phân tích đồ thị tri thức, chỉ rõ các khái niệm nền tảng bị thiếu hụt cần được bổ trợ trước.
+- Lịch ôn tập ngắt quãng (Spaced Repetition) và mô hình dự báo xác suất đạt điểm mục tiêu trước ngày thi.
+- Câu trả lời giải đáp thắc mắc về cấu trúc đề, thang điểm chuẩn xác kèm trích dẫn từ tài liệu khảo thí chính thống.
+- Cảnh báo khi tốc độ học hiện tại có nguy cơ trễ hạn ngày thi hoặc lịch học bị dồn nén quá tải.
+
+## 4. Nguyên tắc thiết kế
+
+Hệ thống kết hợp **thuật toán đồ thị và kiểm tra ràng buộc (Knowledge DAG, CSP, Spaced Repetition)** để đảm bảo tính khoa học, chuẩn xác trong việc phát hiện lỗ hổng kiến thức và phân bổ thời gian học, **cơ chế tìm kiếm thông tin RAG (LangChain, Vector DB)** để tra cứu chính xác quy chuẩn và đề cương thi cử, và **trợ lý AI** để thích ứng hóa bài học và cá nhân hóa trải nghiệm học tập của từng học viên.
+
+---
+
+## English:  
+#### My project will be about a Smart Adaptive Exam Preparation & Assessment Assistant that supports learners in building personalized study plans, identifying knowledge gaps via knowledge graphs, scheduling spaced repetition reviews, and looking up official examination regulations.
+
+#### How it works
+
+### Step 1: Collecting learner input and target goals
+
+The assistant interacts with the learner to collect necessary information, including:
+
+- Current proficiency level, mock test history, and target exam score.
+- Daily available study hours, busy schedules, and target exam date (deadline).
+- Self-assessed weak topics and preferred learning pace.
+- Inquiries regarding exam blueprints, grading criteria, exemption policies, or examination room rules.
+
+### Step 2: Analyzing knowledge graph and schedule constraint checking
+
+The system applies directed acyclic graph (DAG) algorithms over a **Knowledge Graph** to trace concept prerequisite chains, accurately pinpointing root knowledge gaps. Next, a Constraint Satisfaction Problem (CSP) solver balances required learning volume against available study hours to avoid burnout. Meanwhile, mathematical spaced repetition algorithms (SM-2/FSRS) model the forgetting curve to schedule optimal review intervals for long-term retention.
+
+### Step 3: Information retrieval for syllabus and exam regulations Q&A
+
+For inquiries regarding exam formats, scoring rubrics, and testing policies, the system retrieves relevant information using RAG (LangChain, Vector DB) from official PDF documents such as the **Exam Syllabus**, **Scoring Rubrics / Band Descriptors**, and **Testing Code of Conduct**. It extracts precise information backed by direct section and page citations.
+
+### Step 4: Automated scheduling and adaptive roadmap recommendation
+
+The system synthesizes all data, utilizing AI to recommend daily conflict-free study timetables and adaptively dynamically adjust curriculum difficulty and weak-skill drill sets in real-time based on the student's ongoing test performance.
+
+## 3. Output
+
+The system provides users with:
+
+- A personalized study roadmap and daily conflict-free timetables tailored to the learner's schedule.
+- A knowledge graph diagnostic report highlighting missing prerequisite concepts.
+- An optimized spaced-repetition review calendar and score probability projections before the exam date.
+- Accurate answers regarding exam specifications and grading rubrics directly cited from official exam guidelines.
+- Timely warnings when the current study pace risks missing the deadline or when study load causes cognitive overload.
+
+## 4. Design principles
+
+The system combines **graph algorithms and constraint satisfaction (Knowledge DAG, CSP, Spaced Repetition algorithms)** to ensure mathematical soundness in knowledge-gap diagnostics and workload scheduling, a **RAG retrieval framework (LangChain, Vector DB)** for strict exam guideline compliance, and an **AI assistant** to adapt curriculum content and provide personalized learning encouragement.

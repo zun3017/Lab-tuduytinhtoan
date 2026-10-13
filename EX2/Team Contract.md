@@ -296,4 +296,4 @@ By signing below, all team members confirm that they have read, understood, and 
 | 2 | Lê Minh Trí | 25127527 | Agreed | 2026/10/12 |
 | 3 | Nguyễn Trung Kiên | 25127397 | Agreed | 2026/10/12 |
 | 4 | Trương Tấn Phúc | 25127467 | Agreed | 2026/10/13 |
-
+| 5 | Hồ Hoàng Tiến Dũng | 25127304 | Agreed | 2026/10/13 |
