@@ -9,6 +9,7 @@
 |25127527|Lê Minh Trí|letri0107@gmail.com|Zalo, Facebook|
 |25127397|Nguyễn Trung Kiên| nkien3142@gmail.com|Zalo, Facebook|
 |25127467|Trương Tấn Phúc|ttphuc2531@clc.fitus.edu.vn|Zalo, Facebook|
+|25127034| Phạm Tiến Đạt | phamtiendat37@gmail.com | Zalo, Facebook |
 ## 2.Team Goals and Expectations  
 **Project Objectives:**  The goal is to turn an ambiguous human need 
 into a reliable computational process: understand → decompose → represent → decide → 
@@ -35,6 +36,11 @@ execute → verify → improve.
 * Role: Feature Developer
 * Strengths: A solid foundation in C++, has ability to think logically, and a high sense of responsibility.
 * Weaknesses: Limited practical programming experience as well as a tendency to get distracted when doing multiple tasks at once.
+
+**Phạm Tiến Đạt:**
+* Role: Feature Developer
+* Strengths: Strong logical reasoning, solid foundation in C++ , proactive problem solver with high sense of responsibility.
+* Weaknesses: Needs to be more cautious when managing Git branching workflows and resolving complex merge conflicts.
 
 ## 4.Communication  
 * Communication Channels: Zalo, facebook,discord  
@@ -296,4 +302,5 @@ By signing below, all team members confirm that they have read, understood, and 
 | 2 | Lê Minh Trí | 25127527 | Agreed | 2026/10/12 |
 | 3 | Nguyễn Trung Kiên | 25127397 | Agreed | 2026/10/12 |
 | 4 | Trương Tấn Phúc | 25127467 | Agreed | 2026/10/13 |
+| 5 | Phạm Tiến Đạt | 25127034 | Agreed | 2026/10/13 |
 
