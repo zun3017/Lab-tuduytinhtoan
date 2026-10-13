@@ -10,6 +10,7 @@
 |25127397|Nguyễn Trung Kiên| nkien3142@gmail.com|Zalo, Facebook|
 |25127467|Trương Tấn Phúc|ttphuc2531@clc.fitus.edu.vn|Zalo, Facebook|
 |25127034| Phạm Tiến Đạt | phamtiendat37@gmail.com | Zalo, Facebook |
+|25127304| Hồ Hoàng Tiến Dũng | hodung300107@gmail.com | Zalo, Facebook |
 ## 2.Team Goals and Expectations  
 **Project Objectives:**  The goal is to turn an ambiguous human need 
 into a reliable computational process: understand → decompose → represent → decide → 
