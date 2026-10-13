@@ -10,11 +10,8 @@
 |25127397|Nguyễn Trung Kiên| nkien3142@gmail.com|Zalo, Facebook|
 |25127467|Trương Tấn Phúc|ttphuc2531@clc.fitus.edu.vn|Zalo, Facebook|
 |25127034| Phạm Tiến Đạt | phamtiendat37@gmail.com | Zalo, Facebook |
-<<<<<<< HEAD
 |25127304| Hồ Hoàng Tiến Dũng | hodung300107@gmail.com | Zalo, Facebook |
-=======
 |25127549| Nguyễn Chí  Vĩ | vinguyen.14200@gmail.com | Zalo, Facebook |
->>>>>>> 8af07f2 (Complete ex1, ex2, ex3)
 ## 2.Team Goals and Expectations  
 **Project Objectives:**  The goal is to turn an ambiguous human need 
 into a reliable computational process: understand → decompose → represent → decide → 
@@ -47,18 +44,16 @@ execute → verify → improve.
 * Strengths: Strong logical reasoning, solid foundation in C++ , proactive problem solver with high sense of responsibility.
 * Weaknesses: Needs to be more cautious when managing Git branching workflows and resolving complex merge conflicts.
 
-<<<<<<< HEAD
 **Hồ Hoàng Tiến Dũng**
 * Role: Feature Developer
 * Strengths: A solid foundation in C++, has ability to think logically, and a high sense of responsibility.
 * Weaknesses: Limited practical programming experience as well as a tendency to get distracted when doing multiple tasks at once.
-=======
+
 **Nguyễn Chí Vĩ:**  
 * Role: Feature Developer
 * Strenths: Efficiently managing Git/GitHub workflows, branches, and resolving team code conflicts, Strong sense of responsibility in teamwork and a high capacity for self-learning.
 * Weaknesses: Adapting from C++ resource management to the high-level, Python-dominated AI ecosystem, Need to quickly learn specialized agent tools.
 
->>>>>>> 8af07f2 (Complete ex1, ex2, ex3)
 ## 4.Communication  
 * Communication Channels: Zalo, facebook,discord  
 * Expected message response time: Around 1 to 2 hours  
@@ -319,11 +314,7 @@ By signing below, all team members confirm that they have read, understood, and 
 | 2 | Lê Minh Trí | 25127527 | Agreed | 2026/10/12 |
 | 3 | Nguyễn Trung Kiên | 25127397 | Agreed | 2026/10/12 |
 | 4 | Trương Tấn Phúc | 25127467 | Agreed | 2026/10/13 |
-<<<<<<< HEAD
 | 5 | Hồ Hoàng Tiến Dũng | 25127304 | Agreed | 2026/10/13 |
 | 6 | Phạm Tiến Đạt | 25127034 | Agreed | 2026/10/13 |
-=======
-| 5 | Phạm Tiến Đạt | 25127034 | Agreed | 2026/10/13 |
-| 6 | Nguyễn Chí Vĩ | 25127549 | Agreed | 2026/10/13 |
->>>>>>> 8af07f2 (Complete ex1, ex2, ex3)
+| 7 | Nguyễn Chí Vĩ | 25127549 | Agreed | 2026/10/13 |
 
