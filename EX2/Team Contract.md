@@ -20,37 +20,37 @@ execute → verify → improve.
 **The level of effort and time that each member commits to contributing:** Commit to actively contributing to the project by completing assigned tasks on time, attending team meetings regularly, and dedicating sufficient time each week to ensure the quality of the work.   
 ## 3.Roles and Responsibilities     
 **Nguyễn Hoàng Danh:**  
-* Role: Team Leader, Tester, Presenter, Documentation  
+* Role: Team Leader, Code Reviewer, Presenter, Documentation  
 * Strenths: Has good knowledge of Git, including branch management and resolving merge conflicts, has C++ programming skills, careful, with the ability to test and identify bugs.
 * Weaknesses:  Has limited experience in user interface design, has limited experience in integrating system components  
 
 **Lê Minh Trí:**
-* Role: Feature Developer, Code reviewer
+* Role: Feature Developer, Code reviewer, Presenter
 * Strengths: Good logical thinking, basic understanding of programming algorithms and eager to learn.
 * Weaknesses: Limited experience with advanced Git commands and a bit quiet.
 
 **Nguyễn Trung Kiên:**
-* Role: Feature Developer
+* Role: Feature Developer, Presenter
 * Strengths: Good logical thinking, basic understanding of programming algorithms and eager to learn.
 * Weaknesses: Limited experience with advanced Git commands and a bit quiet.
 
 **Trương Tấn Phúc**
-* Role: Feature Developer
+* Role: Feature Developer, Presenter
 * Strengths: A solid foundation in C++, has ability to think logically, and a high sense of responsibility.
 * Weaknesses: Limited practical programming experience as well as a tendency to get distracted when doing multiple tasks at once.
 
 **Phạm Tiến Đạt:**
-* Role: Feature Developer
+* Role: Feature Developer, Presenter
 * Strengths: Strong logical reasoning, solid foundation in C++ , proactive problem solver with high sense of responsibility.
 * Weaknesses: Needs to be more cautious when managing Git branching workflows and resolving complex merge conflicts.
 
 **Hồ Hoàng Tiến Dũng**
-* Role: Feature Developer
+* Role: Feature Developer, Presenter
 * Strengths: A solid foundation in C++, has ability to think logically, and a high sense of responsibility.
 * Weaknesses: Limited practical programming experience as well as a tendency to get distracted when doing multiple tasks at once.
 
 **Nguyễn Chí Vĩ:**  
-* Role: Feature Developer
+* Role: Feature Developer, Presenter
 * Strenths: Efficiently managing Git/GitHub workflows, branches, and resolving team code conflicts, Strong sense of responsibility in teamwork and a high capacity for self-learning.
 * Weaknesses: Adapting from C++ resource management to the high-level, Python-dominated AI ecosystem, Need to quickly learn specialized agent tools.
 
@@ -304,7 +304,8 @@ Serious issues involving academic-integrity violations, harassment, or intention
 
 * The team should review the agreement at important project milestones or when significant issues arise.
 * All members are responsible for following the latest approved version of the team agreement.  
-## 12. Signatures
+## 12. Signatures  
+<div align="center">
 
 By signing below, all team members confirm that they have read, understood, and agreed to the terms of this Team Contract.
 
@@ -318,3 +319,4 @@ By signing below, all team members confirm that they have read, understood, and 
 | 6 | Phạm Tiến Đạt | 25127034 | Agreed | 2026/10/13 |
 | 7 | Nguyễn Chí Vĩ | 25127549 | Agreed | 2026/10/13 |
 
+<div>
