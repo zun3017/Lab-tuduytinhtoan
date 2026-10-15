@@ -1,8 +1,8 @@
 <h1 align="center">TEAM CONTRACT</h1>  
 
 ## 1.Team information 
-**Tên nhóm:**   
-**Tên đồ án:**  
+**Group name:** Family Guy   
+**Project name:** an intelligent system that supports students living for **x** days with a predetermined amount of **n** money
 |Student ID|Full name|Email|Communication method|  
 |:----------:|:---------:|:-----:|:--------------------:|
 |25127031|Nguyễn Hoàng Danh|Phamthanhthuy7797@gmail.com|Zalo,Facebook|

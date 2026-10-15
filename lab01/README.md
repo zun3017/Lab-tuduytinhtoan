@@ -14,7 +14,7 @@
 
 This submission includes all completed exercises for Week 01 (Lab 01):
 
-* **`Exercise01/`**: Team Formation (Member list, roles, strengths & weaknesses).
+* **`Exercise01/`**: Team Formation (Member list, roles).
 * **`Exercise02/`**: Team Contract (Rules, communication channels, meeting schedule, workflow, and policies).
 * **`Exercise03/`**: Individual Proposal for the Course Project.
 * **`Exercise04/`**: Git setup information (Personal and group repository links, collaborator settings).
