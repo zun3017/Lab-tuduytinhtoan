@@ -1,0 +1,213 @@
+commit 3e1486ad17ed036921c806f2bc725f18e9fbd794
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Thu Oct 15 10:14:25 2026 +0700
+
+    Add Appendix about rule of use AI for EX2
+
+commit 838158b00b6b5273d588ec2690a0fdbd6aff593d
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Tue Oct 13 20:29:17 2026 +0700
+
+    Add framming of EX4
+
+commit 5277df59b286c8e489e6f50c2fcad3dba7b66fa7
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Tue Oct 13 20:15:48 2026 +0700
+
+    Add pdf for EX2
+
+commit 2deb97204c1ce46721381e7221df47e2dfd6082c
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Tue Oct 13 20:01:45 2026 +0700
+
+    Do EX1,2,3 follow the format, Add PDF for Ex1,2
+
+commit 243113d664bbced4c3ca41c84dd00ca54219c4a5
+Author: Nguyen Chi Vi <vinguyen.14200@gmail.com>
+Date:   Tue Oct 13 19:10:09 2026 +0700
+
+    fixed conflict
+
+commit 9bc31098206fe8e7283d26c0e59aa81ac86b5367
+Author: Nguyen Chi Vi <vinguyen.14200@gmail.com>
+Date:   Tue Oct 13 11:11:20 2026 +0700
+
+    Complete ex1, ex2, ex3
+
+commit c11ae25ab902e1f78f6b44dcd9fee5797bf94924
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Tue Oct 13 13:10:27 2026 +0700
+
+    Final compeletion from Dung
+
+commit c52deb30aa80f768f8af67bf37dc48bb9a936a77
+Merge: 8b634ec 34a0931
+Author: PoHD2006 <lylin030103@gmail.com>
+Date:   Tue Oct 13 13:01:18 2026 +0700
+
+    Merge branch 'main' into feature/Dung
+
+commit 8b634ecb0c500a8053a32fdc0f10d3a0d3b0ed7a
+Author: zun3017 <hodung300107@gmail.com>
+Date:   Tue Oct 13 10:08:53 2026 +0700
+
+    Complete EX2, EX3 from Dung
+
+commit 43e3851ec7a5e12bcb2ea9b963eb2db8091c04bb
+Author: Pham Tien Dat <phamtiendat37@gmail.com>
+Date:   Tue Oct 13 09:45:33 2026 +0700
+
+    Complete EX2 from Dat
+
+commit 14bbc27bd01f6ad88a455aa538fb0ffde831ef34
+Author: zun3017 <hodung300107@gmail.com>
+Date:   Tue Oct 13 10:08:53 2026 +0700
+
+    Complete EX2, EX3 from Dung
+
+commit 34a09311adc5adeb35fd06e47e41ef9a05482827
+Author: Pham Tien Dat <phamtiendat37@gmail.com>
+Date:   Tue Oct 13 09:45:33 2026 +0700
+
+    Complete EX2 from Dat
+
+commit 23d302868cf121537c5b4738708a85b5a4b68390
+Author: Phúc <ttphuc2531@clc.fitus.edu.vn>
+Date:   Tue Oct 13 01:04:07 2026 +0700
+
+    them y tuong ve viec AI ho tro suc khoe cua sv
+
+commit 6b323175fe9d4261aafdbda1f69352c7fb041bef
+Author: Phúc <ttphuc2531@clc.fitus.edu.vn>
+Date:   Tue Oct 13 01:03:17 2026 +0700
+
+    Them noi dung o muc 3 va dong y bien ban
+
+commit e48b254f2b5cdf3d8d50b0523dcc57764a893767
+Author: Phúc <ttphuc2531@clc.fitus.edu.vn>
+Date:   Tue Oct 13 00:44:06 2026 +0700
+
+    Cap nhat ten thanh vien Phuc
+
+commit ea7827ec4eef14c93730ab1d6ad7db25f9a99f98
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Mon Oct 12 22:23:18 2026 +0700
+
+    remove the excess part
+
+commit 5fba1a6829e0621ece6bc171da431ba5092525aa
+Author: The-Kice <nkien3142@gmail.com>
+Date:   Mon Oct 12 21:58:38 2026 +0700
+
+    fixed EX2 and EX3
+
+commit 9a80872abded87fec3b37068fc08468f44d53f0b
+Author: The-Kice <nkien3142@gmail.com>
+Date:   Mon Oct 12 21:38:24 2026 +0700
+
+    Add personal proposal
+
+commit ef8889bcca02a8e267bbd6b665ea9360ab0bbf1d
+Author: The-Kice <nkien3142@gmail.com>
+Date:   Mon Oct 12 21:19:10 2026 +0700
+
+    Complete EX2 and EX3
+
+commit 13dcb93479e18466b0b8b7f4b9438cd170d6da4d
+Author: Trí Lê <letri0107@gmail.com>
+Date:   Mon Oct 12 19:27:00 2026 +0700
+
+    Complete EX2 from Tri
+
+commit 3a234897ab586a7cc57cd4b1ab7758155d302a87
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Mon Oct 12 18:51:42 2026 +0700
+
+    Complete EX1 from Tri
+
+commit 47cb09b9c30e2a1b434dea17d5eedb70a6bc18e6
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Mon Oct 12 18:19:52 2026 +0700
+
+    Add Framming markdown of EX2
+
+commit d2952aaeb76261d05975ae3cb9a10f440658a3b6
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Mon Oct 12 14:56:11 2026 +0700
+
+    Complete EX1 From Dung Ho
+
+commit 3a5d7375bf1a7706aa17f6641dcc74b159f936c0
+Author: Pham Tien Dat <phamtiendat37@gmail.com>
+Date:   Mon Oct 12 10:31:43 2026 +0700
+
+    docs: bo sung de xuat du an ca nhan EX3
+
+commit 42c6360105d08a04afe1fe56c587d077d62f8524
+Merge: e680101 4643f47
+Author: PoHD2006 <lylin030103@gmail.com>
+Date:   Sun Oct 11 21:10:57 2026 +0700
+
+    Merge pull request #2 from PoHD2006/feature/update-info-Tri
+    
+    Update EX1 and EX3 for Tri
+
+commit 4643f47265a371b56a092415c44ef20016adae3d
+Merge: 8e580dc e680101
+Author: PoHD2006 <lylin030103@gmail.com>
+Date:   Sun Oct 11 21:09:31 2026 +0700
+
+    Merge branch 'main' into feature/update-info-Tri
+
+commit e68010109e2e94e3139d95eb9ba4c05428c95657
+Merge: 59d898c 73d64e3
+Author: Pham Tien Dat <phamtiendat37@gmail.com>
+Date:   Sun Oct 11 21:00:32 2026 +0700
+
+    Merge branch 'main' of https://github.com/PoHD2006/Family-guy-private
+
+commit 59d898cca39430a5fbc4ac45ade7af6c43618fc0
+Author: Pham Tien Dat <phamtiendat37@gmail.com>
+Date:   Sun Oct 11 21:00:17 2026 +0700
+
+    name
+
+commit 8e580dc15dd2f8b1d8e5c31c3a28aeb5e2111412
+Merge: 44677e7 73d64e3
+Author: Trí Lê <letri0107@gmail.com>
+Date:   Sun Oct 11 20:44:55 2026 +0700
+
+    Update lan 2 Tri
+
+commit 44677e75a9ed4d441ff4d603208c7e9e99e986ae
+Author: Trí Lê <letri0107@gmail.com>
+Date:   Sun Oct 11 20:38:34 2026 +0700
+
+    Update EX1 and EX3 with Tri info and proposal
+
+commit 73d64e3f73d194669eb8cda52387680cbc945ecc
+Merge: 155fe97 0fc6108
+Author: PoHD2006 <lylin030103@gmail.com>
+Date:   Sun Oct 11 20:36:10 2026 +0700
+
+    Merge pull request #1 from PoHD2006/feature/Kien
+    
+    Ex1 completly
+
+commit 0fc6108efff9bc691db45feedf9218ef47211409
+Author: The-Kice <nkien3142@gmail.com>
+Date:   Sun Oct 11 20:28:00 2026 +0700
+
+    Ex1 completly
+
+commit 155fe97b0c8a12aa42696d433bea79a498765a37
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Sun Oct 11 19:58:18 2026 +0700
+
+    Add the framming of EX1,EX3 completely
+
+commit 12ea4f7c12256412a1d30549337253b0ffe6fe07
+Author: Nguyen Hoang Danh <Phamthanhthuy7797@gmail.com>
+Date:   Sun Oct 11 19:51:32 2026 +0700
+
+    Add the framming of EX1,EX3
