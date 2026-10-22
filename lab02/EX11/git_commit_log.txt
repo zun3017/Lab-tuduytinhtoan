@@ -1,0 +1,44 @@
+ccee082  Them cac file nhu readme và file bao cao dong gop trong nhom
+ac2e7e1 Cap nhat sua lai cac bai con lai va them bai 8 bi loi khong xem duoc de bai, bai 9
+5cb3e53 Sua lai bai 5 va them bai 7
+d5bafdb Cap nhat bai tap 5 va 6
+9cd50ac Sap xep lai thu muc
+314f24b cap nhat bai tap 21/10 lam
+29db126 Lab02 week 2
+4251583 Them thong tin lab01 team contract
+e5875d4 Remove old folders, keep only lab01
+eb88f39 lab01
+3e1486a Add Appendix about rule of use AI for EX2
+838158b Add framming of EX4
+5277df5 Add pdf for EX2
+2deb972 Do EX1,2,3 follow the format, Add PDF for Ex1,2
+243113d fixed conflict
+9bc3109 Complete ex1, ex2, ex3
+c11ae25 Final compeletion from Dung
+c52deb3 Merge branch 'main' into feature/Dung
+8b634ec Complete EX2, EX3 from Dung
+43e3851 Complete EX2 from Dat
+14bbc27 Complete EX2, EX3 from Dung
+34a0931 Complete EX2 from Dat
+23d3028 them y tuong ve viec AI ho tro suc khoe cua sv
+6b32317 Them noi dung o muc 3 va dong y bien ban
+e48b254 Cap nhat ten thanh vien Phuc
+ea7827e remove the excess part
+5fba1a6 fixed EX2 and EX3
+9a80872 Add personal proposal
+ef8889b Complete EX2 and EX3
+13dcb93 Complete EX2 from Tri
+3a23489 Complete EX1 from Tri
+47cb09b Add Framming markdown of EX2
+d2952aa Complete EX1 From Dung Ho
+3a5d737 docs: bo sung de xuat du an ca nhan EX3
+42c6360 Merge pull request #2 from PoHD2006/feature/update-info-Tri
+4643f47 Merge branch 'main' into feature/update-info-Tri
+e680101 Merge branch 'main' of https://github.com/PoHD2006/Family-guy-private
+59d898c name
+8e580dc Update lan 2 Tri
+44677e7 Update EX1 and EX3 with Tri info and proposal
+73d64e3 Merge pull request #1 from PoHD2006/feature/Kien
+0fc6108 Ex1 completly
+155fe97 Add the framming of EX1,EX3 completely
+12ea4f7 Add the framming of EX1,EX3
