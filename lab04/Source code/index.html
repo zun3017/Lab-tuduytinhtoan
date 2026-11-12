@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart Budget Meal Planner giúp lập kế hoạch bữa ăn tiết kiệm và hạn chế lãng phí." />
+  <title>Smart Budget Meal Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="announcement">Lập kế hoạch bữa ăn thông minh hơn mỗi tuần <a href="#bat-dau">Bắt đầu ngay →</a></div>
+
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Điều hướng chính">
+      <a class="brand" href="index.html"><span class="brand-icon" aria-hidden="true">●</span>Smart Budget <b>Meal Planner</b></a>
+      <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <div class="nav-links">
+        <a href="about.html">Giới thiệu</a>
+        <button class="nav-action" type="button">Đăng ký</button>
+        <button class="nav-action" type="button">Đăng nhập</button>
+        <a class="nav-highlight" href="meals.html">Đề xuất bữa ăn đơn giản</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container" id="bat-dau">
+      <div class="hero-copy">
+        <p class="section-label">Bắt đầu từ những bữa ăn hằng ngày</p>
+        <h1>Ăn đủ, <span>tiết kiệm,</span><br />không bỏ phí nguyên liệu.</h1>
+        <p class="hero-description">Chọn ngân sách, thêm nguyên liệu đang có và nhận gợi ý bữa ăn đơn giản. Bạn sẽ biết mình cần chuẩn bị gì trước khi đi chợ.</p>
+        <div class="hero-actions">
+          <button class="primary-button nav-action" type="button">Bắt đầu lập kế hoạch <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+
+      <aside class="recipe-card" aria-label="Gợi ý bữa tối trong tuần">
+        <!-- Thay phần khung này bằng thẻ img chứa ảnh món ăn thật khi nhóm có tài nguyên. -->
+        <div class="meal-image" role="img" aria-label="Khung ảnh món ăn, có thể thay bằng ảnh thật sau này">
+          <span class="recipe-label">GỢI Ý TRONG TUẦN</span>
+          <span class="image-placeholder-note">Vị trí ảnh món ăn</span>
+          <div class="plate-art" aria-hidden="true"><span></span><i></i><b></b></div>
+        </div>
+        <div class="recipe-content">
+          <p>MÓN ĂN ĐƠN GIẢN</p>
+          <h2>Cơm gà rau củ<br />sốt nhẹ</h2>
+          <div class="recipe-meta"><span>30 phút</span><span>2 người ăn</span><span>Tổng 86.000đ</span></div>
+          <div class="cost-badge"><b>43.000đ</b><small>MỖI PHẦN</small></div>
+        </div>
+      </aside>
+    </section>
+
+  </main>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

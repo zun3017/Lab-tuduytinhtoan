@@ -1,0 +1,77 @@
+77c6210 Tinh gon lai con 1 tinh nang
+50b7720 Sua lai tinh nang theo huong dan
+ccba696 Sua lai giao dien web theo huong dan
+24408ce Them tinh nang de xuat mon an
+326c2ca Lam giao dien trang chu, them vao cac nut tinh nang de cac thanh vien khac phat trien
+a8a29b2  meeting's record 10/18
+2e3f0d0 Upload script from Trung Kien
+6875fbd Merge pull request #26 from PoHD2006/feature/Phuc
+9bf5268 Merge branch 'main' into feature/Phuc
+34755c6 Decleration using AI from Truong Tan Phuc
+67e2b39 Merge pull request #25 from PoHD2006/feature/Dung
+e9d5be2  report on 21/10
+ed9f557 Merge branch 'main' of https://github.com/PoHD2006/Family-guy-private into feature/Phuc
+1093f62 report on 21/10
+09211d6 Merge pull request #24 from PoHD2006/feature/Tri
+693e5ca Merge pull request #21 from PoHD2006/feature/Kien
+e4a2460 Fix loi lan 6
+a3c6aaf Fix loi lan 5
+ed046e6 Fix loi lan 4
+32ed8a3 Fix loi lan 3
+e67d5bf fix loi lan 2
+267239c report on 21/10
+0c660c9 Merge branch 'feature/Kien' of https://github.com/PoHD2006/Family-guy-private into feature/Kien
+5b4d084 Decleration using AI frome Trung Kien
+4a084b6 Decleration using AI from Trung Kien
+210172f chinh loi
+36a1cd1 Fix loi
+a2d3a47 Slide of Tien Dat va Chi Vi
+6ee6e9a Update Declare AI usage
+e64b51b Xoa File Dat push lon
+eb8ee33 Resolve confict
+9813ea8 Khai bao su dung AI
+e4d839b Decleration using AI frome Trung Kien
+e03099c Merge pull request #16 from PoHD2006/feature/Dat-ai-declaration
+8bcbc6a Merge branch 'main' into feature/Dat-ai-declaration
+b3b42b7 Add AI usage declaration for Pham Tien Dat
+0d1a3cd declaration using AI from Tien Dung
+6ba116c declaration using AI from Tien Dung
+8f763aa Add AI usage declaration for TIENDATFITUS
+f263643 Final declaration using AI from Hoang Danh
+8b93042 create 2 new folder Script, Slide and submit my script
+976c109 decleration using AI of Hoang Danh in file Readmeofweek04
+882854a Add folder work in week 04 and file Readmeforweek04
+3e1486a Add Appendix about rule of use AI for EX2
+838158b Add framming of EX4
+5277df5 Add pdf for EX2
+2deb972 Do EX1,2,3 follow the format, Add PDF for Ex1,2
+243113d fixed conflict
+9bc3109 Complete ex1, ex2, ex3
+c11ae25 Final compeletion from Dung
+c52deb3 Merge branch 'main' into feature/Dung
+8b634ec Complete EX2, EX3 from Dung
+43e3851 Complete EX2 from Dat
+14bbc27 Complete EX2, EX3 from Dung
+34a0931 Complete EX2 from Dat
+23d3028 them y tuong ve viec AI ho tro suc khoe cua sv
+6b32317 Them noi dung o muc 3 va dong y bien ban
+e48b254 Cap nhat ten thanh vien Phuc
+ea7827e remove the excess part
+5fba1a6 fixed EX2 and EX3
+9a80872 Add personal proposal
+ef8889b Complete EX2 and EX3
+13dcb93 Complete EX2 from Tri
+3a23489 Complete EX1 from Tri
+47cb09b Add Framming markdown of EX2
+d2952aa Complete EX1 From Dung Ho
+3a5d737 docs: bo sung de xuat du an ca nhan EX3
+42c6360 Merge pull request #2 from PoHD2006/feature/update-info-Tri
+4643f47 Merge branch 'main' into feature/update-info-Tri
+e680101 Merge branch 'main' of https://github.com/PoHD2006/Family-guy-private
+59d898c name
+8e580dc Update lan 2 Tri
+44677e7 Update EX1 and EX3 with Tri info and proposal
+73d64e3 Merge pull request #1 from PoHD2006/feature/Kien
+0fc6108 Ex1 completly
+155fe97 Add the framming of EX1,EX3 completely
+12ea4f7 Add the framming of EX1,EX3

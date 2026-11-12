@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Đề xuất món ăn và giá nấu ăn cho 1 người với định lượng nguyên liệu chi tiết và cách làm." />
+  <title>Đề xuất món ăn | Smart Budget Meal Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="meals.css" />
+</head>
+<body class="meal-site">
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Điều hướng chính">
+      <a class="brand" href="index.html">Smart Budget <b>Meal Planner</b></a>
+      <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <div class="nav-links">
+        <a href="about.html">Giới thiệu</a>
+        <button class="nav-action" type="button">Đăng ký</button>
+        <button class="nav-action" type="button">Đăng nhập</button>
+        <a class="nav-highlight" href="meals.html" aria-current="page">Đề xuất món ăn</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="meal-page container" id="main-planner">
+    <!-- Header trang: Đề xuất món ăn & Giá nấu cho 1 người -->
+    <header class="meal-view-header">
+      <div>
+        <p class="section-label">Gợi ý hôm nay</p>
+        <h1 class="meal-page-title">Đề xuất món ăn</h1>
+        <p class="meal-page-desc">Khám phá 60 món ăn thơm ngon, giá tiền nấu ăn ước tính cho 1 người cùng định lượng nguyên liệu chi tiết (ví dụ: 1 củ cà rốt, 1 quả trứng) và hướng dẫn cách làm.</p>
+      </div>
+      <div class="meal-header-actions">
+        <a class="meal-btn-outline" href="index.html">Về trang chủ ↗</a>
+      </div>
+    </header>
+
+    <!-- Danh sách món ăn đề xuất -->
+    <section class="panel catalog-library-panel" id="catalog-section" aria-labelledby="catalog-title">
+      <div class="catalog-panel-top">
+        <div class="catalog-header-flex">
+          <div>
+            <h2 id="catalog-title">Danh sách món ăn</h2>
+            <p id="catalog-subtitle">Mỗi món đều có hình ảnh minh họa chính xác, giá nấu 1 người, định lượng mua cụ thể và các bước thực hiện.</p>
+          </div>
+          <button type="button" id="toggle-images-btn" class="meal-btn-outline">
+            <span>📷 Ẩn / Hiện ảnh món ăn</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Thanh công cụ tìm kiếm và lọc theo loại món -->
+      <div class="catalog-toolbar">
+        <div class="search-input-wrap">
+          <input type="search" id="dish-search" placeholder="🔍 Tìm tên món hoặc nguyên liệu (thịt gà, cá, nấm, đậu hũ...)" autocomplete="off" />
+        </div>
+        <div class="category-tabs" id="category-tabs">
+          <button class="cat-tab is-active" type="button" data-cat="all">Tất cả (60)</button>
+          <button class="cat-tab" type="button" data-cat="meat">🍖 Món thịt (20)</button>
+          <button class="cat-tab" type="button" data-cat="fish">🐟 Cá &amp; hải sản (20)</button>
+          <button class="cat-tab" type="button" data-cat="vegetarian">🥬 Món chay (20)</button>
+        </div>
+      </div>
+
+      <p id="meal-status" role="status" aria-live="polite">Đang hiển thị 60 món ăn.</p>
+
+      <!-- Empty state khi không có món -->
+      <div id="meal-empty" class="meal-empty" hidden>
+        <div class="meal-empty-icon" aria-hidden="true">🍽️</div>
+        <p class="meal-empty-title">Chưa tìm thấy món phù hợp</p>
+        <p class="meal-empty-hint">Hãy thử đổi từ khóa tìm kiếm hoặc chọn danh mục khác.</p>
+      </div>
+
+      <!-- Lưới card món ăn dạng Grid 2 cột vuông vắn -->
+      <div id="meal-results" class="meal-results"></div>
+
+      <!-- Nút xem thêm -->
+      <div class="catalog-footer">
+        <button id="meal-more" class="meal-more" type="button" hidden>Xem thêm món khác</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+  <script src="meals-data.js"></script>
+  <script src="meals.js"></script>
+</body>
+</html>

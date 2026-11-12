@@ -1,0 +1,529 @@
+/* ========================================================================
+   meals.css — Giao diện trang Đề xuất món ăn theo style của styles.css / about.html
+   Tuân thủ design system trong AGENTS.md:
+   - Font: Arial, Helvetica, sans-serif (không đổi font)
+   - Bảng màu: Chuẩn --ink, --muted, --bright, --paper, --white, --line
+   ======================================================================== */
+
+:root {
+  --meal-action: #06c765;
+  --meal-action-hover: #00a955;
+  --meal-green: #057a3f;
+  --meal-green-hover: #046331;
+  --meal-soft: #edf5ee;
+  --meal-bg: #f5f6f3;
+  --meal-surface: #ffffff;
+  --meal-line: #dedfd9;
+  --meal-text: #24251f;
+  --meal-muted: #65665e;
+  --meal-amber: #805218;
+  --meal-amber-bg: #fff4de;
+  --meal-radius: 14px;
+}
+
+body.meal-site,
+.meal-site,
+.meal-site button,
+.meal-site input,
+.meal-site select,
+.meal-site textarea,
+.meal-site h1,
+.meal-site h2,
+.meal-site h3,
+.meal-site h4,
+.meal-site p,
+.meal-site span,
+.meal-site a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body.meal-site {
+  background: var(--meal-bg);
+  color: var(--meal-text);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.meal-site * {
+  box-sizing: border-box;
+}
+
+/* Header & Navbar */
+.meal-site .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #414149;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.meal-site .navbar {
+  min-height: 68px;
+}
+
+.meal-site .brand {
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-decoration: none;
+}
+
+.meal-site .brand b {
+  color: var(--meal-action);
+}
+
+/* Main Container */
+.meal-page {
+  padding-top: 32px;
+  padding-bottom: 72px;
+}
+
+/* View Header */
+.meal-view-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.meal-page-title {
+  margin: 0 0 8px;
+  font-size: clamp(1.85rem, 3.2vw, 2.45rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  color: var(--meal-text);
+}
+
+.meal-page-desc {
+  max-width: 680px;
+  margin: 0;
+  color: var(--meal-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.meal-header-actions {
+  flex-shrink: 0;
+}
+
+.meal-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1.5px solid var(--meal-line);
+  border-radius: 9px;
+  background: var(--meal-surface);
+  color: var(--meal-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.meal-btn-outline:hover {
+  border-color: var(--meal-green);
+  color: var(--meal-green);
+  background: var(--meal-soft);
+  transform: translateY(-1px);
+}
+
+/* Panel chung */
+.panel {
+  background: var(--meal-surface);
+  border: 1px solid var(--meal-line);
+  border-radius: var(--meal-radius);
+  padding: 28px;
+  box-shadow: 0 4px 18px rgba(36, 37, 31, 0.04);
+}
+
+/* Catalog Top */
+.catalog-panel-top {
+  margin-bottom: 22px;
+}
+
+.catalog-header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+#catalog-title {
+  margin: 0 0 6px;
+  font-size: 1.38rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--meal-text);
+}
+
+#catalog-subtitle {
+  margin: 0;
+  color: var(--meal-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+#toggle-images-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--meal-text);
+  background: var(--meal-surface);
+  border: 1.5px solid var(--meal-line);
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+#toggle-images-btn:hover {
+  background: var(--meal-soft);
+  border-color: var(--meal-green);
+  color: var(--meal-green);
+}
+
+/* Thanh công cụ tìm kiếm và lọc tab */
+.catalog-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.search-input-wrap {
+  flex: 1 1 260px;
+  min-width: 220px;
+}
+
+.search-input-wrap input {
+  width: 100%;
+  padding: 11px 16px;
+  border: 1.5px solid var(--meal-line);
+  border-radius: 9px;
+  background: var(--meal-surface);
+  color: var(--meal-text);
+  font-size: 0.93rem;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.search-input-wrap input:focus {
+  border-color: var(--meal-green);
+  box-shadow: 0 0 0 3px rgba(6, 199, 101, 0.18);
+}
+
+.category-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cat-tab {
+  padding: 10px 16px;
+  border: 1.5px solid var(--meal-line);
+  border-radius: 9px;
+  background: var(--meal-surface);
+  color: var(--meal-muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.cat-tab:hover {
+  border-color: #adb0a5;
+  color: var(--meal-text);
+}
+
+.cat-tab.is-active {
+  background: var(--meal-action);
+  color: #123520;
+  border-color: var(--meal-action);
+}
+
+#meal-status {
+  margin: 0 0 20px;
+  font-size: 0.88rem;
+  color: var(--meal-muted);
+}
+
+/* Empty State */
+.meal-empty {
+  text-align: center;
+  padding: 48px 20px;
+  background: var(--meal-bg);
+  border-radius: 12px;
+  border: 1px dashed var(--meal-line);
+}
+
+.meal-empty-icon {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+}
+
+.meal-empty-title {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--meal-text);
+}
+
+.meal-empty-hint {
+  margin: 0;
+  color: var(--meal-muted);
+  font-size: 0.9rem;
+}
+
+/* LƯỚI CARD MÓN ĂN: 2 CỘT VUÔNG VẮN, ĐỒNG NHẤT */
+.meal-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.meal-result {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--meal-line);
+  border-radius: var(--meal-radius);
+  background: var(--meal-surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.meal-result:hover {
+  border-color: #a4bfa3;
+  box-shadow: 0 8px 24px rgba(5, 122, 63, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Hình ảnh món ăn */
+.guide-dish-visual {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: #eef2ed;
+}
+
+.guide-dish-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.meal-result:hover .guide-dish-visual img {
+  transform: scale(1.03);
+}
+
+.guide-photo-price {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  padding: 6px 12px;
+  border-radius: 7px;
+  color: #123520;
+  background: #ffffff;
+  font-weight: 800;
+  font-size: 0.88rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.guide-photo-note {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #384a3e;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* Khi bấm ẩn ảnh */
+.hide-dish-images .guide-dish-visual {
+  display: none !important;
+}
+
+/* Category Badge */
+.meal-category {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding: 4px 11px;
+  border-radius: 20px;
+  background: var(--meal-soft);
+  color: var(--meal-green);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Tiêu đề món */
+.meal-title {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--meal-text);
+  line-height: 1.28;
+}
+
+/* Giá & Meta */
+.meal-meta {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  color: var(--meal-muted);
+}
+
+.meal-meta strong {
+  color: var(--meal-green);
+  font-size: 1.18rem;
+  font-weight: 800;
+}
+
+/* Khối danh sách nguyên liệu có định lượng cụ thể */
+.meal-ingredients-box {
+  margin: 6px 0 16px;
+  padding: 12px 14px;
+  background: var(--meal-soft);
+  border: 1px solid #d5e5d5;
+  border-radius: 10px;
+}
+
+.ingredients-box-title {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--meal-green);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 800;
+}
+
+.meal-ingredients-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meal-ingredients-chips li {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 11px;
+  background: #ffffff;
+  border: 1px solid #c8dbc8;
+  border-radius: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--meal-text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+/* Details cách làm */
+.meal-details {
+  margin-top: auto;
+  border-top: 1px solid var(--meal-line);
+  padding-top: 12px;
+}
+
+.meal-details summary {
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--meal-green);
+  user-select: none;
+  outline: none;
+  transition: color 0.18s ease;
+}
+
+.meal-details summary:hover {
+  color: var(--meal-green-hover);
+}
+
+.meal-details ol {
+  margin: 12px 0 4px;
+  padding-left: 20px;
+  color: var(--meal-text);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.meal-details li {
+  margin-bottom: 6px;
+}
+
+/* Nút xem thêm */
+.catalog-footer {
+  text-align: center;
+  margin-top: 28px;
+}
+
+.meal-more {
+  padding: 12px 28px;
+  border: 1.5px solid var(--meal-line);
+  border-radius: 9px;
+  background: var(--meal-surface);
+  color: var(--meal-text);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.meal-more:hover {
+  background: var(--meal-soft);
+  border-color: var(--meal-green);
+  color: var(--meal-green);
+  transform: translateY(-1px);
+}
+
+/* ========================================================================
+   RESPONSIVE
+   ======================================================================== */
+@media (max-width: 830px) {
+  .meal-results {
+    grid-template-columns: 1fr;
+  }
+  .catalog-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-input-wrap {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 680px) {
+  .meal-view-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .panel {
+    padding: 20px 16px;
+  }
+  .meal-result {
+    padding: 18px 16px;
+  }
+}
