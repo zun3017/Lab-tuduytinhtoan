@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Google Calendar style for Tutors - Recurrence Timetable · ZunTutor Lab07</title>
+<link href="favicon.ico" rel="shortcut icon"/>
+<link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="img/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="manifest.json" rel="manifest"/>
+<meta content="#2563EB" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="ZunTutor" name="apple-mobile-web-app-title"/>
+<link href="img/zuntutor_app_icon.png" rel="apple-touch-icon"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="192x192"/>
+<link href="img/zuntutor_app_icon_512.png" rel="apple-touch-icon" sizes="512x512"/>
+<link href="css/themes.css" rel="stylesheet"/>
+<link href="css/tutor-calendar.css" rel="stylesheet"/>
+<link href="css/mobile.css" rel="stylesheet"/>
+<link href="/vendor/inter.css" rel="stylesheet"/><link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/><link href="/css/lab-portals.css" rel="stylesheet"/></head>
+<body class="lab-private" data-page="tutor-calendar">
+<div class="container">
+<div class="calendar-header-custom">
+<div class="cal-header-left">
+<a class="btn-back-dashboard" href="tutor-dashboard.html" title="Quay lại Dashboard">
+<i class="fa-solid fa-arrow-left"></i>
+<span class="btn-back-text">Quay lại Dashboard</span>
+</a>
+<div class="cal-nav-group">
+<button class="cal-nav-btn" id="btnCalPrev" title="Tháng trước" type="button">
+<i class="fa-solid fa-chevron-left"></i>
+</button>
+<button class="cal-nav-btn" id="btnCalNext" title="Tháng sau" type="button">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+<button class="cal-today-btn" id="btnCalToday" title="Về hôm nay" type="button">
+                        Hôm nay
+                    </button>
+</div>
+<div class="cal-title-block">
+<h2 class="calendar-month-title" id="calendarHeaderTitle"><span class="cal-title-main">Tháng 9</span><span class="cal-title-year">2026</span></h2>
+</div>
+</div>
+<div class="cal-header-right">
+<div class="cal-view-pills has-indicator">
+<span class="cal-view-indicator" id="calViewIndicator"></span>
+<button class="cal-view-pill active" id="viewPillMonth" type="button"><i class="fa-solid fa-calendar"></i><span>Tháng</span></button>
+<button class="cal-view-pill" id="viewPillWeek" type="button"><i class="fa-solid fa-calendar-week"></i><span>Tuần</span></button>
+<button class="cal-view-pill" id="viewPillDay" type="button"><i class="fa-solid fa-calendar-day"></i><span>Ngày</span></button>
+</div>
+<button class="cal-sheet-toggle-btn" id="scheduleList" title="Xem bảng phân bổ lịch dạy" type="button">
+<i class="fa-solid fa-table-list"></i>
+<span class="cal-sheet-btn-text">Lịch tóm tắt</span>
+</button>
+</div>
+</div>
+</div>
+<div class="calendar-wrapper">
+<div id="calendar"></div>
+</div>
+<div class="calendar-bottom-bar" id="calendarBottomBar">
+<div class="cal-legend-list" id="calStudentLegendList"></div>
+<div class="cal-status-bar" id="calMonthStatusBar">
+<i class="fa-solid fa-chart-pie" style="color: #C05E8E;"></i>
+<span id="calStatusText">0 buổi trong tháng · 0 học sinh</span>
+</div>
+</div>
+<div class="sheet-panel" id="sheetPanel">
+  <div class="sheet-panel-header">
+    <div class="sheet-title">
+      <button type="button" class="btn-sheet-toggle-header" id="btnCloseSheetHeader"><i class="fa-solid fa-xmark"></i> Đóng lịch tóm tắt</button>
+      <i class="fa-solid fa-table-list"></i> Dữ liệu lịch dạy từ SQLite
+    </div>
+    <button type="button" class="btn-close-panel" id="btnCloseSheetChevron"><i class="fa-solid fa-chevron-down"></i></button>
+  </div>
+  <div class="sheet-wrapper">
+    <table class="sheet-table">
+      <thead>
+        <tr>
+          <th style="text-align: left; width: 140px;">Tên Học Sinh</th>
+          <th>Thứ Hai</th><th>Thứ Ba</th><th>Thứ Tư</th><th>Thứ Năm</th><th>Thứ Sáu</th><th>Thứ Bảy</th><th>Chủ Nhật</th>
+        </tr>
+      </thead>
+      <tbody id="sheetDataTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="popoverBackdrop" class="popover-backdrop"></div>
+<div id="eventDetailPopover">
+  <div class="bottom-sheet-handle"></div>
+  <div class="detail-header-actions">
+    <div class="detail-actions-left">
+      <button type="button" class="btn-detail-action" id="btnDetailEdit" title="Sửa ca học"><i class="fa-solid fa-pen"></i></button>
+      <button type="button" class="btn-detail-action" id="btnDetailDelete" title="Xóa ca học"><i class="fa-solid fa-trash-can"></i></button>
+    </div>
+    <button type="button" class="btn-close" id="btnDetailClose"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="detail-content">
+    <div class="detail-title-wrap">
+      <span class="detail-color-dot" id="detailColorDot"></span>
+      <h3 id="detailTitle">Tên Học Sinh</h3>
+    </div>
+    <div class="detail-info-item">
+      <i class="fa-regular fa-clock"></i>
+      <div>
+        <div id="detailDateTime">Ngày giờ hiển thị</div>
+        <div id="detailRecurrence" class="detail-recurrence-info">Tần suất lặp</div>
+      </div>
+    </div>
+    <div class="detail-info-item" id="detailNotesContainer">
+      <i class="fa-regular fa-note-sticky"></i>
+      <div id="detailNotes">Ghi chú ca học</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="eventModalOverlay">
+  <div class="calendar-modal" id="calendarModal">
+    <div class="modal-header">
+      <h3 id="modalTitleText"><i class="fa-solid fa-circle-info"></i> Thiết lập ca dạy</h3>
+      <button type="button" class="btn-close" id="btnCalModalClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <form id="eventForm">
+      <input type="hidden" id="eventScheduleId" value="">
+      <div class="form-group">
+        <label for="eventStudent">Học sinh</label>
+        <select class="form-control" id="eventStudent"></select>
+      </div>
+      <div class="form-group">
+        <label for="eventRepeatMode">Chế độ lặp lại</label>
+        <select class="form-control" id="eventRepeatMode" required>
+          <option value="weekly">Lặp hàng tuần</option>
+          <option value="once">Không lặp (Chỉ học 1 lần)</option>
+        </select>
+      </div>
+      <div class="form-group" id="daySelectGroup">
+        <label for="eventDayOfWeek">Chọn ngày dạy trong tuần</label>
+        <select class="form-control" id="eventDayOfWeek">
+          <option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option>
+          <option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="7">Chủ Nhật</option>
+        </select>
+      </div>
+      <div class="form-group" id="specificDateGroup" style="display:none;">
+        <label for="eventSpecificDate">Ngày diễn ra (Chỉ học 1 lần)</label>
+        <input type="date" class="form-control" id="eventSpecificDate">
+      </div>
+      <div class="row-grid">
+        <div class="form-group"><label for="eventStartTime">Giờ học (Bắt đầu)</label><input type="time" class="form-control" id="eventStartTime" required></div>
+        <div class="form-group"><label for="eventEndTime">Giờ học (Kết thúc)</label><input type="time" class="form-control" id="eventEndTime" required></div>
+      </div>
+      <div class="form-group"><label for="eventSubject">Môn học</label><input type="text" class="form-control" id="eventSubject" placeholder="Ví dụ: Toán, Khoa học..."></div>
+      <div class="form-group"><label for="eventNotes">Ghi chú ca học (Tùy chọn)</label><input type="text" class="form-control" id="eventNotes" placeholder="Ví dụ: Ôn và sửa bài cuối buổi"></div>
+      <div class="form-group color-picker-section">
+        <label>Màu sắc</label>
+        <div class="color-swatches" id="colorSwatches"></div>
+        <input type="hidden" id="eventColor" value="#2563eb">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-delete" id="btnDeleteEvent" style="display:none;">Xóa lịch</button>
+        <button type="button" class="btn btn-cancel" id="btnCancelEvent">Hủy</button>
+        <button type="submit" class="btn btn-save">Lưu lại</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<button aria-label="Thêm lịch dạy" class="fab-add" data-original-action="openAddEventModal"><i class="fa-solid fa-plus"></i></button>
+<script defer="" src="/vendor/fullcalendar.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/lang-all.js"></script><script defer="" src="/js/calendar.js"></script></body>
+</html>

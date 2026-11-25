@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Hệ thống Tra cứu Học tập · ZunTutor Lab07</title>
+<link href="favicon.ico" rel="shortcut icon"/>
+<link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="img/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="manifest.json" rel="manifest"/>
+<meta content="#2563EB" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="ZunTutor" name="apple-mobile-web-app-title"/>
+<link href="img/zuntutor_app_icon.png" rel="apple-touch-icon"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="192x192"/>
+<link href="img/zuntutor_app_icon_512.png" rel="apple-touch-icon" sizes="512x512"/>
+<link href="css/themes.css" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/tutor-dashboard.css" rel="stylesheet"/>
+<link href="css/mobile.css" rel="stylesheet"/>
+<link href="/vendor/inter.css" rel="stylesheet"/><link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/><link href="/css/lab-portals.css" rel="stylesheet"/></head>
+<body class="lab-private" data-page="tutor-dashboard">
+<div class="tutor-app-layout" id="tutorDashboardBox">
+<div class="sidebar-overlay" id="tutorSidebarOverlay"></div>
+<aside class="tutor-sidebar" id="tutorSidebar" style="overflow: visible !important;">
+<button class="sidebar-collapse-btn" id="sidebarCollapseBtn" style="z-index: 1005 !important;" title="Thu gọn menu" type="button">
+<i class="fa-solid fa-chevron-left" id="sidebarCollapseIcon"></i>
+</button>
+<div class="tutor-sidebar-brand">
+<div data-original-action="openTutorAccountModal" style="display: flex; align-items: center; gap: 12px; min-width: 0; cursor: pointer;" title="Cài đặt tài khoản của tôi">
+<div class="sidebar-avatar" id="sidebarAvatarContainer" style="overflow: hidden; padding: 0; display: flex; align-items: center; justify-content: center; position: relative;">
+<img alt="Avatar" id="sidebarAvatarImg" src="" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: none;"/>
+<i class="fa-solid fa-chalkboard-user" id="sidebarAvatarIcon"></i>
+</div>
+<div class="sidebar-user-info">
+<div class="sidebar-user-title">Gia Sư 4.0</div>
+<div class="sidebar-user-name" id="sidebarTutorName">Gia sư</div>
+<span class="badge-locked-pill active" id="sidebarTutorStatusBadge" style="display:none"></span>
+</div>
+</div>
+<button aria-label="Đóng menu" class="sidebar-mobile-close-btn" data-original-action="toggleTutorMobileSidebar" title="Đóng menu" type="button">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<nav class="tutor-sidebar-nav">
+<button class="sidebar-nav-item active" data-original-action="switchTutorNavTab" data-tab="overview" data-title="Tổng quan" type="button">
+<svg class="nav-icon-svg" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="18">
+<rect height="19" rx="3.5" width="16" x="4" y="2.5"></rect>
+<line x1="8" x2="16" y1="7.5" y2="7.5"></line>
+<line x1="8" x2="13.5" y1="11.5" y2="11.5"></line>
+<line x1="8" x2="10.5" y1="15.5" y2="15.5"></line>
+<path d="M13.5 15.5l1.8 2 3.7-4"></path>
+</svg>
+<span>Tổng quan</span>
+</button>
+<button class="sidebar-nav-item" data-original-action="switchTutorNavTab" data-tab="reports" data-title="Báo cáo" type="button">
+<i class="fa-solid fa-file-image"></i>
+<span>Báo cáo</span>
+</button>
+<button class="sidebar-nav-item" data-original-action="switchTutorNavTab" data-tab="diary" data-title="Nhật ký buổi học" type="button">
+<i class="fa-solid fa-book-open"></i>
+<span>Nhật ký buổi học</span>
+</button>
+<button class="sidebar-nav-item" data-original-action="switchTutorNavTab" data-tab="calendar" data-title="Lịch dạy" type="button">
+<i class="fa-solid fa-calendar-days"></i>
+<span>Lịch dạy</span>
+</button>
+<button class="sidebar-nav-item" data-original-action="switchTutorNavTab" data-tab="students" data-title="Học sinh" type="button">
+<i class="fa-solid fa-user-graduate"></i>
+<span>Học sinh</span>
+</button>
+<button class="sidebar-nav-item" data-original-action="switchTutorNavTab" data-tab="tuition" data-title="Học phí" type="button">
+<i class="fa-solid fa-money-bill-wave"></i>
+<span>Học phí</span>
+</button>
+</nav>
+<div class="tutor-sidebar-footer">
+<button class="sidebar-theme-btn" data-title="Giao diện" id="sidebarBtnTheme" title="Đổi chủ đề giao diện" type="button">
+<i class="fa-solid fa-palette"></i>
+<span>Giao diện</span>
+</button>
+<button class="sidebar-footer-btn" data-title="Tài khoản" id="sidebarBtnAccount" title="Cài đặt tài khoản" type="button">
+<i class="fa-solid fa-user-gear"></i>
+<span>Tài khoản</span>
+</button>
+<button class="sidebar-footer-btn" data-title="Cài đặt" id="sidebarBtnSettings" title="Cài đặt hệ thống" type="button">
+<i class="fa-solid fa-gear"></i>
+<span>Cài đặt</span>
+</button>
+<button class="sidebar-footer-btn logout" data-original-action="quayLai" data-title="Đăng xuất" title="Đăng xuất" type="button">
+<i class="fa-solid fa-arrow-right-from-bracket"></i>
+<span>Đăng xuất</span>
+</button>
+</div>
+</aside>
+<main class="tutor-main-content" id="tutorMainContent">
+<header class="tutor-mobile-header" id="tutorMobileHeader">
+<div class="mobile-header-left">
+<button aria-label="Mở menu" class="tutor-mobile-menu-btn" data-original-action="toggleTutorMobileSidebar" title="Mở danh mục" type="button">
+<i class="fa-solid fa-bars"></i>
+</button>
+<div class="mobile-header-brand">
+<span class="mobile-brand-title">Gia Sư 4.0</span>
+<span class="mobile-brand-name" id="mobileHeaderTutorName">Gia sư</span>
+<span class="badge-locked-pill active" id="mobileHeaderTutorStatusBadge" style="display:none"></span>
+</div>
+</div>
+<div class="mobile-header-actions">
+<button aria-label="Đổi giao diện" class="mobile-action-btn theme-btn" id="mobileBtnTheme" title="Đổi giao diện" type="button">
+<i class="fa-solid fa-palette"></i>
+</button>
+<button aria-label="Cài đặt" class="mobile-action-btn settings-btn" id="mobileBtnSettings" title="Cài đặt" type="button">
+<i class="fa-solid fa-gear"></i>
+</button>
+<button aria-label="Tài khoản" class="mobile-action-btn account-btn" id="mobileBtnAccount" title="Cài đặt tài khoản" type="button">
+<i class="fa-solid fa-user-gear"></i>
+</button>
+<button aria-label="Đăng xuất" class="mobile-action-btn logout-btn" data-original-action="quayLai" title="Đăng xuất" type="button">
+<i class="fa-solid fa-arrow-right-from-bracket"></i>
+</button>
+</div>
+</header>
+<div class="tutor-header" style="display: none;">
+<div>
+<h2 id="tutorNameDisplay">Xin chào, Gia sư</h2>
+<p>Tổng quan hệ thống giảng dạy</p>
+</div>
+</div>
+<div class="tutor-section" id="tutorSectionOverview" style="display: block;">
+<div class="overview-top-bar" id="overviewTopBar">
+<div class="overview-top-title">
+<h2>
+<svg class="overview-title-svg" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" style="color: var(--color-primary); vertical-align: -3px; margin-right: 6px; display: inline-block;" viewbox="0 0 24 24" width="22">
+<rect height="19" rx="3.5" width="16" x="4" y="2.5"></rect>
+<line x1="8" x2="16" y1="7.5" y2="7.5"></line>
+<line x1="8" x2="13.5" y1="11.5" y2="11.5"></line>
+<line x1="8" x2="10.5" y1="15.5" y2="15.5"></line>
+<path d="M13.5 15.5l1.8 2 3.7-4"></path>
+</svg>
+<span>Tổng quan</span>
+</h2>
+<p>Tổng quan hệ thống giảng dạy &amp; theo dõi hiệu suất</p>
+</div>
+<div class="month-selector-widget" id="tutorOverviewMonthSelector">
+<button class="month-nav-btn" id="overviewPrevMonthBtn" title="Tháng trước" type="button">
+<i class="fa-solid fa-chevron-left"></i>
+</button>
+<span id="overviewMonthDisplay">Tháng 10/2026</span>
+<button class="month-nav-btn" disabled="" id="overviewNextMonthBtn" title="Tháng sau" type="button">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+</div>
+</div>
+<div class="tutor-kpi-grid reveal-stagger" id="tutorKpiGrid">
+<div class="tutor-kpi-card">
+<div class="kpi-card-top">
+<span class="kpi-label">Học sinh đang dạy</span>
+<div class="kpi-icon icon-purple"><i class="fa-solid fa-user-graduate"></i></div>
+</div>
+<div class="kpi-value text-purple" id="kpiStudentCount">0</div>
+<div class="kpi-subtext"><i class="fa-solid fa-arrow-trend-up"></i> Đang theo học</div>
+</div>
+<div class="tutor-kpi-card">
+<div class="kpi-card-top">
+<span class="kpi-label" id="kpiSessionLabel">Buổi dạy tháng này</span>
+<div class="kpi-icon icon-green"><i class="fa-solid fa-calendar-check"></i></div>
+</div>
+<div class="kpi-value text-green" id="kpiSessionCount">0</div>
+<div class="kpi-subtext"><i class="fa-solid fa-circle-check"></i> Đã hoàn thành</div>
+</div>
+<div class="tutor-kpi-card">
+<div class="kpi-card-top">
+<span class="kpi-label">Tổng giờ tích lũy</span>
+<div class="kpi-icon icon-cyan"><i class="fa-solid fa-clock"></i></div>
+</div>
+<div class="kpi-value text-cyan" id="kpiTotalHours">0h</div>
+<div class="kpi-subtext"><i class="fa-solid fa-hourglass-half"></i> Thời lượng dạy</div>
+</div>
+<div class="tutor-kpi-card">
+<div class="kpi-card-top">
+<span class="kpi-label" id="kpiTuitionLabel">Học phí tháng này</span>
+<div class="kpi-icon icon-amber"><i class="fa-solid fa-money-bill-wave"></i></div>
+</div>
+<div class="kpi-value text-amber" id="kpiTuitionTotal">0đ</div>
+<div class="kpi-subtext"><i class="fa-solid fa-coins"></i> Tổng học phí</div>
+</div>
+</div>
+<div class="upcoming-schedule-box reveal" id="tutorUpcomingScheduleBox">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+<h3 style="color: var(--text-heading, var(--text-primary)); font-size: 16px; margin: 0; display: flex; align-items: center; gap: 8px;">
+<i class="fa-solid fa-calendar-check" style="color: var(--color-primary);"></i>
+<span id="upcomingScheduleTitleText">Lịch dạy sắp tới</span>
+</h3>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+<span id="upcomingScheduleSubtext" style="font-size: 12px; color: var(--text-secondary);"><i class="fa-solid fa-bolt" style="color: var(--color-primary);"></i> Hôm nay &amp; Ngày mai</span>
+<button class="upcoming-all-schedule-btn" data-original-action="openTutorCalendarTab" style="padding: 5px 12px; font-size: 12px; font-weight: 600; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background: var(--nav-active-bg); border: 1px solid var(--border-color); color: var(--nav-active-text); transition: all 0.2s ease; cursor: pointer;" type="button">
+<i class="fa-regular fa-calendar-days" style="color: var(--color-primary);"></i> Xem toàn bộ lịch dạy
+                        </button>
+</div>
+</div>
+<div class="upcoming-days-grid" id="tutorUpcomingDaysGrid">
+<div class="upcoming-day-column" id="upcomingTodayCol">
+<div class="upcoming-day-header">
+<span id="upcomingTodayHeaderTitle"><i class="fa-solid fa-sun"></i> Hôm nay</span>
+<span id="upcomingTodayCountBadge" style="font-size: 11px; opacity: 0.8;">0 buổi</span>
+</div>
+<div class="upcoming-items-list" id="upcomingTodayList">
+</div>
+</div>
+<div class="upcoming-day-column" id="upcomingTomorrowCol">
+<div class="upcoming-day-header">
+<span id="upcomingTomorrowHeaderTitle"><i class="fa-solid fa-calendar-day"></i> Ngày mai</span>
+<span id="upcomingTomorrowCountBadge" style="font-size: 11px; opacity: 0.8;">0 buổi</span>
+</div>
+<div class="upcoming-items-list" id="upcomingTomorrowList">
+</div>
+</div>
+</div>
+</div>
+<div class="overview-charts-grid reveal" id="overviewChartsGrid">
+<div class="overview-chart-box" id="revenueBarChartBox">
+<div style="margin-bottom: 10px;">
+<h3 class="overview-chart-title" id="revenueChartTitle" style="font-size: 16px; font-weight: 700; color: var(--text-heading, var(--text-primary)); margin: 0 0 4px 0;">
+                            Doanh thu 12 tháng
+                        </h3>
+<div class="revenue-big-total" id="revenuePeriodTotal" style="color: var(--text-primary); font-size: 26px; font-weight: 800; line-height: 1.2;">
+                            0 đ
+                        </div>
+</div>
+<div class="overview-chart-filters" style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+<select class="chart-filter-select-img2" id="revenuePeriodFilter" title="Khoảng thời gian">
+<option selected="" value="12">12 tháng</option>
+<option value="6">6 tháng</option>
+<option value="3">3 tháng</option>
+</select>
+<select class="chart-filter-select-img2" id="revenueYearFilter" title="Năm">
+<option selected="" value="2026">Năm 2026</option>
+<option value="2025">Năm 2025</option>
+</select>
+</div>
+<div class="chart-canvas-container" style="position: relative; height: 230px; width: 100%;">
+<canvas id="revenueBarChartCanvas"></canvas>
+</div>
+</div>
+<div class="overview-chart-box" id="studentRevenueDonutBox">
+<div class="overview-chart-header">
+<div>
+<h3 class="overview-chart-title" id="studentRevenueTitle">
+<i class="fa-solid fa-chart-pie" style="color: #FFD23F;"></i>
+<span>Doanh thu theo học sinh</span>
+</h3>
+<span class="revenue-big-subtext" id="studentRevenueSubtitle">Phân bổ doanh thu tháng này</span>
+</div>
+<div class="overview-chart-filters">
+<select class="chart-filter-select" id="studentRevenueMonthFilter" title="Chọn tháng">
+<option selected="" value="10/2026">Tháng 10/2026</option>
+<option value="9/2026">Tháng 9/2026</option>
+<option value="8/2026">Tháng 8/2026</option>
+<option value="7/2026">Tháng 7/2026</option>
+<option value="6/2026">Tháng 6/2026</option>
+<option value="5/2026">Tháng 5/2026</option>
+</select>
+</div>
+</div>
+<div class="student-revenue-body">
+<div class="student-donut-wrap">
+<div class="student-donut-canvas-container">
+<canvas id="studentRevenueDonutCanvas"></canvas>
+<div class="donut-center-total" id="studentDonutCenterTotal">
+<span class="donut-center-label">Tổng thu</span>
+<span class="donut-center-value" id="studentDonutTotalVal">0đ</span>
+</div>
+</div>
+</div>
+<div class="student-revenue-list" id="studentRevenueList">
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-section reveal">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+<h3 style="margin: 0; display: flex; align-items: center; gap: 8px;"><i class="fa-regular fa-calendar-alt" style="color: var(--color-primary);"></i> Thời khóa biểu tổng hợp</h3>
+<button class="modal-btn modal-btn-primary" data-original-action="openTutorCalendarTab" style="width: auto; padding: 8px 18px; background: var(--btn-bg); color: var(--btn-text); font-weight: bold; border-radius: 20px; display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow-primary); text-decoration: none; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer;" type="button">
+<i class="fa-solid fa-calendar-days"></i> Quản lý &amp; Tạo thời khóa biểu
+                </button>
+</div>
+<div class="table-wrapper desktop-table-view" style="margin-top: 10px; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px;">
+<table id="tutorScheduleTable" style="min-width: 700px; width: 100%; border-collapse: collapse;">
+<thead>
+<tr>
+<th style="text-align: left; padding: 12px 14px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Học sinh</th>
+<th style="text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Thứ 2</th>
+<th style="text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Thứ 3</th>
+<th style="text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Thứ 4</th>
+<th style="text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Thứ 5</th>
+<th style="text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Thứ 6</th>
+<th style="text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Thứ 7</th>
+<th style="text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">CN</th>
+<th style="text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700; width: 50px;">Sửa</th>
+</tr>
+</thead>
+<tbody>
+<tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 20px;">Đang tải thời khóa biểu...</td></tr>
+</tbody>
+</table>
+</div>
+<div class="mobile-cards-view" id="tutorScheduleMobile" style="margin-top: 10px;">
+<div style="text-align: center; color: var(--text-muted); padding: 15px;">Đang tải thời khóa biểu...</div>
+</div>
+</div>
+</div>
+<div class="tutor-section" id="tutorSectionReports" style="display: none;"></div>
+<div class="tutor-section" id="tutorSectionDiary" style="display: none;"></div>
+<div class="tutor-section" id="tutorSectionCalendar" style="display: none; width: 100%; height: calc(100vh - 28px); min-height: 560px; flex: 1; box-sizing: border-box;">
+<div class="calendar-embed-wrapper" style="width: 100%; height: 100%; min-height: 560px; flex: 1; background: var(--bg-card, #FFFFFF); border: 1px solid var(--border-card, #E2E8F0); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-card, 0 4px 16px rgba(0,0,0,0.06)); display: flex; flex-direction: column;">
+<iframe id="tutorCalendarIframe" loading="lazy" style="width:100%;height:100%;border:0" title="Lịch dạy"></iframe>
+</div>
+</div>
+<div class="tutor-section" id="tutorSectionStudents" style="display: none;">
+<div class="students-toolbar reveal">
+<div class="students-toolbar-title">
+<h3 style="color: var(--text-primary); font-size: 18px; margin: 0; display: flex; align-items: center; gap: 8px;">
+<i class="fa-solid fa-user-graduate" style="color: var(--color-primary);"></i>
+<span>Danh sách học sinh</span>
+</h3>
+<p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0 0;">Theo dõi tiến độ, lịch cố định, tỷ lệ chuyên cần và quản lý từng học sinh</p>
+</div>
+<div class="students-toolbar-actions">
+<button class="btn-student-action btn-add-student" data-original-action="openAddStudentModal" type="button">
+<i class="fa-solid fa-user-plus"></i>
+<span>Thêm học sinh</span>
+</button>
+<button class="btn-student-action btn-trash-student" data-original-action="openTrashModal" title="Thùng rác học sinh" type="button">
+<i class="fa-solid fa-trash-can"></i>
+</button>
+</div>
+</div>
+<div class="students-cards-grid reveal-stagger" id="tutorStudentsGrid">
+</div>
+<div class="student-buttons-container" id="tutorStudentsList" style="display: none;">
+</div>
+</div>
+<div class="tutor-section" id="tutorSectionTuition" style="display: none;">
+<div class="tuition-toolbar reveal">
+<div class="tuition-toolbar-title">
+<h3 style="color: var(--text-heading, var(--text-primary)); font-size: 18px; margin: 0; display: flex; align-items: center; gap: 8px;">
+<i class="fa-solid fa-money-bill-wave" style="color: #10B981;"></i>
+<span>Quản lý học phí &amp; Thu nhập</span>
+</h3>
+<p style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0 0;">Theo dõi tổng thu nhập, tình trạng đóng học phí từng em và xuất hóa đơn phiếu học tập</p>
+</div>
+<div class="tuition-filters">
+<div class="tuition-filter-item custom-dropdown-wrap" id="tuitionMonthDropdownWrap"><input aria-label="Tháng học phí" id="tuitionMonth" type="month"/></div>
+</div>
+</div>
+<div class="tuition-banner-grid reveal-stagger">
+<div class="tuition-banner-card">
+<div class="tuition-banner-top">
+<span class="tuition-banner-lbl">Tổng thu dự kiến</span>
+<div class="tuition-banner-icon icon-purple"><i class="fa-solid fa-calculator"></i></div>
+</div>
+<div class="tuition-banner-val text-purple" id="tuitionTotalExpected">0đ</div>
+<div class="tuition-banner-sub"><i class="fa-solid fa-chart-line"></i> Số buổi × Đơn giá</div>
+</div>
+<div class="tuition-banner-card">
+<div class="tuition-banner-top">
+<span class="tuition-banner-lbl">Đã thu</span>
+<div class="tuition-banner-icon icon-green"><i class="fa-solid fa-circle-check"></i></div>
+</div>
+<div class="tuition-banner-val text-green" id="tuitionTotalCollected">0đ</div>
+<div class="tuition-banner-sub"><i class="fa-solid fa-circle-check"></i> Đã thanh toán thành công</div>
+</div>
+<div class="tuition-banner-card">
+<div class="tuition-banner-top">
+<span class="tuition-banner-lbl">Còn phải thu</span>
+<div class="tuition-banner-icon icon-amber"><i class="fa-solid fa-clock-rotate-left"></i></div>
+</div>
+<div class="tuition-banner-val text-amber" id="tuitionTotalPending">0đ</div>
+<div class="tuition-banner-sub"><i class="fa-solid fa-triangle-exclamation"></i> Chưa hoàn tất thanh toán</div>
+</div>
+</div>
+<div class="table-wrapper desktop-table-view reveal" style="margin-top: 15px; border-radius: 16px;">
+<table id="tuitionTable" style="width: 100%; border-collapse: collapse;">
+<thead>
+<tr>
+<th style="width: 200px; text-align: left; padding: 12px 14px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Học sinh</th>
+<th style="width: 110px; text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Số buổi</th>
+<th style="width: 130px; text-align: right; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Đơn giá/buổi</th>
+<th style="width: 140px; text-align: right; padding: 12px 14px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Tổng tiền</th>
+<th style="width: 140px; text-align: center; padding: 12px 10px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Trạng thái</th>
+<th style="width: 140px; text-align: center; padding: 12px 14px; background: var(--nav-active-bg); color: var(--text-primary); font-weight: 700;">Hóa đơn</th>
+</tr>
+</thead>
+<tbody id="tuitionTableBody">
+<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 25px;">Đang tải danh sách học phí...</td></tr>
+</tbody>
+</table>
+</div>
+<div class="mobile-cards-view" id="tuitionMobileList" style="margin-top: 15px;">
+<div style="text-align: center; color: var(--text-muted); padding: 20px;">Đang tải danh sách học phí...</div>
+</div>
+</div>
+</main>
+<nav aria-label="Điều hướng nhanh" class="zt-bottom-nav" id="ztBottomNav">
+<button class="zt-bnav-item active" data-original-action="ztBottomNavGo" data-tab="overview" type="button">
+<i class="fa-solid fa-house"></i><span>Tổng quan</span>
+</button>
+<button class="zt-bnav-item" data-original-action="ztBottomNavGo" data-tab="calendar" type="button">
+<i class="fa-solid fa-calendar-days"></i><span>Lịch</span>
+</button>
+<button class="zt-bnav-item" data-original-action="ztBottomNavGo" data-tab="students" type="button">
+<i class="fa-solid fa-user-graduate"></i><span>Học sinh</span>
+</button>
+<button class="zt-bnav-item" data-original-action="ztBottomNavGo" data-tab="tuition" type="button">
+<i class="fa-solid fa-money-bill-wave"></i><span>Học phí</span>
+</button>
+<button class="zt-bnav-item" data-original-action="ztBottomNavGo" data-tab="more" type="button">
+<i class="fa-solid fa-ellipsis"></i><span>Thêm</span>
+</button>
+</nav>
+</div>
+<script defer="" src="/vendor/html2canvas.min.js"></script><script defer="" src="/vendor/chart.umd.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/lang-all.js"></script><script defer="" src="/js/tutor.js"></script></body>
+</html>

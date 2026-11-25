@@ -1,0 +1,20 @@
+Bep Sinh Vien | commit cua zun3017 lien quan den ma nguon
+Snapshot: fa856047b899eb5de7404f224c0bf9d899edb842
+
+fa856047b899eb5de7404f224c0bf9d899edb842 | 2026-11-18 | zun3017 | Them tinh nang Kham pha mon an va them mot vai tinh nang vao tong qua
+3cdf6b23a91af8f17efcde4d292a35197d5d0dd3 | 2026-11-18 | zun3017 | cap nhat file progess
+12c79971885544ee36058fb11db4ecd6ffca995d | 2026-11-18 | zun3017 | Tich hop policy de xuat Kien voi API va thiet lap Vi
+1e5fd0f95d6005841af1f68e5e6f6c1ed46651b0 | 2026-11-18 | zun3017 |  sua filter va them du lieu ao cho tai khoan demo
+5e3a6f6c6ad5ded8cfb1e107254609b684f11a96 | 2026-11-18 | zun3017 | Gop nhanh cua Danh va them du lieu demo, file huong dan lam nhom
+d9f469e04ea5dba52bb49da200f1c932cf1ba458 | 2026-11-18 | zun3017 | Gop ngan sach Danh va mua theo chu ky 3 ngay
+9054cc4fc9d4eef27a6f0210b9c4075cf865beda | 2026-11-17 | zun3017 | gop xong nhanh cua Tri
+5ad3038f1533adbc889bf1ac06908f7ca0c910d5 | 2026-11-17 | zun3017 | Hoan tac gop Kien, giu ban Vi Tri Phuc
+4e8cb9925df85fc771e8263d016b08dfba07a665 | 2026-11-17 | zun3017 | Gop thuat toan Kien voi thiet lap Vi va bo loc Tri
+bc96d5f19ea3f89477967b9db86b40902d929a6e | 2026-11-17 | zun3017 | Gop tinh nang loc nguyen lieu chinh phu cua Tri
+a870c1c7b8c9646b32fa0e34c2809d0e3260c938 | 2026-11-17 | zun3017 | Gop nhanh Vi va Phuc xong
+26529ff1a1b132991e770c86842ca56f7396aaf2 | 2026-11-17 | zun3017 | refactor: use Vi planning flow with SQLite storage
+6efd1f69b24de84ccd046a64ad53b2713b7e2240 | 2026-11-17 | zun3017 | Merge feature/nguyenchivi into test_branch_Dung_Vi
+534b31c67938f5d0d9e1d134f00a4b4bc8359d5c | 2026-11-17 | zun3017 | Merge pull request #43 from PoHD2006/feature/Phuc
+95082c92c9c2fd0e5cd5045cdc4aed980172da64 | 2026-11-17 | zun3017 | them database moi
+3dad53e54f8edaf9fe4784b2867f9960ba34fd92 | 2026-11-16 | zun3017 | them database món ăn và tai khoan demo lam nhom
+35ffe43759a8f2bae199a9ebb0a6fd000dc11e1e | 2026-11-11 | zun3017 | Khung web moi

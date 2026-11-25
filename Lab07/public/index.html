@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title data-i18n="title" data-prefix="ZunTutor · ">ZunTutor · Quản lý gia sư và tra cứu học tập</title>
+<meta content="Cổng quản lý gia sư, tra cứu tiến trình học tập, nộp bài tập và theo dõi học phí tại lớp học mẫu." data-i18n-content="meta" name="description"/>
+
+<link href="favicon.ico" rel="shortcut icon"/>
+<link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="img/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+
+<link href="manifest.json" rel="manifest"/>
+<meta content="#2563EB" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="ZunTutor" name="apple-mobile-web-app-title"/>
+<link href="img/zuntutor_app_icon.png" rel="apple-touch-icon"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="192x192"/>
+<link href="img/zuntutor_app_icon_512.png" rel="apple-touch-icon" sizes="512x512"/>
+
+<link href="vendor/inter.css" rel="stylesheet"/>
+<link href="vendor/fontawesome/css/all.min.css" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+
+<link href="css/public-theme.css" rel="stylesheet"/>
+
+<link href="css/home.css" rel="stylesheet"/>
+
+<link href="css/homepage.css" rel="stylesheet"/></head>
+<body>
+
+<div class="header">
+<div class="nav-container">
+<a class="nav-left" href="index.html" style="text-decoration: none; cursor: pointer;">
+<img alt="ZunTutor" class="nav-logo" src="img/zuntutor_avatar_blue.png"/>
+<div class="header-text">
+<h1 translate="no">ZunTutor</h1>
+<p data-i18n="header-text">Quản lý Gia sư 4.0</p>
+</div>
+</a>
+<div class="nav-right">
+<a class="nav-btn active" href="index.html" id="btnNavHome"><i class="fa-solid fa-house"></i> <span class="nav-label" data-i18n="nav.home">Trang chủ</span></a>
+<a class="nav-btn" href="student-login.html" id="btnNavStudent"><i class="fa-solid fa-graduation-cap"></i> <span class="nav-label" data-i18n="nav-label">PH/HS</span></a>
+<a class="nav-btn" href="homework.html" id="btnNavHomework"><i class="fa-solid fa-file-arrow-up"></i> <span class="nav-label" data-i18n="nav-label.2">BÀI TẬP</span></a>
+<a class="nav-btn" href="tutor-login.html" id="btnNavTutor"><i class="fa-solid fa-chalkboard-user"></i> <span class="nav-label" data-i18n="nav-label.3">GIA SƯ</span></a>
+</div>
+
+<button aria-controls="mobileNavDropdown" aria-expanded="false" aria-label="Danh mục điều hướng" class="hamburger-btn" data-i18n-aria-label="hamburgerBtn" id="hamburgerBtn">
+<i class="fa-solid fa-bars" id="hamburgerIcon"></i>
+</button>
+
+<div class="language">
+<button aria-controls="languageList" aria-expanded="false" aria-label="Chọn ngôn ngữ" class="nav-btn" data-i18n-aria-label="languageToggle" id="languageToggle" type="button">
+<span aria-hidden="true">🌐</span> <span data-i18n="language.label" id="languageLabel">Ngôn ngữ</span><span id="languageCode" translate="no">VI</span>
+</button>
+<div aria-labelledby="languageLabel" hidden="" id="languageList">
+<button aria-pressed="true" data-lang="vi" lang="vi" translate="no" type="button">Tiếng Việt</button>
+<button aria-pressed="false" data-lang="en" lang="en" translate="no" type="button">English</button>
+<button aria-pressed="false" data-lang="ja" lang="ja" translate="no" type="button">日本語</button>
+<button aria-pressed="false" data-lang="ko" lang="ko" translate="no" type="button">한국어</button>
+</div>
+</div><button class="nav-install-btn" data-i18n-title="btnHeaderInstallApp" id="btnHeaderInstallApp" title="Cài đặt ứng dụng" type="button">
+<i class="fa-solid fa-cloud-arrow-down"></i>
+<span data-i18n="btnHeaderInstallApp.2">Tải App</span>
+</button>
+</div>
+
+<div class="mobile-nav-dropdown" id="mobileNavDropdown">
+<a class="mobile-nav-item active" href="index.html" id="mobileHome">
+<i class="fa-solid fa-house"></i> <span data-i18n="nav.home">Trang chủ</span> </a>
+<a class="mobile-nav-item" href="student-login.html" id="mobileStudent">
+<i class="fa-solid fa-graduation-cap"></i> <span data-i18n="nav-label">PH/HS</span> </a>
+<a class="mobile-nav-item" href="homework.html" id="mobileHomework">
+<i class="fa-solid fa-file-arrow-up"></i> <span data-i18n="mobileHomework">Bài tập</span> </a>
+<a class="mobile-nav-item" href="tutor-login.html" id="mobileTutor">
+<i class="fa-solid fa-chalkboard-user"></i> <span data-i18n="mobileTutor">Gia sư</span> </a>
+</div>
+</div>
+
+<div class="main-container" style="max-width: 1200px; margin-top: 20px; padding-bottom: 70px;">
+
+<section class="hero-section">
+<div class="hero-badge reveal">
+<span>⭐</span> <span data-i18n="hero-badge">HỆ SINH THÁI QUẢN LÝ DẠY KÈM 1-1 &amp; TRA CỨU HỌC TẬP THẾ HỆ MỚI</span> </div>
+<h1 class="hero-title reveal" style="transition-delay:0.1s"> <span data-i18n="hero-title">Số Hóa Lớp Học Gia Sư</span> <br/><span class="highlight" data-i18n="highlight">Chuyên Nghiệp &amp; Minh Bạch 4.0</span> 🚀
+            </h1>
+<p class="hero-subtitle reveal" data-i18n="hero-subtitle" style="transition-delay:0.2s">
+                Giải pháp đồng bộ toàn diện giúp Gia sư tự động hóa lịch dạy, chấm bài và sổ học phí — Đồng thời giúp Phụ huynh &amp; Học sinh an tâm theo dõi sát sao điểm số, nhận xét và sự tiến bộ qua từng buổi học.
+            </p>
+<div class="hero-ctas reveal" style="transition-delay:0.3s">
+<a class="btn-cta btn-cta-student" href="student-login.html">
+<i class="fa-solid fa-graduation-cap"></i> <span data-i18n="btn-cta">Cổng Phụ Huynh / Học Sinh</span> </a>
+<a class="btn-cta btn-cta-hw" href="homework.html">
+<i class="fa-solid fa-file-arrow-up"></i> <span data-i18n="btn-cta.2">Cổng Nộp Bài Tập</span> </a>
+<a class="btn-cta btn-cta-primary" href="tutor-login.html">
+<i class="fa-solid fa-chalkboard-user"></i> <span data-i18n="btn-cta.3">Cổng Quản Lý Gia Sư</span> </a>
+</div>
+
+<div class="hero-big-demo-wrap reveal" style="margin-top: 22px; transition-delay:0.35s; display: flex; justify-content: center; width: 100%;">
+<a class="btn-cta-big-demo" href="tutor-login.html?demo=1" style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 15px 34px; font-size: 16px; font-weight: 800; color: #FFFFFF !important; background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 50%, #2563EB 100%) !important; border-radius: 50px; text-decoration: none !important; border: 2px solid rgba(255, 255, 255, 0.4) !important; box-shadow: 0 10px 25px -4px rgba(79, 70, 229, 0.45); touch-action: manipulation; -webkit-tap-highlight-color: transparent;">
+<span class="demo-icon-badge" style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 255, 255, 0.22); display: inline-flex; align-items: center; justify-content: center; font-size: 16px;"><i class="fa-solid fa-rocket"></i></span>
+<span data-i18n="btn-cta-big-demo">Trải Nghiệm Web Demo</span>
+<i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 13.5px; opacity: 0.85; margin-left: 2px;"></i>
+</a>
+</div>
+</section>
+
+<section class="metrics-section">
+<div class="section-header reveal">
+<h2 data-i18n="section-header">Con Số Nói Lên Tất Cả</h2>
+<p data-i18n="section-header.2">Các số liệu minh họa cách theo dõi hiệu quả dạy và học trong bản Lab07</p>
+</div>
+<div class="metrics-donut-grid reveal-stagger">
+<div class="metric-donut-card">
+<div class="metric-donut-canvas-wrap">
+<canvas aria-hidden="true" height="130" id="metricChart0" width="130"></canvas>
+<div class="metric-donut-center">
+<span class="metric-donut-num" data-target="80">0</span><span class="metric-donut-unit">%</span>
+</div>
+</div>
+<div class="metric-donut-label" data-i18n="metric-donut-label">Tiết kiệm thời gian quản lý sổ sách &amp; điểm danh thủ công</div>
+</div>
+<div class="metric-donut-card">
+<div class="metric-donut-canvas-wrap">
+<canvas aria-hidden="true" height="130" id="metricChart1" width="130"></canvas>
+<div class="metric-donut-center">
+<span class="metric-donut-num" data-target="95">0</span><span class="metric-donut-unit">%</span>
+</div>
+</div>
+<div class="metric-donut-label" data-i18n="metric-donut-label.2">Phụ huynh hài lòng và tin tưởng với hệ thống minh bạch</div>
+</div>
+<div class="metric-donut-card">
+<div class="metric-donut-canvas-wrap">
+<canvas aria-hidden="true" height="130" id="metricChart2" width="130"></canvas>
+<div class="metric-donut-center">
+<span class="metric-donut-num" data-target="100">0</span><span class="metric-donut-unit">%</span>
+</div>
+</div>
+<div class="metric-donut-label" data-i18n="metric-donut-label.3">Minh bạch tiến trình học tập, nhật ký &amp; nhận xét từng buổi</div>
+</div>
+<div class="metric-donut-card">
+<div class="metric-donut-canvas-wrap">
+<canvas aria-hidden="true" height="130" id="metricChart3" width="130"></canvas>
+<div class="metric-donut-center">
+<span class="metric-donut-num" data-target="98">0</span><span class="metric-donut-unit">%</span>
+</div>
+</div>
+<div class="metric-donut-label" data-i18n="metric-donut-label.4">Học viên cải thiện và bứt phá điểm số sau 2 tháng kèm cặp</div>
+</div>
+</div>
+</section>
+
+<section class="section-wrapper">
+<div class="section-header reveal">
+<h2 data-i18n="section-header.3">3 Cổng Trải Nghiệm Cốt Lõi Của Nền Tảng</h2>
+<p data-i18n="section-header.4">Mỗi phân hệ được thiết kế may đo chính xác theo nhu cầu thực tế của từng đối tượng</p>
+</div>
+<div class="pillars-grid reveal-stagger">
+
+<div class="pillar-card">
+<div>
+<div class="pillar-badge" style="background: #EFF6FF; border: 1px solid #BFDBFE; color: #2563EB;">
+<i class="fa-solid fa-user-graduate"></i> <span data-i18n="pillar-badge">PHỤ HUYNH &amp; HỌC SINH</span> </div>
+<div class="pillar-icon-wrap" style="background: #EFF6FF; color: #3B82F6;">
+<i class="fa-solid fa-chart-line"></i>
+</div>
+<h3 class="pillar-title" data-i18n="pillar-title">Cổng Tra Cứu Học Tập</h3>
+<p class="pillar-desc" data-i18n="pillar-desc">Tra cứu bảng điểm, nhận xét và tỷ lệ chuyên cần sau mỗi buổi học bằng tài khoản của học sinh.</p>
+<ul class="pillar-features-list">
+<li><i class="fa-solid fa-circle-check"></i> <span data-i18n="pillar-features-list">Tra cứu điểm đầu giờ &amp; điểm định kỳ chi tiết</span></li>
+<li><i class="fa-solid fa-circle-check"></i> <span data-i18n="pillar-features-list.2">Biểu đồ đường trực quan hóa sự tiến bộ</span></li>
+<li><i class="fa-solid fa-circle-check"></i> <span data-i18n="pillar-features-list.3">Lời nhận xét chi tiết sau từng buổi học của gia sư</span></li>
+</ul>
+</div>
+<a class="pillar-btn" href="student-login.html" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: #FFF;"> <span data-i18n="pillar-btn">Vào Cổng Tra Cứu</span> <i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+
+<div class="pillar-card">
+<div>
+<div class="pillar-badge" style="background: rgba(16,185,129,0.15); border: 1px solid #10B981; color: #34D399;">
+<i class="fa-solid fa-file-lines"></i> <span data-i18n="pillar-badge.2">LUYỆN TẬP &amp; ĐỀ THI</span> </div>
+<div class="pillar-icon-wrap" style="background: rgba(16,185,129,0.2); color: #34D399;">
+<i class="fa-solid fa-file-arrow-up"></i>
+</div>
+<h3 class="pillar-title" data-i18n="pillar-title.2">Cổng Nộp &amp; Chấm Bài Online</h3>
+<p class="pillar-desc" data-i18n="pillar-desc.2">Không gian giao nhận đề bài tập, tài liệu học tập PDF và nộp bài làm trực tuyến an toàn, chống thất lạc bài.</p>
+<ul class="pillar-features-list">
+<li><i class="fa-solid fa-circle-check"></i> <span data-i18n="pillar-features-list.4">Tải đề ôn tập, tài liệu PDF chất lượng cao</span></li>
+<li><i class="fa-solid fa-circle-check"></i> <span data-i18n="pillar-features-list.5">Nộp bài giải bằng ảnh chụp hoặc file trực tuyến</span></li>
+<li><i class="fa-solid fa-circle-check"></i> <span data-i18n="pillar-features-list.6">Xem điểm chấm và lời phê chữa bài 1-1 từ gia sư</span></li>
+</ul>
+</div>
+<a class="pillar-btn" href="homework.html" style="background: linear-gradient(135deg, #10B981 0%, #047857 100%); color: #FFF;"> <span data-i18n="pillar-btn.2">Nộp Bài Tập Ngay</span> <i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+
+<div class="pillar-card">
+<div>
+<div class="pillar-badge" style="background: #EFF6FF; border: 1px solid #BFDBFE; color: #2563EB;">
+<i class="fa-solid fa-chalkboard-user"></i> <span data-i18n="pillar-badge.3">GIA SƯ &amp; TRUNG TÂM</span> </div>
+<div class="pillar-icon-wrap" style="background: #EFF6FF; color: #3B82F6;">
+<i class="fa-solid fa-calendar-days"></i>
+</div>
+<h3 class="pillar-title" data-i18n="pillar-title.3">Bảng Quản Lý Gia Sư</h3>
+<p class="pillar-desc" data-i18n="pillar-desc.3">Trung tâm điều hành giảng dạy chuyên nghiệp, đồng bộ lịch dạy, quản lý học sinh và sổ thu học phí tự động 100%.</p>
+<ul class="pillar-features-list">
+<li><i class="fa-solid fa-circle-check"></i> <span data-i18n="pillar-features-list.7">Lịch dạy tuần trực quan (Google Calendar Style)</span></li>
+<li><i class="fa-solid fa-circle-check"></i> <span data-i18n="pillar-features-list.8">Điểm danh &amp; ghi nhật ký buổi học 1 chạm</span></li>
+<li><i class="fa-solid fa-circle-check"></i> <span data-i18n="pillar-features-list.9">Quản lý sổ thu học phí &amp; tích hợp mã QR thanh toán</span></li>
+</ul>
+</div>
+<a class="pillar-btn" href="tutor-login.html" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: #FFF;"> <span data-i18n="pillar-btn.3">Vào Bảng Quản Lý</span> <i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+</div>
+</section>
+
+<section class="platform-preview-section">
+<div class="platform-preview-grid">
+
+<div class="platform-mockup reveal-left">
+<div class="mockup-frame">
+<div class="mockup-topbar">
+<span class="mockup-dot red"></span>
+<span class="mockup-dot yellow"></span>
+<span class="mockup-dot green"></span>
+<span class="mockup-url" translate="no">localhost</span>
+</div>
+<div class="mockup-content">
+<div class="mockup-hero-row">
+<div class="mockup-avatar" translate="no">MV</div>
+<div>
+<div class="mockup-name" translate="no">Mây Vi</div>
+<div class="mockup-meta" data-i18n="mockup-meta">Toán · Tháng 11</div>
+</div>
+</div>
+<div class="mockup-kpi-row">
+<div class="mockup-kpi blue"><span class="mockup-kpi-val" data-number="8.6">8,6</span><span class="mockup-kpi-lbl" data-i18n="mockup-kpi-lbl">TB Điểm</span></div>
+<div class="mockup-kpi green"><span class="mockup-kpi-val">95%</span><span class="mockup-kpi-lbl" data-i18n="mockup-kpi-lbl.2">Chuyên cần</span></div>
+<div class="mockup-kpi purple"><span class="mockup-kpi-val">12</span><span class="mockup-kpi-lbl" data-i18n="mockup-kpi-lbl.3">Buổi học</span></div>
+</div>
+<div class="mockup-chart-bar">
+<div class="mockup-chart-label" data-i18n="mockup-chart-label">Biểu đồ tiến bộ điểm số</div>
+<div class="mockup-bars">
+<div class="mockup-bar" style="height:55%"></div>
+<div class="mockup-bar" style="height:65%"></div>
+<div class="mockup-bar" style="height:70%"></div>
+<div class="mockup-bar" style="height:60%"></div>
+<div class="mockup-bar" style="height:80%"></div>
+<div class="mockup-bar" style="height:88%"></div>
+<div class="mockup-bar" style="height:92%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mockup-badge-float badge-float-1"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="mockup-badge-float">Phân quyền theo vai trò</span></div>
+<div class="mockup-badge-float badge-float-2"><i class="fa-solid fa-bolt"></i> <span data-i18n="mockup-badge-float.2">Real-time</span></div>
+</div>
+
+<div class="platform-features reveal-right">
+<div class="platform-features-badge" data-i18n="platform-features-badge">✨ Nền tảng thực tế</div>
+<h2 class="platform-features-title" data-i18n="platform-features-title">Tất cả trong một bảng điều khiển thông minh</h2>
+<p class="platform-features-sub" data-i18n="platform-features-sub">Được thiết kế cho nhu cầu thực tế của từng Gia sư, từng Phụ huynh và từng Học sinh.</p>
+<div class="platform-feature-list">
+<div class="platform-feature-item">
+<div class="pf-icon" style="background:#EFF6FF;color:#3B82F6;"><i class="fa-solid fa-chart-line"></i></div>
+<div class="pf-info"><strong data-i18n="pf-info">Biểu đồ tiến bộ real-time</strong><p data-i18n="pf-info.2">Theo dõi điểm số qua từng buổi học với biểu đồ đường trực quan hóa</p></div>
+</div>
+<div class="platform-feature-item">
+<div class="pf-icon" style="background:#ECFDF5;color:#059669;"><i class="fa-solid fa-circle-check"></i></div>
+<div class="pf-info"><strong data-i18n="pf-info.3">Điểm danh &amp; nhật ký 1 chạm</strong><p data-i18n="pf-info.4">Ghi lại chuyên cần và nhận xét để phụ huynh xem trong cổng học tập.</p></div>
+</div>
+<div class="platform-feature-item">
+<div class="pf-icon" style="background:#FFF7ED;color:#D97706;"><i class="fa-solid fa-qrcode"></i></div>
+<div class="pf-info"><strong data-i18n="pf-info.5">Sổ học phí &amp; mã QR tự động</strong><p data-i18n="pf-info.6">Theo dõi các khoản thu và xem hóa đơn từ dữ liệu học phí của lớp mẫu.</p></div>
+</div>
+<div class="platform-feature-item">
+<div class="pf-icon" style="background:#F5F3FF;color:#7C3AED;"><i class="fa-solid fa-file-arrow-up"></i></div>
+<div class="pf-info"><strong data-i18n="pf-info.7">Nộp bài &amp; chấm điểm online</strong><p data-i18n="pf-info.8">Học sinh nộp bài qua app, gia sư chấm và trả lời nhận xét trực tiếp</p></div>
+</div>
+</div>
+<a class="platform-cta-btn" href="tutor-login.html"><i class="fa-solid fa-rocket"></i> <span data-i18n="platform-cta-btn">Khám phá ngay</span></a>
+</div>
+</div>
+</section>
+
+<section class="section-wrapper">
+<div class="section-header reveal">
+<h2 data-i18n="section-header.5">Tầm Nhìn &amp; Hướng Đi Phát Triển Đột Phá</h2>
+<p data-i18n="section-header.6">Nâng tầm chất lượng giáo dục gia sư thông qua công nghệ quản trị thông minh</p>
+</div>
+<div class="vision-grid reveal-stagger">
+<div class="vision-card">
+<div class="vision-icon"><i class="fa-solid fa-laptop-code"></i></div>
+<h3 data-i18n="vision-card">Chuẩn Hóa Dạy Kèm</h3>
+<p data-i18n="vision-card.2">Xóa bỏ hoàn toàn tình trạng ghi nhớ sổ tay thủ công, dễ quên ca học hoặc nhầm lẫn sổ thu học phí.</p>
+</div>
+<div class="vision-card">
+<div class="vision-icon"><i class="fa-solid fa-award"></i></div>
+<h3 data-i18n="vision-card.3">Thương Hiệu Độc Quyền</h3>
+<p data-i18n="vision-card.4">Giúp Gia sư sở hữu hệ thống chuyên nghiệp mang tên riêng, tạo ấn tượng vượt trội khi tư vấn tuyển sinh.</p>
+</div>
+<div class="vision-card">
+<div class="vision-icon"><i class="fa-solid fa-shield-halved"></i></div>
+<h3 data-i18n="vision-card.5">Bảo Mật &amp; An Toàn</h3>
+<p data-i18n="vision-card.6">Hồ sơ học sinh được lưu trong SQLite trên máy chạy bản lab. Mỗi vai trò truy cập dữ liệu trong phạm vi được cấp.</p>
+</div>
+<div class="vision-card">
+<div class="vision-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+<h3 data-i18n="vision-card.7">Mở Rộng Quy Mô Dễ Dàng</h3>
+<p data-i18n="vision-card.8">Sẵn sàng quản lý từ 1 học sinh đến hàng chục lớp học kèm mà không sợ quá tải công việc quản trị.</p>
+</div>
+</div>
+</section>
+
+<section class="section-wrapper">
+<div class="section-header reveal">
+<h2 data-i18n="section-header.7">Bắt Đầu Sử Dụng Trong 3 Bước</h2>
+<p data-i18n="section-header.8">Quy trình đăng nhập và quản lý đơn giản, bảo mật và tiện lợi trên mọi thiết bị</p>
+</div>
+<div class="steps-timeline reveal-stagger">
+<div class="step-card-new">
+<div class="step-num-new">1</div>
+<div class="step-connector"></div>
+<i class="fa-solid fa-hand-pointer step-icon-new"></i>
+<h3 data-i18n="step-card-new">Chọn Cổng Truy Cập</h3>
+<p data-i18n="step-card-new.2">Nhấp vào PH/HS, BÀI TẬP hoặc GIA SƯ trên thanh điều hướng</p>
+</div>
+<div class="step-card-new">
+<div class="step-num-new">2</div>
+<div class="step-connector"></div>
+<i class="fa-solid fa-key step-icon-new"></i>
+<h3 data-i18n="step-card-new.3">Đăng Nhập Tài Khoản</h3>
+<p data-i18n="step-card-new.4">Nhập thông tin đăng nhập mẫu trong README để truy cập cổng của bạn.</p>
+</div>
+<div class="step-card-new last">
+<div class="step-num-new">3</div>
+<i class="fa-solid fa-rocket step-icon-new"></i>
+<h3 data-i18n="step-card-new.5">Quản Lý &amp; Theo Dõi</h3>
+<p data-i18n="step-card-new.6">Theo dõi điểm số, nộp bài hoặc quản lý lịch dạy và sổ học phí trực quan</p>
+</div>
+</div>
+</section>
+
+<section class="section-wrapper">
+<div class="section-header reveal">
+<h2 data-i18n="section-header.9">Câu Hỏi Thường Gặp (FAQ)</h2>
+<p data-i18n="section-header.10">Giải đáp những thắc mắc phổ biến về quy trình vận hành và triển khai website</p>
+</div>
+<div class="faq-accordion reveal">
+<div class="faq-item">
+<button aria-expanded="false" class="faq-question" type="button">
+<span data-i18n="faq-question">Phụ huynh có cần tạo tài khoản hay nhớ mật khẩu phức tạp không?</span>
+<i class="fa-solid fa-chevron-down"></i>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-content" data-i18n="faq-answer-content">Phụ huynh và học sinh đăng nhập bằng tài khoản mẫu của lớp để xem bảng điểm, chuyên cần và nhận xét sau mỗi buổi học.</div>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-question" type="button">
+<span data-i18n="faq-question.2">Gia sư có thể sử dụng website này trên điện thoại di động không?</span>
+<i class="fa-solid fa-chevron-down"></i>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-content" data-i18n="faq-answer-content.2">
+                            Có! Toàn bộ hệ thống được thiết kế tương thích hoàn hảo (Responsive) trên mọi thiết bị: Điện thoại Smartphone, iPad/Máy tính bảng và Laptop/PC.
+                        </div>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-question" type="button">
+<span data-i18n="faq-question.3">Tính năng Sổ Học Phí &amp; Mã QR thanh toán hoạt động như thế nào?</span>
+<i class="fa-solid fa-chevron-down"></i>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-content" data-i18n="faq-answer-content.3">Gia sư cập nhật trạng thái học phí, còn học sinh xem số tiền và hóa đơn của mình. Các thông tin thanh toán trong bản lab đều là dữ liệu minh họa.</div>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-question" type="button">
+<span data-i18n="faq-question.4">Tôi có thể trải nghiệm lịch dạy của trung tâm ở đâu?</span>
+<i class="fa-solid fa-chevron-down"></i>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-content" data-i18n="faq-answer-content.4">Mở phần hỗ trợ ở cuối trang và chọn xem lịch dạy mẫu. Bạn cũng có thể đăng nhập cổng gia sư để quản lý lịch của lớp.</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<div style="position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1;">
+<div class="decor planet-left"></div>
+<div class="decor planet-right"></div>
+<div class="decor rocket"></div>
+<div class="star twinkle-1" style="top: 10%; left: 20%; width: 2px; height: 2px;"></div>
+<div class="star twinkle-2" style="top: 15%; right: 25%; width: 3px; height: 3px;"></div>
+<div class="star twinkle-3" style="top: 40%; left: 10%; width: 2px; height: 2px;"></div>
+<div class="star twinkle-1" style="top: 70%; right: 15%; width: 3px; height: 3px;"></div>
+<div class="star twinkle-2" style="top: 85%; left: 30%; width: 2px; height: 2px;"></div>
+</div>
+
+<footer class="footer-premium">
+<div class="footer-container">
+<div class="footer-top-grid">
+
+<div class="footer-col-brand">
+<a class="footer-logo-wrap" href="index.html">
+<img alt="ZunTutor" class="footer-logo-img" src="img/zuntutor_avatar_blue.png"/>
+<div>
+<h3 class="footer-brand-title" translate="no">ZunTutor</h3>
+<div class="footer-brand-tagline" data-i18n="footer-brand-tagline">Hệ Thống Quản Lý Gia Sư 4.0</div>
+</div>
+</a>
+<p class="footer-brand-desc" data-i18n="footer-brand-desc">
+                        Nền tảng công nghệ số hóa quy trình dạy kèm 1-1 và theo dõi tiến độ học tập tiên phong. Đồng hành cùng Gia sư và Phụ huynh nâng tầm kết quả học tập cho học sinh.
+                    </p>
+<div class="footer-social-links">
+<a aria-label="Hỗ trợ bản lab" class="footer-social-btn" data-i18n-aria-label="f" data-i18n-title="f" href="#labSupport" title="Hỗ trợ bản lab"><i class="fa-solid fa-headset"></i></a>
+<a aria-label="Cổng học sinh" class="footer-social-btn" data-i18n-aria-label="f.2" data-i18n-title="f.2" href="student-login.html" title="Cổng học sinh"><i class="fa-solid fa-graduation-cap"></i></a>
+<a aria-label="Cổng gia sư" class="footer-social-btn" data-i18n-aria-label="f.3" data-i18n-title="f.3" href="tutor-login.html" title="Cổng gia sư"><i class="fa-solid fa-chalkboard-user"></i></a>
+<a aria-label="Trang chủ" class="footer-social-btn" data-i18n-aria-label="nav.home" data-i18n-title="nav.home" href="index.html" title="Trang chủ"><i class="fa-solid fa-house"></i></a>
+</div>
+</div>
+
+<div class="footer-col footer-hide-mobile">
+<h4><i class="fa-solid fa-layer-group" style="color: #3B82F6;"></i> <span data-i18n="footer-col">Cổng Người Dùng</span></h4>
+<ul class="footer-links-list">
+<li><a href="student-login.html"><i class="fa-solid fa-graduation-cap"></i> <span data-i18n="btn-cta">Cổng Phụ Huynh / Học Sinh</span></a></li>
+<li><a href="homework.html"><i class="fa-solid fa-file-arrow-up"></i> <span data-i18n="footer-links-list">Cổng Nộp &amp; Chấm Bài Tập</span></a></li>
+<li><a href="tutor-login.html"><i class="fa-solid fa-chalkboard-user"></i> <span data-i18n="btn-cta.3">Cổng Quản Lý Gia Sư</span></a></li>
+<li><a href="tutor-dashboard.html?tab=calendar"><i class="fa-solid fa-calendar-days"></i> <span data-i18n="footer-links-list.2">Lịch Dạy &amp; Điểm Danh</span></a></li>
+</ul>
+</div>
+
+<div class="footer-col footer-hide-mobile">
+<h4><i class="fa-solid fa-wand-magic-sparkles" style="color: #10B981;"></i> <span data-i18n="footer-col.2">Tính Năng Nổi Bật</span></h4>
+<ul class="footer-links-list">
+<li><a href="student-login.html"><i class="fa-solid fa-bolt"></i> <span data-i18n="footer-links-list.3">Tra cứu điểm số Real-time</span></a></li>
+<li><a href="student-login.html"><i class="fa-solid fa-chart-pie"></i> <span data-i18n="footer-links-list.4">Biểu đồ đường tiến bộ 4.0</span></a></li>
+<li><a href="tutor-login.html"><i class="fa-solid fa-qrcode"></i> <span data-i18n="footer-links-list.5">Sổ học phí &amp; Mã QR tự động</span></a></li>
+<li><a href="tutor-login.html"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="footer-links-list.6">Bảo mật PIN cá nhân</span></a></li>
+</ul>
+</div>
+
+<div class="footer-col">
+<h4><i class="fa-solid fa-headset" style="color: #FFD23F;"></i> <span data-i18n="f">Hỗ trợ bản lab</span></h4>
+<div class="footer-contact-card" id="labSupport">
+<p data-i18n="labSupport" style="font-size: 12.5px; color: #CBD5E1; margin: 0; line-height: 1.5;">Khám phá lịch dạy và các buổi học của trung tâm giả lập trong bản Lab07.</p>
+<a class="footer-hotline-btn" href="demo-calendar.html" rel="noopener noreferrer">
+<i class="fa-solid fa-phone-volume"></i> <span data-i18n="footer-hotline-btn">Xem lịch dạy mẫu</span></a>
+<div style="font-size: 11.5px; color: #94A3B8; text-align: center;"><span data-i18n="labSupport.2">Liên hệ giả lập</span> · <span translate="no">trogiup@example.invalid</span></div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+
+<nav aria-label="Điều hướng chính" class="bottom-nav" data-i18n-aria-label="bottom-nav">
+<a class="bottom-nav-item active" href="index.html"><i class="fa-solid fa-house"></i><span data-i18n="nav.home">Trang chủ</span></a>
+<a class="bottom-nav-item" href="student-login.html"><i class="fa-solid fa-graduation-cap"></i><span data-i18n="nav-label">PH/HS</span></a>
+<a class="bottom-nav-item" href="homework.html"><i class="fa-solid fa-file-arrow-up"></i><span data-i18n="mobileHomework">Bài tập</span></a>
+<a class="bottom-nav-item" href="tutor-login.html"><i class="fa-solid fa-chalkboard-user"></i><span data-i18n="mobileTutor">Gia sư</span></a>
+</nav>
+
+<div aria-atomic="true" aria-live="polite" id="translationStatus" role="status"></div>
+<div hidden="" id="homeMessages">
+<span data-i18n="status.loading">Đang dịch trang chủ…</span>
+<span data-i18n="status.missing_key">Chưa cấu hình khóa Google Dịch. Hãy điền khóa vào tệp .env của Lab07 và khởi động lại máy chủ.</span>
+<span data-i18n="status.quota">Đã hết hạn mức dịch. Hãy thử lại sau hoặc kiểm tra hạn mức Google Cloud.</span>
+<span data-i18n="status.google_denied">Google chưa cấp quyền dịch. Hãy kiểm tra khóa và cấu hình Cloud Translation.</span>
+<span data-i18n="status.network">Không kết nối được dịch vụ dịch. Hãy kiểm tra mạng rồi thử lại.</span>
+<span data-i18n="status.google_error">Dịch vụ dịch chưa trả về kết quả. Hãy thử chọn lại ngôn ngữ.</span>
+</div>
+<dialog aria-labelledby="installTitle" id="installGuide">
+<form method="dialog">
+<img alt="ZunTutor" height="54" src="img/zuntutor_app_icon.png" width="54"/>
+<h3 data-i18n="btnHeaderInstallApp" id="installTitle">Cài đặt ứng dụng</h3>
+<p data-i18n="installGuide" data-platform="desktop">Trong Chrome hoặc Edge, chọn biểu tượng cài đặt trên thanh địa chỉ hoặc mở mục cài đặt ứng dụng trong menu trình duyệt.</p>
+<p data-i18n="installGuide.2" data-platform="ios" hidden="">Trong Safari, nhấn Chia sẻ, chọn Thêm vào màn hình chính, rồi nhấn Thêm.</p>
+<p data-i18n="installGuide.3" data-platform="android" hidden="">Trong Chrome, mở menu ba chấm, chọn Cài đặt ứng dụng hoặc Thêm vào màn hình chính.</p>
+<button class="nav-install-btn" data-i18n="nav-install-btn" type="submit">Đã hiểu</button>
+</form>
+</dialog>
+<div hidden="" id="homeUpdate" role="status">
+<span data-i18n="homeUpdate">Có phiên bản mới của ứng dụng.</span>
+<button data-i18n="reloadHome" id="reloadHome" type="button">Tải lại</button>
+<button aria-label="Đóng" data-i18n="hideUpdate.2" data-i18n-aria-label="hideUpdate" id="hideUpdate" type="button">×</button>
+</div>
+
+<script defer="" src="js/homepage.js"></script>
+<script defer="" src="js/scroll-animations.js"></script>
+</body>
+</html>

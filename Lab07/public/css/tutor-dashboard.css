@@ -1,0 +1,1767 @@
+/* ========================================================
+   ZUNTUTOR - TUTOR DASHBOARD STYLES (Trích xuất Bước 6 - C1)
+   ======================================================== */
+
+/* --- KHỐI 1: BỐ CỤC DASHBOARD, STATUS BADGES & SIDEBAR --- */
+/* Đảm bảo nút thu gọn Sidebar luôn hiển thị tròn nguyên vẹn, không bao giờ bị cắt cụt */
+        .tutor-sidebar {
+            overflow: visible !important;
+        }
+        .sidebar-collapse-btn {
+            z-index: 1005 !important;
+        }
+
+        /* ===== TUTOR LOCK / EXPIRED BANNER & STATUS BADGES ===== */
+        .tutor-lock-banner {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin: 16px 0 20px;
+            box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.08);
+            animation: fadeInDown 0.35s ease;
+        }
+        .tutor-lock-banner.trial-expired {
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border: 1.5px solid #FCD34D;
+            color: #92400E;
+        }
+        .tutor-lock-banner.sub-expired {
+            background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
+            border: 1.5px solid #FCA5A5;
+            color: #991B1B;
+        }
+        .tutor-lock-banner.near-expiry {
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border: 1.5px solid #F59E0B;
+            color: #92400E;
+            position: relative;
+            padding-right: 68px; /* Khoảng trống an toàn để nút X không bao giờ dính/đè lên nút Zalo */
+        }
+        .tutor-lock-banner.near-expiry .lock-icon-wrap {
+            background: #F59E0B;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+        }
+        .tutor-lock-banner.near-expiry .lock-info h4 { color: #B45309; }
+        .tutor-lock-banner.near-expiry .lock-actions {
+            margin-right: 8px;
+        }
+        .tutor-lock-banner-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(180, 83, 9, 0.12);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: #92400E;
+            transition: all 0.15s ease;
+            line-height: 1;
+            z-index: 10;
+        }
+        .tutor-lock-banner-close:hover {
+            background: rgba(180, 83, 9, 0.25);
+            color: #78350F;
+            transform: scale(1.08);
+        }
+        .tutor-lock-banner .lock-icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .tutor-lock-banner.trial-expired .lock-icon-wrap {
+            background: #F59E0B;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+        }
+        .tutor-lock-banner.sub-expired .lock-icon-wrap {
+            background: #EF4444;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+        }
+        .tutor-lock-banner .lock-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .tutor-lock-banner .lock-info h4 {
+            margin: 0 0 4px;
+            font-size: 15px;
+            font-weight: 800;
+        }
+        .tutor-lock-banner.trial-expired .lock-info h4 { color: #B45309; }
+        .tutor-lock-banner.sub-expired .lock-info h4 { color: #B91C1C; }
+        .tutor-lock-banner.trial-welcome {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border: 1.5px solid #93C5FD;
+            position: relative;
+            padding-right: 68px;
+        }
+        .tutor-lock-banner.trial-welcome .lock-icon-wrap {
+            background: #2563EB;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+        .tutor-lock-banner.trial-welcome .lock-info h4 { color: #1E40AF; }
+        .tutor-lock-banner.trial-welcome .lock-info p { color: #1E3A8A; }
+        .tutor-lock-banner.trial-welcome .tutor-lock-banner-close {
+            background: rgba(37, 99, 235, 0.12);
+            color: #1E40AF;
+        }
+        .tutor-lock-banner.trial-welcome .tutor-lock-banner-close:hover {
+            background: rgba(37, 99, 235, 0.22);
+            color: #1E3A8A;
+        }
+        .tutor-lock-banner .lock-info p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #475569;
+        }
+        .tutor-lock-banner .lock-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        .tutor-lock-banner .btn-renew {
+            background: #2563EB;
+            color: #fff;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 9px 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+        .tutor-lock-banner .btn-renew:hover {
+            background: #1D4ED8;
+            transform: translateY(-1px);
+        }
+        .tutor-lock-banner .btn-contact {
+            background: #fff;
+            color: #334155;
+            border: 1.5px solid #CBD5E1;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .tutor-lock-banner .btn-contact:hover {
+            border-color: #94A3B8;
+            background: #F8FAFC;
+        }
+        @media (max-width: 768px) {
+            .tutor-lock-banner {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                padding: 16px !important;
+                gap: 12px !important;
+            }
+            .tutor-lock-banner.near-expiry,
+            .tutor-lock-banner.trial-welcome {
+                padding-top: 18px !important;
+                padding-right: 48px !important;
+            }
+            .tutor-lock-banner .lock-actions {
+                width: 100% !important;
+                margin-top: 4px !important;
+                margin-right: 0 !important;
+            }
+            .tutor-lock-banner .btn-renew {
+                width: 100% !important;
+                justify-content: center !important;
+            }
+        }
+        .badge-locked-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10.5px;
+            font-weight: 800;
+            margin-top: 3px;
+            line-height: 1.4;
+        }
+        .badge-locked-pill.trial {
+            background: #FEF3C7;
+            color: #D97706;
+            border: 1px solid #FCD34D;
+        }
+        .badge-locked-pill.sub {
+            background: #FEE2E2;
+            color: #DC2626;
+            border: 1px solid #FCA5A5;
+        }
+        .badge-locked-pill.active {
+            background: #ECFDF5;
+            color: #059669;
+            border: 1px solid #A7F3D0;
+        }
+        .badge-locked-pill.trial-active {
+            background: #EFF6FF;
+            color: #2563EB;
+            border: 1px solid #BFDBFE;
+        }
+        .badge-locked-pill.expiring {
+            background: #FFF7ED;
+            color: #EA580C;
+            border: 1px solid #FDBA74;
+        }
+
+        /* Renew Modal Styling */
+        .rn-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 14px 0;
+            background: #F8FAFC;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #E2E8F0;
+        }
+        .rn-table th, .rn-table td {
+            padding: 9px 14px;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .rn-table th { background: #F1F5F9; font-weight: 700; color: #475569; }
+        .rn-table tr.highlight { background: #EFF6FF; font-weight: 700; color: #1D4ED8; }
+
+        /* ================= INVOICE STYLES (APPROVED E-RECEIPT) ================= */
+        .invoice-container {
+            width: 100% !important;
+            max-width: 500px !important;
+            margin: 0 auto !important;
+            background: #FFFFFF !important;
+            color: #0F172A !important;
+            border-radius: 28px !important;
+            padding: 26px 24px 26px 24px !important;
+            box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            box-sizing: border-box !important;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif !important;
+        }
+
+        .invoice-container::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important; left: 0 !important; right: 0 !important;
+            height: 6px !important;
+            background: linear-gradient(90deg, #8E4DFF 0%, #3B82F6 50%, #10B981 100%) !important;
+        }
+
+        .inv-head {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding-bottom: 16px !important;
+            border-bottom: 1px dashed #E2E8F0 !important;
+        }
+        .inv-head-left {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+        }
+        .inv-avatar {
+            width: 48px !important;
+            height: 48px !important;
+            border-radius: 15px !important;
+            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%) !important;
+            color: #FFFFFF !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 24px !important;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25) !important;
+        }
+        .inv-user-meta .inv-tag-mini {
+            font-size: 10.5px !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.8px !important;
+            text-transform: uppercase !important;
+            color: #64748B !important;
+            display: block !important;
+            margin-bottom: 2px !important;
+        }
+        .inv-user-meta h2 {
+            font-size: 21px !important;
+            font-weight: 800 !important;
+            color: #0F172A !important;
+            letter-spacing: -0.4px !important;
+            line-height: 1.2 !important;
+            margin: 0 !important;
+        }
+        .inv-head-right {
+            text-align: right !important;
+        }
+        .inv-pill-status {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            background: #F3E8FF !important;
+            color: #6D28D9 !important;
+            font-size: 11.5px !important;
+            font-weight: 800 !important;
+            padding: 6px 14px !important;
+            border-radius: 20px !important;
+            letter-spacing: 0.3px !important;
+            border: 1px solid rgba(109, 40, 217, 0.12) !important;
+        }
+
+        .inv-section-title {
+            font-size: 10.5px !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.6px !important;
+            text-transform: uppercase !important;
+            color: #64748B !important;
+            margin: 14px 0 8px 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+        }
+        .inv-section-title i { color: #7C3AED !important; }
+
+        .metrics-grid {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 10px !important;
+            align-items: stretch !important;
+        }
+        .metric-card {
+            background: #F8FAFC !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 16px !important;
+            padding: 12px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            height: 100% !important;
+            box-sizing: border-box !important;
+        }
+        .metric-card-header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            color: #334155 !important;
+            margin-bottom: 8px !important;
+        }
+        .metric-card-header i { font-size: 13px !important; }
+
+        .metric-badges {
+            display: flex !important;
+            gap: 6px !important;
+            margin-bottom: 8px !important;
+        }
+        .m-badge {
+            flex: 1 !important;
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 10px !important;
+            padding: 5px 2px !important;
+            text-align: center !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
+        }
+        .m-num {
+            font-size: 17px !important;
+            font-weight: 800 !important;
+            line-height: 1.1 !important;
+            color: #0F172A !important;
+        }
+        .m-lbl {
+            font-size: 9.5px !important;
+            font-weight: 600 !important;
+            color: #64748B !important;
+            margin-top: 2px !important;
+        }
+
+        .metric-notes {
+            margin-top: auto !important;
+            font-size: 10px !important;
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 8px !important;
+            padding: 7px 8px !important;
+            line-height: 1.35 !important;
+            color: #475569 !important;
+            display: flex !important;
+            align-items: center !important;
+            box-sizing: border-box !important;
+        }
+        .metric-notes span { font-weight: 700 !important; color: #1E293B !important; }
+        .text-green { color: #059669 !important; }
+        .text-amber { color: #D97706 !important; }
+        .text-red { color: #DC2626 !important; }
+        .text-purple { color: #7C3AED !important; }
+
+        .fee-card {
+            background: linear-gradient(135deg, #FAF5FF 0%, #F5F3FF 100%) !important;
+            border: 1px solid #E9D5FF !important;
+            border-radius: 16px !important;
+            padding: 14px 16px !important;
+            margin-top: 12px !important;
+        }
+        .fee-row {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            font-size: 12px !important;
+            color: #4B5563 !important;
+            margin-bottom: 6px !important;
+            font-weight: 500 !important;
+        }
+        .fee-row b { color: #1F2937 !important; }
+        .fee-row.grand-total {
+            margin-top: 8px !important;
+            padding-top: 8px !important;
+            border-top: 1px dashed #D8B4FE !important;
+            margin-bottom: 0 !important;
+            color: #0F172A !important;
+        }
+        .fee-row.grand-total .total-label {
+            font-size: 12.5px !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.3px !important;
+            text-transform: uppercase !important;
+            color: #4C1D95 !important;
+        }
+        .fee-row.grand-total .total-val {
+            font-size: 22px !important;
+            font-weight: 900 !important;
+            color: #6D28D9 !important;
+            letter-spacing: -0.5px !important;
+            font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif !important;
+        }
+
+        .bottom-action-container {
+            display: grid !important;
+            grid-template-columns: 1fr 190px !important;
+            gap: 12px !important;
+            margin-top: 12px !important;
+            align-items: stretch !important;
+        }
+        .msg-box {
+            background: #F8FAFC !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 18px !important;
+            padding: 14px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+        }
+        .msg-header {
+            font-size: 11.5px !important;
+            font-weight: 700 !important;
+            color: #64748B !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            margin-bottom: 8px !important;
+        }
+        .msg-header i { color: #7C3AED !important; }
+        .msg-text {
+            font-size: 11.5px !important;
+            color: #334155 !important;
+            line-height: 1.55 !important;
+            font-weight: 500 !important;
+            outline: none !important;
+        }
+        .msg-footer {
+            font-size: 10px !important;
+            color: #94A3B8 !important;
+            margin-top: 8px !important;
+            font-style: italic !important;
+        }
+
+        .qr-card {
+            background: #FFFFFF !important;
+            border: 1.5px solid #E9D5FF !important;
+            border-radius: 18px !important;
+            padding: 10px 8px 8px 8px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.06) !important;
+            background: linear-gradient(180deg, #FFFFFF 0%, #FAF5FF 100%) !important;
+        }
+        .qr-img {
+            width: 168px !important;
+            height: 168px !important;
+            object-fit: contain !important;
+            border-radius: 12px !important;
+            background: #FFFFFF !important;
+            padding: 4px !important;
+            border: 1px solid #E2E8F0 !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+        }
+        .qr-label {
+            font-size: 11px !important;
+            font-weight: 800 !important;
+            color: #6D28D9 !important;
+            margin-top: 6px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+            letter-spacing: 0.3px !important;
+        }
+        .btn-export { background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important; color: #FFF !important; border: none !important; padding: 12px 30px !important; border-radius: 30px !important; font-weight: 700 !important; font-size: 15px !important; cursor: pointer !important; transition: 0.3s !important; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4) !important; display: inline-flex !important; align-items: center !important; gap: 8px !important;}
+        .btn-export:hover { transform: translateY(-2px) !important; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.6) !important; }
+
+        /* --- SYNC TOAST --- */
+        .sync-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            animation: toastSlideIn 0.25s ease;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes toastSlideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .sync-toast.pending {
+            background: var(--btn-bg);
+            border: 1px solid var(--border-color);
+            color: var(--color-primary-light);
+        }
+        .sync-toast.success {
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #6EE7B7;
+        }
+        .sync-toast.error {
+            background: rgba(239, 68, 68, 0.18);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #FCA5A5;
+        }
+
+        /* ===== TUTOR HISTORY TABLE (DESKTOP NO HORIZONTAL SCROLL) ===== */
+        .table-wrapper.desktop-table-view {
+            width: 100% !important;
+            overflow-x: hidden !important;
+            border-radius: 12px;
+            box-sizing: border-box;
+        }
+        .tutor-history-table {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            border-collapse: collapse;
+            font-family: Inter, sans-serif;
+            table-layout: auto;
+        }
+        .tutor-history-table th {
+            background: #F0F7FF;
+            color: #64748B;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding: 8px 6px !important;
+            text-align: left;
+            border-bottom: 2px solid #DBEAFE;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        [data-theme="dark"] .tutor-history-table th {
+            background: rgba(30, 41, 59, 0.7);
+            color: #94A3B8;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+        .tutor-history-table td {
+            padding: 8px 6px !important;
+            border-bottom: 1px solid var(--border-card, #F1F5F9);
+            font-size: 12.5px;
+            color: var(--text-primary, #475569);
+            vertical-align: middle;
+            box-sizing: border-box;
+        }
+        .tutor-history-table tr:hover td {
+            background-color: var(--nav-hover-bg, #F8FAFF);
+        }
+        .tutor-history-table .cell-noidung {
+            min-width: 100px;
+            white-space: normal !important;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.35;
+            color: var(--text-heading, #1E293B);
+            font-weight: 500;
+            font-size: 12px;
+        }
+        .tutor-history-table .cell-nhanxet {
+            min-width: 120px;
+            white-space: normal !important;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.35;
+            font-size: 12px;
+            color: var(--text-primary, #334155);
+        }
+
+        /* ===== TUTOR DASHBOARD MOBILE OPTIMIZATIONS (TASK 14.4) ===== */
+        @media (max-width: 768px) {
+            .tutor-kpi-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px !important;
+            }
+            .kpi-number, .kpi-value { font-size: 22px !important; }
+            .kpi-label { font-size: 11px !important; }
+            .kpi-card, .tutor-kpi-card { padding: 14px !important; }
+
+            /* Ẩn hoàn toàn bảng desktop trên mobile vì đã có thẻ mở / cards bên dưới */
+            .desktop-table-view,
+            .table-wrapper.desktop-table-view,
+            #tuitionTable,
+            #tutorScheduleTable,
+            .desktop-table-view table {
+                display: none !important;
+            }
+            .mobile-cards-view,
+            #tuitionMobileList,
+            #tutorScheduleMobile {
+                display: block !important;
+            }
+
+            /* Diary entries full width */
+            .diary-entry, .tutor-session-row {
+                flex-direction: column !important;
+                gap: 8px !important;
+            }
+
+            /* Content padding on mobile */
+            .tutor-main-content {
+                padding: 12px 12px calc(30px + env(safe-area-inset-bottom)) 12px !important;
+            }
+
+            /* Tuition banner grid 1 or 2 cols on mobile */
+            .tuition-banner-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tutor-kpi-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+            }
+            .tutor-kpi-card { padding: 12px 10px !important; }
+            .kpi-value { font-size: 19px !important; }
+            .kpi-label { font-size: 10.5px !important; }
+            .overview-top-bar {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 10px !important;
+            }
+            .month-selector-widget {
+                width: 100% !important;
+                justify-content: space-between !important;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .kpi-number, .kpi-value { font-size: 18px !important; }
+        }
+
+        /* ===== PHASE 17 — TUTOR DASHBOARD MOBILE ===== */
+        @media (max-width: 768px) {
+          /* Sidebar ẩn mặc định, slide từ trái */
+          .tutor-sidebar {
+            position: fixed !important;
+            left: -280px !important; top: 0 !important; bottom: 0 !important;
+            width: 260px !important; z-index: 10020 !important;
+            transition: left 0.3s cubic-bezier(0.4,0,0.2,1) !important;
+            overflow-y: auto; overflow-x: hidden;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+          }
+          .tutor-sidebar.sidebar-open,
+          .tutor-sidebar.mobile-open { left: 0 !important; }
+
+          /* Overlay mờ */
+          .sidebar-overlay {
+            display: none !important;
+            position: fixed !important;
+            inset: 0 !important;
+            background: rgba(15, 23, 42, 0.65) !important;
+            backdrop-filter: blur(4px) !important;
+            -webkit-backdrop-filter: blur(4px) !important;
+            z-index: 10010 !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+          }
+          .sidebar-overlay.active {
+            display: block !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+          }
+
+          /* Main content full width & header flush to top */
+          .tutor-main-content {
+            margin-left: 0 !important;
+            width: 100% !important;
+            padding: 0 12px 60px 12px !important;
+          }
+          .tutor-mobile-header {
+            margin: 0 -12px 14px -12px !important;
+            width: calc(100% + 24px) !important;
+            background: var(--header-bg, var(--bg-card)) !important;
+          }
+
+          /* KPI grid 2 cột */
+          [class*="kpi-grid"], .kpi-grid, .stats-row, .overview-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 12px !important;
+          }
+          [class*="kpi-number"], .kpi-number, .stat-number { font-size: 22px !important; }
+          [class*="kpi-card"], .kpi-card { padding: 14px !important; }
+
+          /* Bảng học phí scroll ngang */
+          .table-wrapper, [class*="table-wrap"], .fee-table-wrap {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+          }
+        }
+
+/* --- KHỐI 2: HỌC PHÍ & MODAL DIALOG --- */
+.tuition-modal-dialog {
+            width: 95%;
+            max-width: 1140px;
+            min-width: 320px;
+            max-height: 92vh;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            color: #0F172A;
+            padding: 0 !important;
+            box-sizing: border-box;
+            margin: auto;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .tuition-modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #F8FAFC;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-sizing: border-box;
+        }
+        .tuition-modal-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: #64748B;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .tuition-modal-close:hover {
+            background: #E2E8F0;
+            color: #0F172A;
+        }
+        .tuition-modal-body-grid {
+            display: grid;
+            grid-template-columns: 48% 52%;
+            flex: 1;
+            overflow: hidden;
+            background: #F8FAFC;
+            box-sizing: border-box;
+        }
+        .tuition-col-left {
+            padding: 22px 24px;
+            overflow-y: auto;
+            max-height: calc(92vh - 135px);
+            border-right: 1px solid #E2E8F0;
+            box-sizing: border-box;
+            background: #F8FAFC;
+        }
+        .tuition-col-right {
+            padding: 22px 24px;
+            overflow-y: auto;
+            max-height: calc(92vh - 135px);
+            background: #F8FAFC;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tuition-modal-footer {
+            padding: 12px 24px;
+            border-top: 1px solid #E2E8F0;
+            background: #F8FAFC;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-sizing: border-box;
+            border-radius: 0 0 20px 20px;
+        }
+        .btn-tuition-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            padding: 8px 16px;
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            color: #334155;
+        }
+        .btn-tuition-action:hover {
+            transform: translateY(-1px);
+            background: #F1F5F9;
+        }
+        #btnTuitionPromptAI:hover {
+            border-color: #DDD6FE;
+            background: #F5F3FF;
+            color: #6D28D9;
+        }
+        .btn-draft-saved {
+            background: #F5F3FF !important;
+            border-color: #DDD6FE !important;
+            color: #6D28D9 !important;
+            font-weight: 700 !important;
+        }
+        .btn-draft-saved:hover {
+            background: #EDE9FE !important;
+            border-color: #C4B5FD !important;
+        }
+        .btn-tuition-primary {
+            background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%) !important;
+            border: 1px solid #6D28D9 !important;
+            color: #FFFFFF !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25) !important;
+        }
+        .btn-tuition-primary:hover {
+            background: linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%) !important;
+            transform: translateY(-1px);
+        }
+        .btn-template-pill {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #E2E8F0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: transparent;
+            color: #64748B;
+        }
+        .btn-template-pill.active {
+            background: var(--color-primary, #7C3AED) !important;
+            color: #FFFFFF !important;
+            border-color: var(--color-primary, #7C3AED) !important;
+            box-shadow: 0 2px 8px rgba(var(--color-primary-rgb, 124, 58, 237), 0.25);
+        }
+        .btn-tuition-help {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #F8FAFC;
+            border: 1px solid #CBD5E1;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-tuition-help:hover {
+            background: #EDE9FE;
+            border-color: #DDD6FE;
+            color: #7C3AED;
+            transform: translateY(-1px);
+        }
+        /* Tuition Receipt Preview Card */
+        .tuition-receipt-card {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 24px;
+            padding: 24px 20px 20px 20px;
+            box-shadow: 0 20px 50px -10px rgba(109, 40, 217, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #0F172A;
+            position: relative;
+            overflow: hidden;
+        }
+        .tuition-receipt-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+        }
+        /* Hide native browser password reveal/clear buttons (Edge, IE) */
+        input::-ms-reveal,
+        input::-ms-clear {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        .pin-toggle-btn {
+            position: absolute !important;
+            right: 4px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 38px !important;
+            height: 38px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 8px !important;
+            color: var(--text-secondary) !important;
+            cursor: pointer !important;
+            z-index: 15 !important;
+            padding: 0 !important;
+            font-size: 15px !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+            user-select: none !important;
+            pointer-events: auto !important;
+            transition: color 0.15s ease, background 0.15s ease, transform 0.1s ease !important;
+        }
+        .pin-toggle-btn:hover {
+            color: var(--color-primary) !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
+        .pin-toggle-btn:active {
+            transform: translateY(-50%) scale(0.92) !important;
+            color: var(--color-primary) !important;
+        }
+        .pin-toggle-btn i {
+            pointer-events: none !important;
+        }
+
+        /* 2-column Toggle Card Grid */
+        .tuition-card-box {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin-bottom: 18px;
+            box-sizing: border-box;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+            transition: all 0.2s ease;
+        }
+        .tuition-toggle-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .tuition-toggle-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .tuition-toggle-card:hover {
+            border-color: #CBD5E1;
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.04);
+        }
+        .tuition-toggle-label {
+            font-size: 11px;
+            color: #64748B;
+            font-weight: 500;
+        }
+        .tuition-toggle-val {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #0F172A;
+            margin-top: 2px;
+        }
+        .tuition-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+            margin: 0;
+        }
+        .tuition-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+        .tuition-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #CBD5E1;
+            transition: .25s;
+            border-radius: 24px;
+        }
+        .tuition-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .25s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        .tuition-switch input:checked + .tuition-slider {
+            background-color: #7C3AED !important;
+            box-shadow: 0 0 8px rgba(124, 58, 237, 0.35);
+        }
+        .tuition-switch input:checked + .tuition-slider:before {
+            transform: translateX(20px);
+        }
+        @media (max-width: 768px) {
+            .tuition-modal-dialog {
+                width: 96% !important;
+                max-height: 92vh !important;
+                border-radius: 18px !important;
+            }
+            .tuition-modal-body-grid {
+                grid-template-columns: 1fr !important;
+                overflow-y: auto !important;
+                max-height: calc(92vh - 150px) !important;
+            }
+            .tuition-col-left {
+                max-height: none !important;
+                border-right: none !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+                padding: 16px !important;
+                overflow-y: visible !important;
+            }
+            .tuition-col-right {
+                max-height: none !important;
+                padding: 16px !important;
+                overflow-y: visible !important;
+            }
+            .tuition-modal-header {
+                padding: 12px 16px !important;
+            }
+            .tuition-modal-footer {
+                padding: 12px 16px !important;
+                flex-direction: column !important;
+                gap: 8px !important;
+            }
+            .tuition-modal-footer > div {
+                width: 100% !important;
+                display: flex !important;
+                gap: 8px !important;
+                justify-content: space-between !important;
+            }
+            .tuition-modal-footer button {
+                flex: 1 1 auto !important;
+                padding: 8px 10px !important;
+                font-size: 12px !important;
+                justify-content: center !important;
+            }
+        }
+        @media print {
+            @page {
+                margin: 10mm;
+                size: auto;
+            }
+            body {
+                background: #FFFFFF !important;
+                color: #000000 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            /* Hide all navigation, sidebars, headers, other modals, toasts, controls */
+            .tutor-sidebar,
+            .tutor-header,
+            .tutor-main,
+            .modal-overlay:not(#tutorTuitionInvoiceModal),
+            #toastContainer,
+            .tuition-modal-header,
+            .tuition-col-left,
+            .tuition-modal-footer,
+            #fullscreenLightbox,
+            .bottom-nav {
+                display: none !important;
+            }
+            #tutorTuitionInvoiceModal {
+                position: static !important;
+                display: block !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                width: 100% !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+            .tuition-modal-dialog {
+                position: static !important;
+                display: block !important;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                width: 100% !important;
+                max-width: none !important;
+                max-height: none !important;
+                overflow: visible !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .tuition-modal-body-grid {
+                display: block !important;
+                background: transparent !important;
+                overflow: visible !important;
+                border: none !important;
+            }
+            .tuition-col-right {
+                display: block !important;
+                background: transparent !important;
+                max-height: none !important;
+                overflow: visible !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
+                border: none !important;
+            }
+            #tuitionInvoiceModalBody {
+                width: 100% !important;
+                max-width: 500px !important;
+                margin: 0 auto !important;
+            }
+            #tuitionInvoiceCard {
+                display: block !important;
+                width: 100% !important;
+                max-width: 500px !important;
+                margin: 0 auto !important;
+                box-shadow: none !important;
+                border: 1px solid #CBD5E1 !important;
+                background: #FFFFFF !important;
+                color: #0F172A !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                page-break-inside: avoid !important;
+            }
+        }
+
+/* --- KHỐI 3: CÁC MẪU PHIẾU HỌC PHÍ (MẪU 1, 3, 6) --- */
+#tuitionInvoiceModalBody img,
+        #tuitionInvoiceCard img {
+            max-width: 100% !important;
+            box-sizing: border-box;
+        }
+
+        /* ========================================================
+           3 MẪU PHIẾU HỌC PHÍ ĐƯỢC CHỌN (MẪU 1, MẪU 3, MẪU 6)
+           ======================================================== */
+/* --------------------------------------------------------
+       MẪU 1: AIOENGLISH WARM NEOBRUTALISM (Flashcard Ledger)
+       - Đặc trưng Aio: Nền kem #FAF6EE, viền đen 2.5px solid #18181B,
+       - Đổ bóng retro đanh 4px 4px 0 #18181B, font Lexend/Quicksand,
+       - Nhãn sticker nghiêng, tag vàng saffron #FBBF24.
+       -------------------------------------------------------- */
+    .inv-aio-neobrutal {
+      width: 100%;
+      max-width: 440px;
+      background: #FAF6EE;
+      border: 2.5px solid #18181B;
+      border-radius: 18px;
+      box-shadow: 5px 5px 0px #18181B;
+      padding: 22px;
+      font-family: 'Lexend', 'Quicksand', sans-serif;
+      color: #18181B;
+      position: relative;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .inv-aio-neobrutal .aio-badge-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .inv-aio-neobrutal .sticker-title {
+      background: #FBBF24;
+      border: 2px solid #18181B;
+      box-shadow: 2px 2px 0px #18181B;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 900;
+      transform: rotate(-1.5deg);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: -0.2px;
+    }
+    .inv-aio-neobrutal .brand-pill {
+      background: #FFF;
+      border: 2px solid #18181B;
+      box-shadow: 2px 2px 0px #18181B;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+    }
+    .inv-aio-neobrutal .student-hero {
+      background: #FFF;
+      border: 2px solid #18181B;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+      box-shadow: 3px 3px 0px #18181B;
+    }
+    .inv-aio-neobrutal .sh-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .inv-aio-neobrutal .sh-name {
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -0.3px;
+    }
+    .inv-aio-neobrutal .sh-meta {
+      font-size: 12px;
+      color: #52525B;
+      margin-top: 2px;
+      display: flex;
+      gap: 8px;
+    }
+    .inv-aio-neobrutal .session-grid {
+      background: #FFF;
+      border: 2px solid #18181B;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 14px;
+      box-shadow: 3px 3px 0px #18181B;
+    }
+    .inv-aio-neobrutal .grid-title {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .inv-aio-neobrutal .session-badges {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .inv-aio-neobrutal .s-badge {
+      background: #F4F4F5;
+      border: 1.5px solid #18181B;
+      border-radius: 8px;
+      padding: 6px 4px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .inv-aio-neobrutal .s-badge.done {
+      background: #DCFCE7;
+      border-color: #18181B;
+      color: #14532D;
+    }
+    .inv-aio-neobrutal .s-badge.miss {
+      background: #FEE2E2;
+      border-color: #18181B;
+      color: #991B1B;
+    }
+    .inv-aio-neobrutal .calc-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 6px;
+      margin-bottom: 14px;
+    }
+    .inv-aio-neobrutal .calc-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 3px 0;
+    }
+    .inv-aio-neobrutal .calc-row.total {
+      background: #FDE68A;
+      border: 2px solid #18181B;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 6px;
+      font-size: 15px;
+      font-weight: 900;
+      box-shadow: 2px 2px 0px #18181B;
+    }
+    .inv-aio-neobrutal .aio-pay-box {
+      background: #FFF;
+      border: 2px solid #18181B;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      box-shadow: 3px 3px 0px #18181B;
+    }
+    .inv-aio-neobrutal .qr-frame {
+      width: 86px;
+      height: 86px;
+      border: 2px solid #18181B;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #FFF;
+      padding: 3px;
+    }
+    .inv-aio-neobrutal .qr-frame img, .inv-aio-neobrutal .qr-frame svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .inv-aio-neobrutal .pay-details {
+      flex: 1;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .inv-aio-neobrutal .pay-details b {
+      font-weight: 800;
+    }
+    .inv-aio-neobrutal .teacher-note {
+      margin-top: 12px;
+      background: #FEF9C3;
+      border: 1.5px dashed #18181B;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 11.5px;
+      font-style: italic;
+      color: #713F12;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    
+/* Mẫu 1: Aio Neobrutalism Feedback Box */
+    .inv-aio-neobrutal .aio-feedback-box {
+      margin-top: 14px;
+      background: #FEF9C3;
+      border: 2px solid #18181B;
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 3px 3px 0px #18181B;
+      text-align: left;
+    }
+    .inv-aio-neobrutal .af-header {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #713F12;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1.5px dashed #CA8A04;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .inv-aio-neobrutal .af-body {
+      font-size: 12px;
+      line-height: 1.55;
+      color: #18181B;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    
+/* --------------------------------------------------------
+       MẪU 3: AIOENGLISH EDITORIAL CLEAN PAPER (Ấm áp, Font tròn)
+       - Nền màu giấy kem sữa #FBF9F4, viền đen tinh gọn 2px,
+       - Font Newsreader tiêu đề phong cách báo chí + Quicksand thân thiện,
+       - Cuống vé xé viền răng cưa nhẹ nhàng.
+       -------------------------------------------------------- */
+    .inv-aio-editorial {
+      width: 100%;
+      max-width: 440px;
+      background: #FBF9F4;
+      border: 2px solid #27272A;
+      border-radius: 16px;
+      box-shadow: 4px 4px 0px #27272A;
+      padding: 24px;
+      font-family: 'Quicksand', sans-serif;
+      color: #27272A;
+      position: relative;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .inv-aio-editorial .ed-header {
+      text-align: center;
+      border-bottom: 2px dashed #D4D4D8;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+    }
+    .inv-aio-editorial .ed-super {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: #71717A;
+    }
+    .inv-aio-editorial .ed-title {
+      font-family: 'Newsreader', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #18181B;
+      margin: 2px 0 4px;
+    }
+    .inv-aio-editorial .ed-pills {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .inv-aio-editorial .ed-pill {
+      border: 1.5px solid #27272A;
+      background: #FFF;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .inv-aio-editorial .ed-body {
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .inv-aio-editorial .ed-box {
+      background: #FFF;
+      border: 1.5px solid #27272A;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+    .inv-aio-editorial .ed-tear-line {
+      border-top: 2px dashed #A1A1AA;
+      margin: 16px -24px;
+      position: relative;
+    }
+    .inv-aio-editorial .ed-tear-line::before, .inv-aio-editorial .ed-tear-line::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: var(--showcase-bg);
+      border-radius: 50%;
+      top: -8px;
+      border: 2px solid #27272A;
+    }
+    .inv-aio-editorial .ed-tear-line::before { left: -9px; }
+    .inv-aio-editorial .ed-tear-line::after { right: -9px; }
+    .inv-aio-editorial .ed-footer-pay {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .inv-aio-editorial .ed-footer-pay .ed-qr-box {
+      width: 76px;
+      height: 76px;
+      border: 1.5px solid #27272A;
+      border-radius: 8px;
+      padding: 3px;
+      background: #FFF;
+      flex-shrink: 0;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inv-aio-editorial .ed-footer-pay img,
+    .inv-aio-editorial .ed-qr-box img {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
+
+    
+/* Mẫu 3: Aio Editorial Clean Paper Feedback Box */
+    .inv-aio-editorial .ed-feedback-box {
+      margin: 14px 0;
+      background: #FFFBEB;
+      border-left: 3px solid #D97706;
+      border-radius: 4px 8px 8px 4px;
+      padding: 10px 14px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .inv-aio-editorial .ef-header {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #92400E;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .inv-aio-editorial .ef-content {
+      font-size: 12px;
+      color: #27272A;
+      line-height: 1.55;
+    }
+
+    
+/* --------------------------------------------------------
+       MẪU 6: ACADEMIC DIPLOMA (Bằng Chứng Nhận / Thư Viện Cổ Điển)
+       - Nền giấy da cổ #FCFBF7, viền kép màu vàng đồng Antique Gold,
+       - Font có chân cổ điển Playfair Display, con dấu mộc sáp đỏ danh giá.
+       -------------------------------------------------------- */
+    .inv-diploma {
+      width: 100%;
+      max-width: 440px;
+      background: #FCFBF7;
+      border: 3px double #B45309;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(180, 83, 9, 0.12);
+      font-family: 'Playfair Display', serif;
+      color: #372A1C;
+      position: relative;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .inv-diploma::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid rgba(180, 83, 9, 0.3);
+      pointer-events: none;
+    }
+    .inv-diploma .dip-head {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .inv-diploma .dip-badge {
+      display: inline-block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #B45309;
+      font-weight: 700;
+      border-bottom: 1px solid #B45309;
+      padding-bottom: 2px;
+    }
+    .inv-diploma .dip-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin: 6px 0 2px;
+      color: #1C1917;
+      letter-spacing: 0.5px;
+    }
+    .inv-diploma .dip-subtitle {
+      font-size: 12px;
+      font-style: italic;
+      color: #78716C;
+    }
+    .inv-diploma .dip-content {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12.5px;
+      line-height: 1.6;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid #E7E5E4;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+    .inv-diploma .dip-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px dashed #D6D3D1;
+    }
+    .inv-diploma .dip-row:last-child {
+      border-bottom: none;
+    }
+    .inv-diploma .dip-total {
+      text-align: center;
+      padding: 8px 0;
+      font-size: 14px;
+      font-weight: 800;
+      color: #9A3412;
+      border-top: 1px solid #B45309;
+      border-bottom: 1px solid #B45309;
+      margin-bottom: 14px;
+    }
+    .inv-diploma .dip-sign-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .inv-diploma .dip-qr-box {
+      width: 58px;
+      height: 58px;
+      background: #FFF;
+      border: 1px solid #D6D3D1;
+      border-radius: 6px;
+      padding: 2px;
+      flex-shrink: 0;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inv-diploma .dip-sign-block img,
+    .inv-diploma .dip-qr-box img {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
+    .inv-diploma .wax-seal {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #DC2626 0%, #991B1B 100%);
+      color: #FFF;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(153, 27, 27, 0.35);
+      border: 2px dashed rgba(255,255,255,0.4);
+    }
+    .inv-diploma .sign-box {
+      text-align: right;
+      font-size: 11px;
+    }
+    .inv-diploma .sig-font {
+      font-family: 'Dancing Script', cursive;
+      font-size: 24px;
+      color: #1E3A8A;
+      margin-top: 2px;
+    }
+
+    
+/* Mẫu 6: Academic Diploma Feedback Box */
+    .inv-diploma .dip-feedback-box {
+      background: #FFFDF8;
+      border: 1px solid #D4AF37;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin: 14px 0;
+      font-family: 'Newsreader', serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #451A03;
+    }
+    .inv-diploma .dip-fb-head {
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      font-weight: 800;
+      font-style: normal;
+      color: #92400E;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px dashed #D4AF37;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .inv-diploma .dip-fb-body {
+      font-style: italic;
+    }
+
+    
+
+        /* ===== MÀU RIÊNG CỦA PHIẾU HỌC PHÍ ===== */
+        .inv-theme-bar { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 480px; margin-bottom: 12px; flex-wrap: wrap; }
+        .inv-theme-bar-label { font-size: 12px; font-weight: 700; color: #64748B; margin-right: 2px; display: inline-flex; align-items: center; gap: 6px; }
+        .inv-theme-swatches { display: inline-flex; gap: 7px; flex-wrap: wrap; }
+        .inv-theme-swatch { position: relative; width: 24px; height: 24px; border-radius: 50%; padding: 0; cursor: pointer; border: 2px solid #FFFFFF; background: linear-gradient(135deg, var(--sw2) 0%, var(--sw) 70%); box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.15), 0 2px 6px rgba(15, 23, 42, 0.12); transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .inv-theme-swatch:hover { transform: scale(1.12); }
+        .inv-theme-swatch.active { transform: scale(1.12); box-shadow: 0 0 0 2px var(--sw), 0 3px 10px rgba(15, 23, 42, 0.2); }
+        .inv-theme-swatch.active::after { content: '\2713'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 12px; font-weight: 900; }
+        [data-theme="dark"] .inv-theme-bar-label { color: var(--text-secondary, #CBD5E1); }
+
+        #tuitionInvoiceCard.inv-themed::before { background: var(--inv-bar) !important; }
+        #tuitionInvoiceCard.inv-themed .inv-avatar { background: linear-gradient(135deg, var(--inv-p) 0%, var(--inv-pd) 100%) !important; box-shadow: 0 4px 12px rgba(var(--inv-rgb), 0.25) !important; }
+        #tuitionInvoiceCard.inv-themed .inv-pill-status { background: var(--inv-line) !important; color: var(--inv-mid) !important; border-color: rgba(var(--inv-rgb), 0.15) !important; }
+        #tuitionInvoiceCard.inv-themed .inv-section-title i,
+        #tuitionInvoiceCard.inv-themed .msg-header i,
+        #tuitionInvoiceCard.inv-themed .text-purple { color: var(--inv-p) !important; }
+        #tuitionInvoiceCard.inv-themed .fee-card { background: linear-gradient(135deg, var(--inv-soft) 0%, var(--inv-soft2) 100%) !important; border-color: var(--inv-border) !important; }
+        #tuitionInvoiceCard.inv-themed .fee-row.grand-total { border-top-color: var(--inv-strong) !important; }
+        #tuitionInvoiceCard.inv-themed .fee-row.grand-total .total-label { color: var(--inv-deep) !important; }
+        #tuitionInvoiceCard.inv-themed .fee-row.grand-total .total-val { color: var(--inv-mid) !important; }
+        #tuitionInvoiceCard.inv-themed .qr-card { border-color: var(--inv-border) !important; background: linear-gradient(180deg, #FFFFFF 0%, var(--inv-soft) 100%) !important; box-shadow: 0 4px 15px rgba(var(--inv-rgb), 0.08) !important; }
+        #tuitionInvoiceCard.inv-themed .qr-label { color: var(--inv-mid) !important; }

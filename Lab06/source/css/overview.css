@@ -1,0 +1,84 @@
+.overview-dashboard .overview-activity {
+  margin-bottom: 20px;
+  padding-block: 14px;
+}
+.overview-activity-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 12px;
+}
+.overview-activity-title h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+.overview-activity-title h2 .icon { color: var(--green); }
+.overview-activity-notice { margin-top: 6px; color: var(--muted); }
+.overview-dashboard .text-btn,
+.overview-dashboard .btn { min-height: 44px; }
+.overview-activity-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, .8fr)) minmax(0, 1.3fr);
+  gap: 12px;
+  margin: 6px 0 0;
+}
+.overview-activity-metrics > div {
+  padding-inline-start: 12px;
+  border-inline-start: 2px solid var(--line);
+}
+.overview-activity-metrics dt { color: var(--muted); font-size: 12px; }
+.overview-activity-metrics dd { margin: 3px 0 0; font-weight: 600; }
+.overview-week-goal progress {
+  display: block;
+  width: min(100%, 190px);
+  height: 8px;
+  margin-top: 6px;
+  accent-color: var(--green);
+}
+.overview-spending {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid currentColor;
+}
+.overview-dashboard .overview-spending p {
+  margin: 0;
+  font-size: 13px;
+}
+.overview-dashboard .overview-spending p + p { margin-top: 4px; }
+.overview-spending strong { color: inherit; }
+.overview-dashboard .cycle-panel h2 { font-size: 15px; }
+.overview-meals .meal-mini-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 126px), 1fr));
+}
+.overview-meals .meal-mini { min-width: 0; }
+.overview-dashboard .overview-meal-focus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 22px;
+  margin-bottom: 20px;
+  padding-block: 14px;
+}
+.overview-meal-focus h2 { font-size: 17px; }
+.overview-meal-focus p { margin-top: 4px; color: var(--muted); font-size: 13px; }
+.overview-meal-focus .overview-next-label { margin: 0 0 4px; color: var(--green); font-weight: 600; }
+.overview-meal-focus .overview-next-name { color: var(--text); font-size: 15px; font-weight: 600; }
+.overview-meal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+.overview-empty .actions { margin-top: 12px; }
+
+@media (max-width: 600px) {
+  .overview-activity-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+  .overview-week-goal { grid-column: 1 / -1; }
+}

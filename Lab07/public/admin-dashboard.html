@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Trung Tâm Quản Trị Hệ Thống · ZunTutor Lab07</title>
+<link href="favicon.ico" rel="shortcut icon"/>
+<link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="img/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="manifest.json" rel="manifest"/>
+<meta content="#2563EB" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="ZunTutor" name="apple-mobile-web-app-title"/>
+<link href="img/zuntutor_app_icon.png" rel="apple-touch-icon"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="192x192"/>
+<link href="img/zuntutor_app_icon_512.png" rel="apple-touch-icon" sizes="512x512"/>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/public-theme.css" rel="stylesheet"/>
+<style>
+        :root {
+            --adm-bg: #F0F7FF;
+            --adm-card-bg: #FFFFFF;
+            --adm-card-border: #E2E8F0;
+            --adm-card-border-subtle: #DBEAFE;
+            --adm-primary: #2563EB;
+            --adm-primary-hover: #1D4ED8;
+            --adm-primary-soft: #EFF6FF;
+            --adm-success: #10B981;
+            --adm-success-soft: #ECFDF5;
+            --adm-warning: #F59E0B;
+            --adm-warning-soft: #FFFBEB;
+            --adm-danger: #EF4444;
+            --adm-danger-soft: #FEF2F2;
+            --adm-text-main: #1E293B;
+            --adm-text-muted: #64748B;
+            --adm-text-light: #94A3B8;
+            --adm-shadow-card: 0 4px 20px rgba(59, 130, 246, 0.08);
+            --adm-shadow-hover: 0 8px 28px rgba(59, 130, 246, 0.14);
+        }
+
+        body {
+            background-color: var(--adm-bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                linear-gradient(160deg, #F0F7FF 0%, #E0EFFF 50%, #F5F8FF 100%);
+            background-attachment: fixed;
+            color: var(--adm-text-main);
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .admin-wrapper {
+            width: 100%;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+            box-sizing: border-box;
+        }
+
+        /* Top Executive Header */
+        .adm-header-bar {
+            background: #FFFFFF;
+            border: 1px solid var(--adm-card-border-subtle);
+            border-radius: 20px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--adm-shadow-card);
+        }
+
+        .adm-brand-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .adm-brand-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFF;
+            font-size: 22px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+            flex-shrink: 0;
+        }
+
+        .adm-brand-title {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 800;
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .adm-live-badge {
+            font-size: 11px;
+            font-weight: 700;
+            background: #ECFDF5;
+            color: #059669;
+            border: 1px solid #A7F3D0;
+            border-radius: 999px;
+            padding: 3px 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .adm-pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10B981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+            animation: admPulse 2s infinite;
+        }
+
+        @keyframes admPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .adm-brand-sub {
+            margin: 3px 0 0;
+            font-size: 12.5px;
+            color: var(--adm-text-muted);
+            font-weight: 500;
+        }
+
+        .adm-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .adm-action-btn {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            color: #334155;
+            border-radius: 12px;
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .adm-action-btn:hover {
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            color: #0F172A;
+            transform: translateY(-1px);
+        }
+
+        .adm-action-btn.btn-refresh {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+            color: #059669;
+        }
+
+        .adm-action-btn.btn-refresh:hover {
+            background: #D1FAE5;
+            border-color: #6EE7B7;
+            color: #047857;
+        }
+
+        .adm-action-btn.btn-account {
+            background: #EFF6FF;
+            border-color: #BFDBFE;
+            color: #2563EB;
+        }
+
+        .adm-action-btn.btn-account:hover {
+            background: #DBEAFE;
+            border-color: #93C5FD;
+            color: #1D4ED8;
+        }
+
+        .adm-action-btn.btn-logout {
+            background: #FEF2F2;
+            border-color: #FECACA;
+            color: #DC2626;
+        }
+
+        .adm-action-btn.btn-logout:hover {
+            background: #FEE2E2;
+            border-color: #FCA5A5;
+            color: #B91C1C;
+        }
+
+        /* Billing alert box */
+        #adminBillingAlerts {
+            margin-bottom: 24px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .adm-alert-card {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 14px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08);
+        }
+
+        /* Segmented Modern Navigation Tabs */
+        .adm-tabs-container {
+            display: inline-flex;
+            background: #FFFFFF;
+            border: 1px solid var(--adm-card-border-subtle);
+            padding: 6px;
+            border-radius: 16px;
+            gap: 6px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.05);
+        }
+
+        .adm-tab-pill {
+            background: transparent;
+            border: none;
+            color: #64748B;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .adm-tab-pill:hover {
+            color: #1E293B;
+            background: #F1F5F9;
+        }
+
+        .adm-tab-pill.active {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+        }
+
+        .adm-badge-count {
+            background: #EFF6FF;
+            color: #2563EB;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        .adm-tab-pill.active .adm-badge-count {
+            background: rgba(255, 255, 255, 0.25);
+            color: #FFFFFF;
+        }
+
+        /* KPI Stat Cards Grid */
+        .adm-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .adm-kpi-card {
+            background: #FFFFFF;
+            border: 1px solid var(--adm-card-border-subtle);
+            border-radius: 20px;
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--adm-shadow-card);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .adm-kpi-card:hover {
+            transform: translateY(-2px);
+            border-color: #BFDBFE;
+            box-shadow: var(--adm-shadow-hover);
+        }
+
+        .adm-kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .adm-kpi-card.kpi-purple::before { background: linear-gradient(90deg, #3B82F6, #60A5FA); }
+        .adm-kpi-card.kpi-green::before { background: linear-gradient(90deg, #10B981, #34D399); }
+        .adm-kpi-card.kpi-orange::before { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+
+        .adm-kpi-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .kpi-purple .adm-kpi-icon { background: #EFF6FF; color: #2563EB; }
+        .kpi-green .adm-kpi-icon { background: #ECFDF5; color: #059669; }
+        .kpi-orange .adm-kpi-icon { background: #FFFBEB; color: #D97706; }
+
+        .adm-kpi-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .adm-kpi-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--adm-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .adm-kpi-val {
+            font-size: 24px;
+            font-weight: 900;
+            color: #0F172A;
+            letter-spacing: -0.5px;
+        }
+
+        /* Glassmorphic Cards & Tables */
+        .adm-card {
+            background: #FFFFFF;
+            border: 1px solid var(--adm-card-border-subtle);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--adm-shadow-card);
+        }
+
+        .adm-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .adm-card-title {
+            margin: 0;
+            font-size: 16.5px;
+            font-weight: 800;
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .adm-card-title i {
+            font-size: 17px;
+        }
+
+        /* Search & Filter Toolbar */
+        .adm-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .adm-search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .adm-search-wrap i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94A3B8;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .adm-search-input {
+            width: 100%;
+            padding: 10px 14px 10px 38px;
+            border-radius: 12px;
+            background: #F8FAFC;
+            border: 1px solid #CBD5E1;
+            color: #0F172A;
+            font-size: 13.5px;
+            font-family: inherit;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .adm-search-input:focus {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            background: #FFFFFF;
+        }
+
+        .adm-filter-select {
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            color: #1E293B;
+            font-size: 13.5px;
+            font-family: inherit;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .adm-filter-select:focus {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Modern Table */
+        .adm-table-wrap {
+            overflow-x: auto;
+            border-radius: 14px;
+            border: 1px solid var(--adm-card-border-subtle);
+            background: #FFFFFF;
+        }
+
+        .adm-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13.5px;
+            text-align: left;
+        }
+
+        .adm-table th {
+            background: #F8FAFC;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 14px 16px;
+            border-bottom: 1px solid #E2E8F0;
+            white-space: nowrap;
+        }
+
+        .adm-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #F1F5F9;
+            color: #334155;
+            vertical-align: middle;
+            transition: background 0.15s ease;
+        }
+
+        .adm-table tbody tr:hover td {
+            background: #F8FAFC;
+        }
+
+        .adm-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Avatar Chip */
+        .adm-user-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .adm-avatar-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: #FFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .adm-phone-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #334155;
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .adm-copy-btn {
+            background: transparent;
+            border: none;
+            color: #64748B;
+            cursor: pointer;
+            padding: 2px;
+            font-size: 11px;
+            transition: color 0.15s ease;
+        }
+
+        .adm-copy-btn:hover {
+            color: #2563EB;
+        }
+
+        /* Status Pills */
+        .adm-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11.5px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .adm-status-pill.status-active {
+            background: #ECFDF5;
+            color: #059669;
+            border: 1px solid #A7F3D0;
+        }
+
+        .adm-status-pill.status-due {
+            background: #FEF2F2;
+            color: #DC2626;
+            border: 1px solid #FECACA;
+        }
+
+        .adm-status-pill.status-locked {
+            background: #FFFBEB;
+            color: #D97706;
+            border: 1px solid #FDE68A;
+        }
+
+        .adm-btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+
+        .adm-btn-action.btn-edit {
+            background: #F1F5F9;
+            color: #2563EB;
+            border-color: #CBD5E1;
+        }
+
+        .adm-btn-action.btn-edit:hover {
+            background: #EFF6FF;
+            border-color: #BFDBFE;
+            color: #1D4ED8;
+        }
+
+        .adm-btn-action.btn-pay {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: #FFF;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+        }
+
+        .adm-btn-action.btn-pay:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .adm-btn-action.btn-lock {
+            background: #FFFBEB;
+            border-color: #FDE68A;
+            color: #D97706;
+        }
+
+        .adm-btn-action.btn-lock:hover {
+            background: #FEF3C7;
+        }
+
+        .adm-btn-action.btn-unlock {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+            color: #059669;
+        }
+
+        .adm-btn-action.btn-unlock:hover {
+            background: #D1FAE5;
+        }
+
+        .adm-btn-action.btn-cancel-renew {
+            background: #FEF2F2;
+            border-color: #FECACA;
+            color: #DC2626;
+        }
+
+        .adm-btn-action.btn-cancel-renew:hover {
+            background: #FEE2E2;
+            border-color: #F87171;
+            color: #B91C1C;
+        }
+
+        .adm-pin-badge {
+            display: inline-block;
+            letter-spacing: 2px;
+            font-family: monospace;
+            font-weight: 700;
+            color: #2563EB;
+            background: #EFF6FF;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid #BFDBFE;
+        }
+
+        .adm-due-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748B;
+        }
+
+        .adm-due-badge.is-due {
+            color: #DC2626;
+            font-weight: 700;
+        }
+
+        .adm-tag-tutor {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #EFF6FF;
+            color: #2563EB;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #DBEAFE;
+        }
+
+        /* Progress Bar in Tables */
+        .adm-progress-bar {
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: #E2E8F0;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .adm-progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.4s ease;
+        }
+
+        /* Broadcast Banner Card */
+        .adm-broadcast-box {
+            background: #EFF6FF;
+            border: 1px dashed #BFDBFE;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Buttons */
+        .btn-primary-gradient {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            border: none;
+            color: #FFF;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary-gradient:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-secondary-ghost {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            color: #475569;
+            padding: 9px 18px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn-secondary-ghost:hover {
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            color: #1E293B;
+        }
+
+        /* Accordions */
+        .accordion-item {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.04);
+        }
+        .accordion-header {
+            padding: 14px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #FFFFFF;
+            user-select: none;
+            transition: background 0.15s ease;
+        }
+        .accordion-header:hover {
+            background: #F8FAFC;
+        }
+        .accordion-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #1E293B;
+            flex-wrap: wrap;
+        }
+        .accordion-header-status {
+            color: #64748B;
+            font-size: 12px;
+        }
+        .accordion-body {
+            padding: 14px 16px;
+            border-top: 1px solid #F1F5F9;
+            background: #F8FAFC;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .accordion-body-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            gap: 12px;
+        }
+        .accordion-body-label {
+            color: #64748B;
+            font-weight: 500;
+        }
+        .accordion-body-val {
+            color: #1E293B;
+            font-weight: 600;
+        }
+
+        /* Modal Overlays Light Theme */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 2000;
+        }
+
+        /* Responsive Mobile Styles */
+        @media (max-width: 768px) {
+            .admin-wrapper {
+                padding: 14px 12px 60px;
+            }
+            .adm-header-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 16px;
+            }
+            .adm-header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .adm-kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            .desktop-table-view {
+                display: none !important;
+            }
+            .mobile-cards-view {
+                display: flex !important;
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-cards-view {
+                display: none !important;
+            }
+        }
+    </style>
+<link href="/vendor/inter.css" rel="stylesheet"/><link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/><link href="/css/lab-portals.css" rel="stylesheet"/></head>
+<body class="lab-private" data-page="admin-dashboard">
+<div class="header">
+<div class="nav-container">
+<a class="nav-left" href="index.html" style="text-decoration: none; cursor: pointer;">
+<img alt="ZunTutor Logo" class="nav-logo" src="img/zuntutor_avatar_blue.png"/>
+<div class="header-text">
+<h1>ZunTutor</h1>
+<p>Quản lý Gia sư 4.0</p>
+</div>
+</a>
+<div class="nav-right">
+<a class="nav-btn" href="index.html" id="btnNavHome"><i class="fa-solid fa-house"></i> <span class="nav-label">Trang chủ</span></a>
+<a class="nav-btn" href="student-login.html" id="btnNavStudent"><i class="fa-solid fa-graduation-cap"></i> <span class="nav-label">PH/HS</span></a>
+<a class="nav-btn" href="homework.html" id="btnNavHomework"><i class="fa-solid fa-file-arrow-up"></i> <span class="nav-label">BÀI TẬP</span></a>
+<a class="nav-btn active" href="tutor-login.html" id="btnNavTutor"><i class="fa-solid fa-chalkboard-user"></i> <span class="nav-label">GIA SƯ</span></a>
+</div>
+<button aria-label="Menu" class="hamburger-btn" id="hamburgerBtn">
+<i class="fa-solid fa-bars" id="hamburgerIcon"></i>
+</button>
+</div>
+<div class="mobile-nav-dropdown" id="mobileNavDropdown">
+<a class="mobile-nav-item" href="index.html" id="mobileHome">
+<i class="fa-solid fa-house"></i> Trang chủ
+            </a>
+<a class="mobile-nav-item" href="student-login.html" id="mobileStudent">
+<i class="fa-solid fa-graduation-cap"></i> PH/HS
+            </a>
+<a class="mobile-nav-item" href="homework.html" id="mobileHomework">
+<i class="fa-solid fa-file-arrow-up"></i> Bài tập
+            </a>
+<a class="mobile-nav-item active" href="tutor-login.html" id="mobileTutor">
+<i class="fa-solid fa-chalkboard-user"></i> Gia sư
+            </a>
+</div>
+</div>
+<div id="adminDashboardBox" style="display: none;">
+<div class="admin-wrapper">
+<header class="adm-header-bar">
+<div class="adm-brand-block">
+<div class="adm-brand-icon">
+<i class="fa-solid fa-shield-halved"></i>
+</div>
+<div>
+<h1 class="adm-brand-title">
+<span id="adminNameDisplay">Xin chào, Quản trị viên</span>
+<span class="adm-live-badge"><span class="adm-pulse-dot"></span> Trực tuyến</span>
+</h1>
+<p class="adm-brand-sub"><i class="fa-solid fa-server" style="color: #2563EB;"></i> Trung tâm điều hành &amp; quản trị cơ sở dữ liệu ZunTutor</p>
+</div>
+</div>
+<div class="adm-header-actions">
+<button class="adm-action-btn btn-refresh" id="btnRefreshAdmin" title="Làm mới dữ liệu từ máy chủ">
+<i class="fa-solid fa-arrows-rotate"></i> <span>Làm mới</span>
+</button>
+<button class="adm-action-btn btn-account" data-original-action="openAdminAccountModal">
+<i class="fa-solid fa-user-shield"></i> <span>Tài khoản</span>
+</button>
+<button class="adm-action-btn btn-logout" data-original-action="quayLai">
+<i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Đăng xuất</span>
+</button>
+</div>
+</header>
+<div id="adminBillingAlerts"></div>
+<nav class="adm-tabs-container">
+<button class="adm-tab-pill active" id="btnAdminTabReport">
+<i class="fa-solid fa-chart-line"></i> Tổng Quan Kinh Doanh
+                </button>
+<button class="adm-tab-pill" id="btnAdminTabTutors">
+<i class="fa-solid fa-chalkboard-user"></i> Quản Lý Gia Sư
+                    <span class="adm-badge-count" id="tutorTabCountBadge">0</span>
+</button>
+<button class="adm-tab-pill" id="btnAdminTabCenters">
+<i class="fa-solid fa-building"></i> Trung Tâm Giới Thiệu
+                    <span class="adm-badge-count" id="centerTabCountBadge">0</span>
+</button>
+<button class="adm-tab-pill" id="btnAdminTabSettings">
+<i class="fa-solid fa-sliders"></i> Cài Đặt Hệ Thống
+                </button>
+</nav>
+<section class="admin-tab-content" id="adminTabReport">
+<div class="adm-kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+<div class="adm-kpi-card kpi-purple">
+<div class="adm-kpi-icon"><i class="fa-solid fa-wallet"></i></div>
+<div class="adm-kpi-info">
+<span class="adm-kpi-label">Doanh thu phí web tháng này</span>
+<span class="adm-kpi-val" id="admKpiRevenue">0 đ</span>
+</div>
+</div>
+<div class="adm-kpi-card kpi-green">
+<div class="adm-kpi-icon"><i class="fa-solid fa-circle-check"></i></div>
+<div class="adm-kpi-info">
+<span class="adm-kpi-label">Gia sư đang hoạt động (trả phí)</span>
+<span class="adm-kpi-val" id="admKpiActive" style="color: #059669;">0</span>
+</div>
+</div>
+<div class="adm-kpi-card" style="border-left: 4px solid #3B82F6;">
+<div class="adm-kpi-icon" style="background: #EFF6FF; color: #2563EB;"><i class="fa-solid fa-clock"></i></div>
+<div class="adm-kpi-info">
+<span class="adm-kpi-label">Gia sư đang dùng thử (15 ngày)</span>
+<span class="adm-kpi-val" id="admKpiTrial" style="color: #2563EB;">0</span>
+</div>
+</div>
+<div class="adm-kpi-card kpi-orange">
+<div class="adm-kpi-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+<div class="adm-kpi-info">
+<span class="adm-kpi-label">Gia sư hết hạn / cần gia hạn</span>
+<span class="adm-kpi-val" id="admKpiExpired" style="color: #DC2626;">0</span>
+</div>
+</div>
+</div>
+<div id="adminBillingAlerts" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;"></div>
+<div class="adm-card">
+<div class="adm-card-header">
+<h2 class="adm-card-title">
+<i class="fa-solid fa-chart-line" style="color: #2563EB;"></i> Biểu đồ doanh thu phí duy trì web theo tháng
+                        </h2>
+</div>
+<div style="position: relative; height: 300px; width: 100%;">
+<canvas id="adminRevenueChartCanvas"></canvas>
+</div>
+</div>
+<div class="adm-card">
+<div class="adm-card-header">
+<h2 class="adm-card-title">
+<i class="fa-solid fa-receipt" style="color: #2563EB;"></i> Lịch sử thu phí &amp; gia hạn gần đây
+                        </h2>
+</div>
+<div class="adm-table-wrap desktop-table-view">
+<table class="adm-table" id="adminPaymentsTable">
+<thead></thead>
+<tbody>
+</tbody>
+</table>
+</div>
+<div class="mobile-cards-view" id="adminPaymentsMobile"></div>
+</div>
+</section>
+<section class="admin-tab-content" id="adminTabTutors" style="display: none;">
+<div class="adm-card">
+<div class="adm-card-header">
+<h2 class="adm-card-title">
+<i class="fa-solid fa-chalkboard-user" style="color: #2563EB;"></i> Danh sách Gia sư trong hệ thống
+                        </h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap;">
+<button class="btn-secondary-ghost" data-original-action="openTutorTrashModal" style="color: #DC2626; border-color: #FECACA; background: #FEF2F2;">
+<i class="fa-solid fa-trash-can"></i> Thùng rác Gia sư
+                            </button>
+<button class="btn-primary-gradient" data-original-action="openAdminAddTutorModal">
+<i class="fa-solid fa-plus"></i> Thêm Gia Sư Mới
+                            </button>
+</div>
+</div>
+<div class="adm-toolbar">
+<div class="adm-search-wrap">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input class="adm-search-input" id="adminTutorSearchInput" placeholder="Tìm gia sư theo tên, SĐT hoặc email..." type="text"/>
+</div>
+<select class="adm-filter-select" id="adminTutorStatusFilter">
+<option value="all">Tất cả trạng thái</option>
+<option value="active">Đang hoạt động (trả phí)</option>
+<option value="trial">Đang dùng thử (15 ngày)</option>
+<option value="trial_expired">Hết hạn dùng thử</option>
+<option value="sub_expired">Hết hạn sử dụng</option>
+<option value="due">Sắp hết hạn (≤3 ngày)</option>
+<option value="deactivated">Bị vô hiệu hóa</option>
+</select>
+<select class="adm-filter-select" id="adminTutorCenterFilter">
+<option value="all">Tất cả nguồn / trung tâm</option>
+</select>
+</div>
+<div class="adm-table-wrap desktop-table-view">
+<table class="adm-table" id="adminTutorsTable">
+<thead></thead>
+<tbody>
+</tbody>
+</table>
+</div>
+<div class="mobile-cards-view" id="adminTutorsMobile"></div>
+</div>
+</section>
+<section class="admin-tab-content" id="adminTabCenters" style="display: none;">
+<div class="adm-card">
+<div class="adm-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+<h2 class="adm-card-title" style="margin-bottom: 0;">
+<i class="fa-solid fa-building" style="color: #2563EB;"></i> Thống kê nguồn &amp; Trung tâm giới thiệu
+                        </h2>
+<button class="btn-primary-gradient" id="btnOpenAddCenterModal" style="padding: 8px 16px; font-size: 13px;">
+<i class="fa-solid fa-plus"></i> Thêm Trung Tâm Mới
+                        </button>
+</div>
+<p style="font-size: 13.5px; color: #64748B; margin-top: 0; margin-bottom: 12px; line-height: 1.5;">
+                        Thống kê số lượng gia sư, doanh thu thực thu và đối soát tiền hoa hồng cho từng đối tác / trung tâm giới thiệu.
+                    </p>
+<div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: #92400E; font-weight: 500; line-height: 1.5;">
+<i class="fa-solid fa-circle-info" style="color: #D97706; font-size: 16px; flex-shrink: 0;"></i>
+<span><strong>Lưu ý nghiệp vụ hoa hồng:</strong> Hoa hồng <strong>chỉ được tính khi gia sư phát sinh giao dịch mua gói / gia hạn dịch vụ thực tế</strong>. Các tài khoản đang trong thời gian dùng thử miễn phí hoặc chưa mua gói không được tính hoa hồng.</span>
+</div>
+<div class="adm-table-wrap desktop-table-view">
+<table class="adm-table" id="adminCentersTable">
+<thead></thead>
+<tbody>
+</tbody>
+</table>
+</div>
+<div class="mobile-cards-view" id="adminCentersMobile"></div>
+</div>
+</section>
+<section class="admin-tab-content" id="adminTabSettings" style="display: none;"></section>
+</div>
+</div>
+<script defer="" src="/vendor/chart.umd.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/lang-all.js"></script><script defer="" src="/js/admin.js"></script></body>
+</html>

@@ -1,0 +1,2737 @@
+/* ========================================================
+   ZUNTUTOR - TUTOR CALENDAR STYLES (Trích xuất Bước 6 - C1)
+   ======================================================== */
+
+/* === BỘ PHÔNG CHỮ VIỆT HÓA CHUẨN ĐỒNG BỘ TOÀN DIỆN CHO LỊCH DẠY === */
+        *:not(i):not([class*="fa-"]) {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        body, button, input, select, textarea,
+        .calendar-month-title, .cal-title-main, .cal-title-year,
+        .cal-today-btn, .cal-view-pill, .cal-sheet-toggle-btn,
+        .fc-col-header-cell-cushion, .fc-daygrid-day-number,
+        .fc-month-chip-inner, .fc-chip-title, .fc-chip-time,
+        .cal-legend-name, .cal-status-bar, #calStatusText {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+        }
+
+        /* Bảo toàn tuyệt đối font FontAwesome Icon */
+        i, [class*="fa-"], .fa-solid, .fa-regular {
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 900 !important;
+        }
+        .fa-regular {
+            font-weight: 400 !important;
+        }
+        .fa-brands {
+            font-family: "Font Awesome 6 Brands" !important;
+            font-weight: 400 !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* === EMBEDDED MODE TRONG DASHBOARD (KHÔNG CHUYỂN TRANG) === */
+        html.is-embedded-calendar,
+        body.is-embedded-calendar {
+            background: transparent !important;
+            padding: 0 !important;
+            height: 100% !important;
+            overflow: hidden !important;
+        }
+        body.is-embedded-calendar .container {
+            background: var(--bg-card, rgba(255, 255, 255, 0.95)) !important;
+            border-bottom: 1px solid var(--border-color, #E5D9CC) !important;
+            padding: 10px 18px !important;
+            border-radius: 16px 16px 0 0 !important;
+        }
+        body.is-embedded-calendar .btn-back-dashboard {
+            display: none !important;
+        }
+        body.is-embedded-calendar .calendar-wrapper {
+            background: var(--bg-card, #FFFFFF) !important;
+            padding: 6px 10px 10px 10px !important;
+            min-height: 480px !important;
+            flex: 1 1 auto !important;
+        }
+        body.is-embedded-calendar .calendar-bottom-bar {
+            background: var(--bg-card, rgba(255, 255, 255, 0.95)) !important;
+            border-top: 1px solid var(--border-color, #E5D9CC) !important;
+            border-radius: 0 0 16px 16px !important;
+        }
+
+        /* Ẩn hoàn toàn thanh cuộn bên phải của FullCalendar - giữ giao diện cố định phẳng đẹp */
+        .fc-scroller,
+        .fc-scroller-liquid-absolute {
+            scrollbar-width: none !important; /* Firefox */
+            -ms-overflow-style: none !important;  /* IE, Edge */
+        }
+        .fc-scroller::-webkit-scrollbar,
+        .fc-scroller-liquid-absolute::-webkit-scrollbar {
+            width: 0 !important;
+            height: 0 !important;
+            display: none !important; /* Chrome, Safari, Opera */
+        }
+
+        /* === FULL-SCREEN LAYOUT NHƯ GOOGLE CALENDAR === */
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Tắt hoàn toàn thanh cuộn ngoài */
+        }
+
+        body {
+            background: #F8F3EC;
+            color: #2D1F0E;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header cố định, không co giãn */
+        .container {
+            flex-shrink: 0;
+            width: 100%;
+            background: #F3EDE4;
+            border-bottom: 1px solid #E5D9CC;
+            padding: 12px 25px;
+            padding-top: calc(constant(safe-area-inset-top, 0px) + 12px);
+            padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
+            padding-left: calc(constant(safe-area-inset-left, 0px) + 25px);
+            padding-left: calc(env(safe-area-inset-left, 0px) + 25px);
+            padding-right: calc(constant(safe-area-inset-right, 0px) + 25px);
+            padding-right: calc(env(safe-area-inset-right, 0px) + 25px);
+            backdrop-filter: blur(25px);
+        }
+
+        /* Vùng lịch chiếm toàn bộ chiều cao còn lại */
+        .calendar-wrapper {
+            flex: 1 1 auto;
+            min-height: 480px;
+            overflow: hidden;
+            background: transparent;
+            padding: 0 10px 10px 10px;
+        }
+
+        .calendar-wrapper #calendar {
+            height: 100%;
+            min-height: 480px;
+        }
+
+        /* --- CUSTOM CALENDAR HEADER (TASK 10.2) --- */
+        .calendar-header-custom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .cal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .cal-header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Nút Quay lại Dashboard */
+        .btn-back-dashboard {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #E8DDD0;
+            border: 1px solid #E5D9CC;
+            color: #2D1F0E;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .btn-back-dashboard:hover {
+            background: #DFD2C3;
+            border-color: #D4C3B3;
+            transform: translateY(-1px);
+        }
+
+        /* Nhóm nút điều hướng Lịch (<, >, Hôm nay) */
+        .cal-nav-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .cal-nav-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #E8DDD0;
+            border: 1px solid #E5D9CC;
+            color: #2D1F0E;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .cal-nav-btn:hover {
+            background: #DFD2C3;
+            border-color: #D4C3B3;
+        }
+        .cal-nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        .cal-today-btn {
+            height: 32px;
+            padding: 0 13px;
+            border-radius: 8px;
+            background: #E8DDD0;
+            border: 1px solid #E5D9CC;
+            color: #2D1F0E;
+            font-size: 12.5px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .cal-today-btn:hover {
+            background: #DFD2C3;
+            border-color: #D4C3B3;
+        }
+        .cal-today-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Tiêu đề Tháng/Năm nổi bật màu tím đậm */
+        .calendar-month-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #7C3AED;
+            margin: 0;
+            letter-spacing: -0.3px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Toggle Filter Pill: "Ẩn đã hủy" */
+        .cal-filter-pill {
+            height: 32px;
+            padding: 0 14px;
+            border-radius: 20px;
+            background: #FFFFFF;
+            border: 1px solid #E5D9CC;
+            color: #6B4226;
+            font-size: 12.5px;
+            font-weight: 600;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .cal-filter-pill:hover {
+            background: #FAF5EE;
+            border-color: #D4C3B3;
+        }
+        .cal-filter-pill.active {
+            background: #FFF0F6;
+            border-color: #C05E8E;
+            color: #C05E8E;
+            box-shadow: 0 2px 8px rgba(192, 94, 142, 0.2);
+        }
+        .cal-filter-pill.active i {
+            color: #C05E8E;
+        }
+
+        /* View Toggle Pills: Tháng / Tuần / Ngày */
+        .cal-view-pills {
+            display: inline-flex;
+            align-items: center;
+            background: #E8DDD0;
+            padding: 3px;
+            border-radius: 20px;
+            border: 1px solid #E5D9CC;
+        }
+        .cal-view-pill {
+            height: 26px;
+            padding: 0 13px;
+            border-radius: 14px;
+            border: none;
+            background: transparent;
+            color: #6B4226;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .cal-view-pill:hover:not(.active) {
+            color: #2D1F0E;
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .cal-view-pill.active {
+            background: #C05E8E;
+            color: #FFFFFF;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(192, 94, 142, 0.28);
+        }
+
+        /* Nút Lịch tóm tắt */
+        .cal-sheet-toggle-btn {
+            height: 32px;
+            padding: 0 13px;
+            border-radius: 20px;
+            background: #E8DDD0;
+            border: 1px solid #E5D9CC;
+            color: #2D1F0E;
+            font-size: 12.5px;
+            font-weight: 600;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .cal-sheet-toggle-btn:hover {
+            background: #DFD2C3;
+        }
+
+        /* --- BOTTOM BAR: STUDENT LEGEND & STATUS BAR (TASK 10.4) --- */
+        .calendar-bottom-bar {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #F3EDE4;
+            border-top: 1px solid #E5D9CC;
+            padding: 8px 20px;
+            gap: 16px;
+            z-index: 10;
+            min-width: 0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .cal-legend-list {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #D5C7B7 transparent;
+            white-space: nowrap;
+            flex: 1 1 0%;
+            min-width: 0;
+            padding-right: 8px;
+        }
+        .cal-legend-list::-webkit-scrollbar {
+            height: 3px;
+        }
+        .cal-legend-list::-webkit-scrollbar-thumb {
+            background: #D5C7B7;
+            border-radius: 4px;
+        }
+
+        .cal-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #2D1F0E;
+            cursor: default;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .cal-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .cal-status-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #6B4226;
+            white-space: nowrap;
+            flex-shrink: 0;
+            background: #E8DDD0;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid #E5D9CC;
+            position: relative;
+            z-index: 2;
+            margin-left: auto;
+        }
+
+        /* --- GOOGLE CALENDAR CUSTOM STYLING (LIGHT CREAM/BEIGE) --- */
+        #calendar {
+            background: transparent;
+            border-radius: 16px;
+            border: none;
+            padding: 4px 0;
+        }
+
+        /* Toolbar buttons */
+        .fc .fc-toolbar {
+            margin-bottom: 12px !important;
+        }
+
+        /* Toolbar buttons & View toggle pills */
+        .fc .fc-toolbar {
+            margin-bottom: 12px !important;
+        }
+
+        .fc .fc-button-group {
+            background: #E8DDD0 !important;
+            border-radius: 30px !important;
+            padding: 3px !important;
+            display: inline-flex !important;
+            gap: 2px !important;
+            border: 1px solid #E5D9CC !important;
+        }
+
+        .fc .fc-button-group .fc-button {
+            border-radius: 20px !important;
+            background: transparent !important;
+            border: none !important;
+            color: #6B4226 !important;
+            padding: 6px 16px !important;
+            font-size: 12.5px !important;
+            font-weight: 600 !important;
+            box-shadow: none !important;
+            transition: all 0.2s ease !important;
+            margin: 0 !important;
+        }
+
+        .fc .fc-button-group .fc-button:hover {
+            background: rgba(192, 94, 142, 0.1) !important;
+            color: #C05E8E !important;
+        }
+
+        .fc .fc-button-group .fc-button.fc-button-active,
+        .fc .fc-button-group .fc-button:not(:disabled).fc-button-active {
+            background: #C05E8E !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 2px 8px rgba(192, 94, 142, 0.35) !important;
+            font-weight: 700 !important;
+        }
+
+        .fc .fc-today-button {
+            background: #E8DDD0 !important;
+            border: 1px solid #E5D9CC !important;
+            color: #2D1F0E !important;
+            border-radius: 20px !important;
+            padding: 6px 16px !important;
+            font-weight: 600 !important;
+            font-size: 12.5px !important;
+            transition: all 0.2s !important;
+        }
+
+        .fc .fc-today-button:hover:not(:disabled) {
+            background: #DFD2C3 !important;
+            color: #2D1F0E !important;
+        }
+
+        .fc .fc-prev-button,
+        .fc .fc-next-button {
+            background: #E8DDD0 !important;
+            border: 1px solid #E5D9CC !important;
+            color: #2D1F0E !important;
+            border-radius: 50% !important;
+            width: 32px !important;
+            height: 32px !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.2s !important;
+        }
+
+        .fc .fc-prev-button:hover,
+        .fc .fc-next-button:hover {
+            background: #DFD2C3 !important;
+            color: #2D1F0E !important;
+        }
+
+        .fc .fc-toolbar-title {
+            font-size: 16px !important;
+            font-weight: 800 !important;
+            color: #2D1F0E !important;
+            text-transform: capitalize !important;
+        }
+
+        /* Scrollgrid and table borders */
+        .fc-theme-standard .fc-scrollgrid {
+            border: none !important;
+            background: transparent !important;
+        }
+
+        .fc-timegrid .fc-scrollgrid {
+            border: 1px solid #ECE7F6 !important;
+            background: #FFFFFF !important;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .fc-theme-standard td, 
+        .fc-theme-standard th {
+            border: none !important;
+        }
+
+        .fc-timegrid td, 
+        .fc-timegrid th {
+            border: 1px solid #ECE7F6 !important;
+        }
+
+        /* Table header cells (Thứ 2, 3...) */
+        .fc-col-header {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .fc th,
+        .fc-col-header-cell {
+            border: none !important;
+            background: transparent !important;
+            padding: 6px 4px 10px 4px !important;
+            text-align: center !important;
+        }
+
+        .fc-timegrid .fc-col-header-cell {
+            border: 1px solid #ECE7F6 !important;
+            background: #FAF9FD !important;
+            padding: 4px 0 !important;
+            text-align: center !important;
+        }
+
+        .fc-col-header-cell-cushion {
+            color: var(--text-primary) !important;
+            font-size: 12px !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.5px !important;
+            text-transform: none !important;
+            text-decoration: none !important;
+            padding: 0 !important;
+            display: inline-block !important;
+            text-align: center !important;
+        }
+
+        .fc-timegrid .fc-col-header-cell-cushion {
+            display: block !important;
+            width: 100% !important;
+            padding: 0 !important;
+            text-decoration: none !important;
+        }
+
+        /* TimeGrid styling */
+        .fc-timegrid-slot {
+            border-bottom: 1px solid #ECE7F6 !important;
+            border-right: 1px solid #ECE7F6 !important;
+            height: 28px !important;
+            background: #FFFFFF !important;
+        }
+
+        .fc-timegrid-slot-minor {
+            border-bottom: 1px solid #F6F3FA !important;
+        }
+
+        .fc-timegrid-slot-lane {
+            background: #FFFFFF !important;
+        }
+
+        .fc-timegrid-slot-label {
+            vertical-align: top !important;
+            background: #FAF9FD !important;
+            border-color: #ECE7F6 !important;
+        }
+
+        .fc-timegrid-slot-label-cushion {
+            color: #716584 !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            display: inline-block !important;
+            transform: translateY(-50%) !important;
+            background: #FAF9FD !important;
+            padding: 0 4px !important;
+            position: relative !important;
+            z-index: 5 !important;
+        }
+
+        .fc-timegrid-axis-frame,
+        .fc-timegrid-axis {
+            color: #716584 !important;
+            background: #FAF9FD !important;
+            border-color: #ECE7F6 !important;
+        }
+
+        .fc-theme-standard th.fc-timegrid-axis {
+            background: #FAF9FD !important;
+            border-bottom: 1px solid #ECE7F6 !important;
+            border-right: 1px solid #ECE7F6 !important;
+        }
+
+        /* DayGrid (Month view: Thẻ Card độc lập bo tròn hiện đại) */
+        .fc-daygrid-body {
+            background: color-mix(in srgb, var(--color-primary, #8E4DFF) 2%, var(--bg-card-alt, #F8FAFC));
+            border-radius: 16px;
+            padding: 2px;
+        }
+
+        .fc-daygrid-day {
+            background: transparent !important;
+            border: none !important;
+            padding: 4px !important;
+        }
+
+        .fc-daygrid-day-frame {
+            background: var(--bg-card, #FFFFFF) !important;
+            border: 1px solid var(--border-card, #E2E8F0) !important;
+            border-radius: 14px !important;
+            min-height: 108px !important;
+            height: 100% !important;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02) !important;
+            transition: transform 0.22s cubic-bezier(.2,.8,.2,1), box-shadow 0.22s cubic-bezier(.2,.8,.2,1), border-color 0.2s ease !important;
+            position: relative !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+        }
+
+        .fc-daygrid-day-frame:hover {
+            border-color: color-mix(in srgb, var(--color-primary, #8E4DFF) 55%, var(--border-card, #E2E8F0)) !important;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+            transform: translateY(-2px) !important;
+            z-index: 2 !important;
+        }
+
+        /* Biểu tượng '+' thêm nhanh xuất hiện ở góc trên phải khi rê chuột vào ô ngày */
+        .fc-daygrid-day-frame::before {
+            content: '+';
+            position: absolute;
+            top: 7px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: color-mix(in srgb, var(--color-primary, #8E4DFF) 14%, transparent);
+            color: var(--color-primary, #8E4DFF);
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 18px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.6);
+            transition: opacity 0.2s ease, transform 0.2s cubic-bezier(.34,1.56,.64,1);
+            pointer-events: none;
+            z-index: 3;
+        }
+        .fc-daygrid-day-frame:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Điểm xuyết nhẹ nhàng cho 2 ngày cuối tuần */
+        .fc-day-sat .fc-daygrid-day-frame,
+        .fc-day-sun .fc-daygrid-day-frame {
+            background: color-mix(in srgb, var(--bg-card, #FFFFFF) 96%, var(--color-primary, #8E4DFF) 4%) !important;
+        }
+
+        /* Số ngày đặt ở GÓC TRÊN BÊN TRÁI của Card */
+        .fc-daygrid-day-top {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            gap: 6px !important;
+            padding: 7px 10px 3px 10px !important;
+            z-index: 2 !important;
+            position: relative !important;
+        }
+
+        .fc-daygrid-day-number {
+            color: var(--text-primary) !important;
+            font-size: 13.5px !important;
+            font-weight: 700 !important;
+            padding: 0 !important;
+            text-decoration: none !important;
+            line-height: 1 !important;
+            letter-spacing: -0.2px !important;
+        }
+
+        /* Ngày lễ quốc gia Việt Nam (Task 10.3 + Mockup styling) */
+        .fc-vn-holiday-badge {
+            color: #DC2626 !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            padding: 0 2px !important;
+            line-height: 1 !important;
+            letter-spacing: -0.2px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 2px !important;
+        }
+
+        .fc-day-other .fc-vn-holiday-badge {
+            opacity: 0.5 !important;
+        }
+
+        /* ẢNH CHÌM NGÀY LỄ: tranh màu nước mờ dưới nền ô ngày (img/holidays/*.jpg) */
+        .fc-holiday-art-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.9) 45%, #000 100%);
+                    mask-image: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.9) 45%, #000 100%);
+            transition: opacity 0.35s ease, transform 0.8s cubic-bezier(.2,.8,.2,1);
+        }
+        .fc-day-holiday .fc-daygrid-day-frame:hover .fc-holiday-art-bg {
+            opacity: 0.8;
+            transform: scale(1.06);
+        }
+        .fc-day-holiday .fc-daygrid-day-top,
+        .fc-day-holiday .fc-daygrid-day-events,
+        .fc-day-holiday .fc-daygrid-day-bottom {
+            position: relative;
+            z-index: 1;
+        }
+        .fc-day-holiday .fc-daygrid-day-frame {
+            border-color: color-mix(in srgb, var(--holiday-tint, #E11D48) 35%, var(--border-card, #E2E8F0)) !important;
+        }
+        .fc-day-holiday .fc-vn-holiday-badge {
+            color: var(--holiday-tint, #DC2626) !important;
+            background: rgba(255, 255, 255, 0.78) !important;
+            padding: 2px 6px !important;
+            border-radius: 6px !important;
+            font-size: 10.5px !important;
+            white-space: nowrap !important;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+        }
+        [data-theme="dark"] .fc-holiday-art-bg {
+            opacity: 0.3;
+            filter: saturate(0.9) brightness(0.85);
+        }
+        [data-theme="dark"] .fc-day-holiday .fc-daygrid-day-frame:hover .fc-holiday-art-bg {
+            opacity: 0.45;
+        }
+        [data-theme="dark"] .fc-day-holiday .fc-vn-holiday-badge {
+            background: rgba(15, 10, 30, 0.6) !important;
+            color: color-mix(in srgb, var(--holiday-tint, #F87171) 55%, #FFFFFF) !important;
+        }
+        @media (max-width: 600px) {
+            .fc-day-holiday .fc-vn-holiday-badge { display: none !important; }
+        }
+
+        /* Ngày ngoài tháng: Card làm mờ nhẹ */
+        .fc-day-other {
+            background: transparent !important;
+        }
+
+        .fc-day-other .fc-daygrid-day-frame {
+            background: var(--bg-card, #FFFFFF) !important;
+            border-color: var(--border-card) !important;
+            box-shadow: none !important;
+            opacity: 0.38 !important;
+            filter: grayscale(15%);
+        }
+
+        .fc-day-other:hover .fc-daygrid-day-frame {
+            opacity: 0.72 !important;
+            transform: none !important;
+        }
+
+        .fc-day-other .fc-daygrid-day-number {
+            color: var(--text-muted) !important;
+            font-weight: 600 !important;
+        }
+
+        .fc-day-other .fc-daygrid-day-events {
+            opacity: 0.85 !important;
+        }
+
+        /* Hôm nay (Today highlight): Viền Card nổi bật + Badge tròn gradient số ngày */
+        .fc-daygrid-day.fc-day-today {
+            background: transparent !important;
+        }
+
+        .fc-daygrid-day.fc-day-today .fc-daygrid-day-frame {
+            border: 2px solid var(--color-primary, #8E4DFF) !important;
+            background: linear-gradient(180deg, color-mix(in srgb, var(--color-primary, #8E4DFF) 6%, var(--bg-card, #FFFFFF)) 0%, var(--bg-card, #FFFFFF) 50%) !important;
+            box-shadow: 0 4px 16px color-mix(in srgb, var(--color-primary, #8E4DFF) 18%, transparent) !important;
+        }
+
+        .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+            background: linear-gradient(135deg, var(--color-primary, #8E4DFF), color-mix(in srgb, var(--color-primary, #8E4DFF) 65%, #EC4899)) !important;
+            color: #FFFFFF !important;
+            border-radius: 50% !important;
+            width: 24px !important;
+            height: 24px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 12px !important;
+            font-weight: 800 !important;
+            line-height: 1 !important;
+            margin: 0 !important;
+            box-shadow: 0 2px 8px color-mix(in srgb, var(--color-primary, #8E4DFF) 40%, transparent) !important;
+        }
+
+        .fc th.fc-day-today .fc-col-header-cell-cushion {
+            color: var(--color-primary, #8E4DFF) !important;
+            background: color-mix(in srgb, var(--color-primary, #8E4DFF) 12%, transparent) !important;
+            font-weight: 800 !important;
+        }
+
+        /* +N buổi nữa link: phong cách viên thuốc tinh tế */
+        .fc .fc-daygrid-more-link {
+            color: var(--color-primary, #8E4DFF) !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            padding: 2.5px 8px !important;
+            border-radius: 999px !important;
+            background: color-mix(in srgb, var(--color-primary, #8E4DFF) 10%, transparent) !important;
+            margin-left: 6px !important;
+            margin-top: 2px !important;
+            display: inline-block !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            z-index: 2 !important;
+            position: relative !important;
+            transition: all 0.15s ease !important;
+        }
+
+        .fc .fc-daygrid-more-link:hover {
+            color: var(--color-primary, #8E4DFF) !important;
+            background: color-mix(in srgb, var(--color-primary, #8E4DFF) 20%, transparent) !important;
+            transform: translateY(-0.5px) !important;
+        }
+
+        .fc .fc-popover {
+            background: #FDF8F3 !important;
+            border: 1px solid #E5D9CC !important;
+            box-shadow: 0 10px 30px rgba(45, 31, 14, 0.15) !important;
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            z-index: 2500 !important;
+        }
+
+        .fc .fc-popover-header {
+            background: #F3EDE4 !important;
+            border-bottom: 1px solid #E5D9CC !important;
+            padding: 8px 12px !important;
+            color: #2D1F0E !important;
+            font-weight: 700 !important;
+            font-size: 13px !important;
+        }
+
+        .fc .fc-popover-title {
+            color: #2D1F0E !important;
+            font-weight: 700 !important;
+        }
+
+        .fc .fc-popover-close {
+            color: #6B4226 !important;
+            font-size: 14px !important;
+            opacity: 0.8 !important;
+        }
+
+        .fc .fc-popover-close:hover {
+            opacity: 1 !important;
+            color: #2D1F0E !important;
+        }
+
+        .fc .fc-popover-body {
+            padding: 8px !important;
+            background: #FFFFFF !important;
+        }
+
+        /* Now Indicator */
+        .fc .fc-timegrid-now-indicator-line {
+            border-color: #8E4DFF !important;
+            border-width: 2px !important;
+        }
+        .fc .fc-timegrid-now-indicator-arrow {
+            border-left-color: #8E4DFF !important;
+        }
+
+        /* --- SỰ KIỆN LỊCH (EVENTS) --- */
+        .fc-v-event {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 2px 3px !important;
+            cursor: pointer !important;
+        }
+
+        .fc-timegrid-event {
+            margin: 2px 3px 2px 2px !important;
+            border-radius: 8px !important;
+            box-shadow: none !important;
+            border: none !important;
+            background: transparent !important;
+            overflow: visible !important;
+        }
+
+        .fc-timegrid-event .fc-event-main {
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        /* Thẻ ca dạy Tuần (Thiết kế Image 2: bo góc 8px, pastel, 3 dòng rõ ràng) */
+        .fc-week-card-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            padding: 6px 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+        }
+
+        .fc-week-card-inner:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .fc-week-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 3px;
+            line-height: 1.1;
+        }
+
+        .fc-week-card-time {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            white-space: nowrap;
+        }
+
+        .fc-week-card-icon {
+            font-size: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+            flex-shrink: 0;
+            opacity: 0.85;
+        }
+
+        .fc-week-card-subject {
+            font-size: 12.5px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .fc-week-card-fee {
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            opacity: 0.9;
+        }
+
+        .fc-timegrid-event-short .fc-week-card-fee {
+            display: none;
+        }
+
+        .fc-timegrid-event-short .fc-week-card-inner {
+            padding: 3px 5px;
+        }
+
+        /* EVENT CHIPS Ở MONTH VIEW: DẠNG VIÊN THUỐC CAPSULE CÓ CHẤM TRÒN MÀU */
+        .fc-daygrid-event {
+            border: none !important;
+            border-radius: 999px !important;
+            margin: 2px 2px !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            cursor: pointer !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        .fc-month-chip-inner {
+            display: flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+            padding: 2.5px 8px !important;
+            border-radius: 999px !important;
+            font-size: 11px !important;
+            line-height: 1.3 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: clip !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+            transition: transform 0.18s cubic-bezier(.2,.8,.2,1), box-shadow 0.18s cubic-bezier(.2,.8,.2,1), filter 0.18s ease !important;
+        }
+
+        .fc-month-chip-inner:hover {
+            transform: translateY(-1.5px) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+            filter: brightness(1.02) !important;
+        }
+
+        .fc-chip-dot {
+            display: none !important;
+        }
+
+        .fc-chip-time {
+            font-weight: 700 !important;
+            font-size: 10.5px !important;
+            flex-shrink: 0 !important;
+            letter-spacing: -0.2px !important;
+        }
+
+        .fc-chip-title {
+            font-weight: 600 !important;
+            font-size: 11px !important;
+            overflow: hidden !important;
+            text-overflow: clip !important;
+            white-space: nowrap !important;
+            flex: 1 !important;
+            color: var(--text-primary) !important;
+            letter-spacing: -0.2px !important;
+        }
+
+        .fc-event-main-frame {
+            padding: 1px 3px !important;
+        }
+
+        .fc-event-time {
+            font-size: 10.5px !important;
+            font-weight: 700 !important;
+            color: #6B4226 !important;
+            margin-bottom: 2px !important;
+        }
+
+        .fc-event-title {
+            font-size: 11.5px !important;
+            font-weight: 700 !important;
+            color: #2D1F0E !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+        }
+
+        /* Column Header Styles for Week & Day View (Thiết kế Image 2) */
+        .fc-week-header-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 0;
+            gap: 3px;
+            line-height: 1.15;
+            user-select: none;
+        }
+
+        .fc-week-header-day {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #716584;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .fc-week-header-date {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #4A3E5D;
+        }
+
+        .fc-week-header-cell.fc-header-today .fc-week-header-day {
+            color: #8E4DFF;
+            font-weight: 700;
+        }
+
+        .fc-week-header-cell.fc-header-today .fc-week-header-date {
+            color: #8E4DFF;
+            font-weight: 800;
+        }
+
+        /* --- BẢNG MÀU CHO MODAL --- */
+        .color-picker-section {
+            margin-top: 4px;
+        }
+        .color-scope-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .color-scope-btn {
+            flex: 1;
+            padding: 5px 0;
+            font-size: 11.5px;
+            font-weight: 600;
+            border: 1px solid #E5D9CC;
+            border-radius: 8px;
+            background: transparent;
+            color: #6B4226;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .color-scope-btn.active {
+            background: #FFF0F6;
+            border-color: #C05E8E;
+            color: #C05E8E;
+        }
+        .color-swatches {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .color-swatch {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.15s, border-color 0.15s;
+            position: relative;
+        }
+        .color-swatch:hover { transform: scale(1.18); }
+        .color-swatch.selected {
+            border-color: #2D1F0E;
+            transform: scale(1.15);
+            box-shadow: 0 0 0 2px rgba(45, 31, 14, 0.2);
+        }
+        .color-swatch.selected::after {
+            content: '✓';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #FFF;
+            font-weight: 800;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .color-preview-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #6B4226;
+            margin-top: 7px;
+        }
+        .color-preview-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* --- SYNC TOAST --- */
+        .sync-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            animation: toastSlideIn 0.25s ease;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes toastSlideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .sync-toast.pending {
+            background: rgba(30, 20, 70, 0.92);
+            border: 1px solid rgba(142, 77, 255, 0.5);
+            color: #C4B5FD;
+        }
+        .sync-toast.success {
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #6EE7B7;
+        }
+        .sync-toast.error {
+            background: rgba(239, 68, 68, 0.18);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #FCA5A5;
+        }
+
+        /* --- SPREADSHEET SIMULATOR TABLE (BẢNG MÔ PHỎNG SHEETS CỦA BẠN) --- */
+        /* --- BẢNG SHEETS SIMULATOR - NỔI LÊN TỪ DƯỚI (SLIDE-UP PANEL) --- */
+        .sheet-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 800;
+            background: #FFFFFF;
+            border-top: 2px solid #C05E8E;
+            border-radius: 20px 20px 0 0;
+            padding: 16px 20px 20px;
+            box-shadow: 0 -8px 30px rgba(45, 31, 14, 0.12);
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 55vh;
+            overflow-y: auto;
+        }
+
+        .sheet-panel.open {
+            transform: translateY(0);
+        }
+
+        .btn-sheet-toggle-header {
+            background: #F3EDE4;
+            border: 1px solid #E5D9CC;
+            color: #6B4226;
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin-right: 12px;
+        }
+        .btn-sheet-toggle-header:hover {
+            background: #E8DDD0;
+            color: #2D1F0E;
+            transform: translateY(-1px);
+        }
+        @media (max-width: 576px) {
+            .btn-sheet-toggle-header {
+                display: none;
+            }
+        }
+
+        .sheet-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .sheet-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #2D1F0E;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sheet-title i.fa-table-list {
+            color: #C05E8E;
+        }
+
+        .btn-close-panel {
+            background: #F8F3EC;
+            border: 1px solid #E5D9CC;
+            color: #6B4226;
+            border-radius: 50%;
+            width: 28px; height: 28px;
+            cursor: pointer;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .btn-close-panel:hover { background: #E8DDD0; color: #2D1F0E; }
+
+        .sheet-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #E5D9CC;
+            background: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(45, 31, 14, 0.04);
+        }
+
+        .sheet-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: center;
+            background: #FFFFFF;
+        }
+
+        .sheet-table th, .sheet-table td {
+            padding: 9px 12px;
+            border: 1px solid #E5D9CC;
+            white-space: nowrap;
+        }
+
+        .sheet-table th {
+            background: #F3EDE4;
+            color: #6B4226;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .sheet-table td.cell-student {
+            font-weight: 700;
+            color: #2D1F0E;
+            text-align: left;
+            background: #FAF6F0;
+            padding-left: 14px;
+        }
+
+        .sheet-table td.cell-active {
+            color: #2D1F0E;
+            font-weight: 600;
+        }
+
+        .sheet-table td.cell-empty {
+            color: #BFA89A;
+            font-style: italic;
+        }
+        
+        .sheet-table td.cell-onetime {
+            color: #C05E8E;
+            font-weight: 700;
+            background: rgba(192, 94, 142, 0.08);
+        }
+
+        .sheet-table tbody tr:hover td {
+            background: #FBF8F4;
+        }
+        .sheet-table tbody tr:hover td.cell-student {
+            background: #F5EFE6;
+        }
+
+        /* --- MODAL HỘP THOẠI (GOOGLE CALENDAR STYLE MODAL) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(45, 31, 14, 0.45);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+        }
+
+        .calendar-modal {
+            background: #FDF8F3;
+            border: 1px solid #E5D9CC;
+            box-shadow: 0 10px 40px rgba(45, 31, 14, 0.15);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 440px;
+            max-height: calc(100vh - 24px);
+            max-height: calc(100dvh - 24px);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 22px 14px 22px;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+            color: #2D1F0E;
+            box-sizing: border-box;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-overlay.active .calendar-modal {
+            transform: scale(1);
+        }
+
+        #eventForm {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 4px;
+            margin-right: -4px;
+        }
+
+        #eventForm::-webkit-scrollbar {
+            width: 5px;
+        }
+        #eventForm::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #eventForm::-webkit-scrollbar-thumb {
+            background: rgba(140, 120, 106, 0.3);
+            border-radius: 4px;
+        }
+        #eventForm::-webkit-scrollbar-thumb:hover {
+            background: rgba(140, 120, 106, 0.5);
+        }
+
+        /* === HỘP THOẠI CHỈNH SỬA SỰ KIỆN LẶP LẠI (GOOGLE CALENDAR STYLE) === */
+        .recurrence-dialog-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(45, 31, 14, 0.45);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+        }
+        .recurrence-dialog-overlay.active { display: flex; }
+
+        .recurrence-dialog {
+            background: #FDF8F3;
+            border: 1px solid #E5D9CC;
+            box-shadow: 0 8px 40px rgba(45, 31, 14, 0.15);
+            border-radius: 16px;
+            padding: 24px 28px;
+            width: 100%;
+            max-width: 360px;
+            max-height: calc(100vh - 24px);
+            max-height: calc(100dvh - 24px);
+            overflow-y: auto;
+            margin: auto;
+            box-sizing: border-box;
+            transform: scale(0.92);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .recurrence-dialog-overlay.active .recurrence-dialog { transform: scale(1); }
+
+        .recurrence-dialog h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2D1F0E;
+            margin-bottom: 6px;
+        }
+        .recurrence-dialog p {
+            font-size: 12px;
+            color: #6B4226;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .recurrence-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+        .recurrence-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: #FFFFFF;
+            border: 1px solid #E5D9CC;
+            border-radius: 12px;
+            padding: 13px 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .recurrence-option:hover {
+            background: #FFF0F6;
+            border-color: #C05E8E;
+        }
+        .recurrence-option.selected {
+            background: #FFF0F6;
+            border-color: #C05E8E;
+        }
+        .recurrence-option input[type="radio"] { display: none; }
+        .recurrence-radio-dot {
+            width: 18px; height: 18px; flex-shrink: 0;
+            border-radius: 50%;
+            border: 2px solid #E5D9CC;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 1px;
+            transition: 0.2s;
+        }
+        .recurrence-option.selected .recurrence-radio-dot {
+            border-color: #C05E8E;
+            background: #C05E8E;
+        }
+        .recurrence-option.selected .recurrence-radio-dot::after {
+            content: '';
+            width: 7px; height: 7px;
+            background: #FFF;
+            border-radius: 50%;
+        }
+        .recurrence-option-text strong {
+            font-size: 13px;
+            color: #2D1F0E;
+            font-weight: 600;
+        }
+        .recurrence-option-text span {
+            display: block;
+            font-size: 11px;
+            color: #8C786A;
+            margin-top: 2px;
+        }
+
+        .recurrence-dialog-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .btn-rec-cancel {
+            background: transparent;
+            border: 1px solid #E5D9CC;
+            color: #6B4226;
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            transition: 0.2s;
+        }
+        .btn-rec-cancel:hover { border-color: #C05E8E; color: #2D1F0E; background: #E8DDD0; }
+        .btn-rec-ok {
+            background: #C05E8E;
+            border: none;
+            color: #FFF;
+            border-radius: 30px;
+            padding: 8px 22px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            transition: 0.2s;
+        }
+        .btn-rec-ok:hover { opacity: 0.88; }
+
+        .popover-backdrop {
+            display: none;
+        }
+        .bottom-sheet-handle {
+            display: none;
+        }
+
+        /* --- FLOATING POPOVER CHI TIẾT SỰ KIỆN (KHÔNG CHE CONTENT) --- */
+        #eventDetailPopover {
+            position: fixed;
+            z-index: 3000;
+            width: 300px;
+            background: #FDF8F3;
+            border: 1px solid #E5D9CC;
+            box-shadow: 0 8px 32px rgba(45, 31, 14, 0.15);
+            border-radius: 14px;
+            padding: 12px 16px 18px 16px;
+            display: none;
+            animation: popoverIn 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: top left;
+        }
+        #eventDetailPopover.visible { display: block; }
+
+        @keyframes popoverIn {
+            from { opacity: 0; transform: scale(0.88); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .detail-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #E5D9CC;
+            padding-bottom: 8px;
+        }
+        .detail-actions-left {
+            display: flex;
+            gap: 4px;
+        }
+        .btn-detail-action {
+            background: transparent;
+            border: none;
+            color: #6B4226;
+            font-size: 14px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .btn-detail-action:hover {
+            background: #E8DDD0;
+            color: #2D1F0E;
+        }
+        .detail-content {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            margin-top: 6px;
+        }
+        .detail-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .detail-color-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: #C05E8E;
+            flex-shrink: 0;
+            box-shadow: 0 0 7px rgba(192, 94, 142, 0.4);
+        }
+        #detailTitle {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2D1F0E;
+        }
+        .detail-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #6B4226;
+            font-size: 12.5px;
+            line-height: 1.45;
+        }
+        .detail-info-item i {
+            font-size: 13px;
+            color: #8C786A;
+            margin-top: 2px;
+            width: 14px;
+            text-align: center;
+        }
+        .detail-recurrence-info {
+            font-size: 11px;
+            color: #8C786A;
+            margin-top: 2px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .modal-header h3 {
+            font-size: 15.5px;
+            font-weight: 800;
+            color: #2D1F0E;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-header h3 i {
+            color: #C05E8E;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: none;
+            color: #8C786A;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .btn-close:hover { color: #2D1F0E; }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #6B4226;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: #FFFFFF;
+            border: 1px solid #E5D9CC;
+            border-radius: 10px;
+            padding: 8px 12px;
+            color: #2D1F0E;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: #C05E8E;
+            box-shadow: 0 0 10px rgba(192, 94, 142, 0.2);
+        }
+
+        .row-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Checkbox grid for Custom Recurrence */
+        .day-checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 5px;
+        }
+
+        .day-checkbox-item {
+            position: relative;
+        }
+
+        .day-checkbox-item input {
+            position: absolute;
+            opacity: 0;
+            width: 0; height: 0;
+        }
+
+        .day-checkbox-label {
+            display: block;
+            text-align: center;
+            padding: 7px 3px;
+            background: #F8F3EC;
+            border: 1px solid #E5D9CC;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #6B4226;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .day-checkbox-item input:checked + .day-checkbox-label {
+            background: #FFF0F6;
+            border-color: #C05E8E;
+            color: #C05E8E;
+            box-shadow: 0 0 10px rgba(192, 94, 142, 0.2);
+        }
+
+        /* Actions Footer Buttons */
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            border-top: 1px solid var(--border-card, #E5D9CC);
+            padding-top: 12px;
+            padding-bottom: 2px;
+            flex-shrink: 0;
+            position: sticky;
+            bottom: -1px;
+            background: var(--bg-card, #FDF8F3);
+            z-index: 10;
+        }
+
+        .btn {
+            padding: 9px 18px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: #6B4226;
+            border: 1px solid #E5D9CC;
+        }
+        .btn-cancel:hover { background: #E8DDD0; color: #2D1F0E; }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.08);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            margin-right: auto;
+        }
+        .btn-delete:hover { background: #EF4444; color: #FFF; }
+
+        .btn-save {
+            background: #C05E8E;
+            color: #FFF;
+            box-shadow: 0 4px 15px rgba(192, 94, 142, 0.3);
+        }
+        .btn-save:hover {
+            box-shadow: 0 6px 20px rgba(192, 94, 142, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* --- FLOATING ACTION BUTTON (GOOGLE CAL FAB STYLE) ON MOBILE --- */
+        .fab-add {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: #C05E8E;
+            color: #FFF;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            box-shadow: 0 4px 20px rgba(192, 94, 142, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            z-index: 900;
+            transition: all 0.3s;
+        }
+
+        .fab-add:hover {
+            transform: scale(1.08) rotate(90deg);
+        }
+
+        /* --- RESPONSIVE MOBILE OPTIMIZATIONS --- */
+        @media (max-width: 768px) {
+            body { padding: 0 !important; }
+            .container { 
+                flex-direction: column !important;
+                gap: 10px !important;
+                padding: 12px 16px !important; 
+                border-radius: 0 !important; 
+                border-bottom: 1px solid var(--border-card, #E5D9CC) !important;
+            }
+            .header-left h1 { font-size: 18px !important; }
+            .header-right { flex-wrap: wrap !important; gap: 8px !important; width: 100% !important; }
+            .calendar-header-custom {
+                gap: 8px !important;
+                flex-wrap: wrap !important;
+            }
+            .cal-header-left {
+                gap: 8px !important;
+                flex-wrap: wrap !important;
+            }
+            .cal-header-right {
+                gap: 6px !important;
+                flex-wrap: wrap !important;
+                width: 100% !important;
+            }
+
+            /* FullCalendar toolbar & cells */
+            .fc-toolbar {
+                flex-direction: column !important;
+                gap: 8px !important;
+                align-items: flex-start !important;
+            }
+            .fc-toolbar-title { font-size: 16px !important; }
+            .fc-button {
+                font-size: 12px !important;
+                padding: 6px 10px !important;
+                min-height: 36px !important;
+            }
+            .fc-daygrid-day-number { font-size: 12px !important; }
+            .fc-col-header-cell-cushion { font-size: 11px !important; }
+            .fc-event-title { font-size: 10px !important; }
+            .fc-daygrid-event { padding: 1px 3px !important; }
+
+            /* Sheet panel full width trên mobile */
+            .sheet-panel, [class*="sheet"] {
+                width: 100% !important;
+                right: 0 !important;
+                left: 0 !important;
+            }
+            /* Mobile: nút Quay lại thu gọn thành icon ← (không có chữ) */
+            .btn-back-dashboard {
+                padding: 0 !important;
+                width: 32px !important;
+                height: 32px !important;
+                border-radius: 50% !important;
+                justify-content: center !important;
+            }
+            .btn-back-dashboard .btn-back-text {
+                display: none !important;
+            }
+            .calendar-month-title {
+                font-size: 16px !important;
+            }
+            .cal-sheet-btn-text {
+                display: none !important;
+            }
+            .cal-sheet-toggle-btn {
+                padding: 0 !important;
+                width: 32px !important;
+                height: 32px !important;
+                border-radius: 50% !important;
+                justify-content: center !important;
+            }
+            .cal-filter-pill {
+                padding: 0 10px !important;
+                font-size: 11.5px !important;
+                height: 28px !important;
+            }
+            .cal-view-pill {
+                padding: 0 9px !important;
+                font-size: 11.5px !important;
+                height: 24px !important;
+            }
+            .calendar-bottom-bar {
+                padding: 7px 12px !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 6px !important;
+            }
+            .cal-legend-list {
+                gap: 12px !important;
+            }
+            .cal-legend-item {
+                font-size: 11.5px !important;
+            }
+            .cal-status-bar {
+                font-size: 11.5px !important;
+                justify-content: center !important;
+                padding: 4px 10px !important;
+            }
+            .calendar-wrapper { padding: 0 4px 4px 4px !important; }
+            
+            .fab-add { display: flex; }
+
+            .fc-timegrid-slot {
+                height: 28px !important; /* Compact trên mobile */
+            }
+
+            /* Thu hẹp cột chứa giờ bên trái trục dọc */
+            .fc-timegrid-axis, .fc-timegrid-slot-label {
+                width: 44px !important;
+            }
+            .fc-timegrid-slot-label-cushion {
+                font-size: 9px !important;
+                padding: 0 2px !important;
+            }
+
+            /* Cỡ chữ sự kiện nhỏ hơn và padding ít hơn trên mobile */
+            .fc-v-event {
+                padding: 1px 3px !important;
+            }
+            .fc-event-time {
+                font-size: 9px !important;
+            }
+            .fc-event-title {
+                font-size: 10px !important;
+            }
+
+            /* Hộp thoại (Modal Overlay) Full-screen trên Mobile */
+            .modal-overlay {
+                padding: 0 !important;
+                align-items: flex-end !important;
+            }
+
+            .calendar-modal {
+                max-width: 100% !important;
+                height: 100% !important;
+                border-radius: 0 !important;
+                border: none !important;
+                overflow-y: auto !important;
+                display: flex !important;
+                flex-direction: column !important;
+                transform: translateY(100%) !important;
+                transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                padding: 24px 20px 40px 20px !important;
+            }
+
+            .modal-overlay.active .calendar-modal {
+                transform: translateY(0) !important;
+            }
+
+            /* Tinh chỉnh day-checkbox-grid 3 cột trên mobile */
+            .day-checkbox-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 6px !important;
+            }
+
+            /* Popover Backdrop của Bottom Sheet */
+            .popover-backdrop {
+                display: block;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(45, 31, 14, 0.45);
+                backdrop-filter: blur(2px);
+                z-index: 2999;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.25s ease;
+            }
+            .popover-backdrop.visible {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            /* Bottom Sheet cho Chi tiết Ca Học trên Mobile */
+            #eventDetailPopover {
+                position: fixed !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                top: auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                border-radius: 24px 24px 0 0 !important;
+                border: none !important;
+                border-top: 1px solid #E5D9CC !important;
+                box-shadow: 0 -8px 32px rgba(45, 31, 14, 0.2) !important;
+                padding: 12px 20px 30px 20px !important;
+                transform: translateY(100%) !important;
+                transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                z-index: 3000 !important;
+                margin: 0 !important;
+            }
+
+            #eventDetailPopover.visible {
+                transform: translateY(0) !important;
+                display: block !important;
+            }
+
+            .bottom-sheet-handle {
+                display: block;
+                width: 40px;
+                height: 4px;
+                background: #D4C3B3;
+                border-radius: 2px;
+                margin: 0 auto 12px auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fc-toolbar-title { font-size: 14px !important; }
+            .fc-button-group .fc-button, .fc-button { padding: 5px 8px !important; font-size: 11px !important; }
+            .fc-daygrid-day-number { font-size: 11px !important; }
+            .calendar-month-title { font-size: 14px !important; }
+            .cal-header-right { flex-wrap: wrap; gap: 6px; }
+        }
+
+        /* Month view trên điện thoại: chip viên thuốc gọn, chỉ hiện giờ */
+        @media (max-width: 600px) {
+            .fc .fc-daygrid-day { padding: 2px !important; }
+            .fc .fc-daygrid-day-frame { border-radius: 10px !important; min-height: 92px !important; }
+            .fc .fc-daygrid-day-top { padding: 5px 5px 2px 5px !important; }
+            .fc .fc-daygrid-event { margin: 1.5px 3px !important; padding: 0 !important; }
+            .fc .fc-month-chip-inner { padding: 2px 3px !important; gap: 0 !important; justify-content: center !important; }
+            .fc .fc-month-chip-inner .fc-chip-dot,
+            .fc .fc-month-chip-inner .fc-chip-title { display: none !important; }
+            .fc .fc-month-chip-inner .fc-chip-time { font-size: 9.5px !important; letter-spacing: -0.3px !important; }
+        }
+    
+        /* === THEME OVERRIDES FOR CALENDAR === */
+        body {
+            background-color: var(--bg-page) !important;
+            background-image: var(--bg-page-gradient) !important;
+            color: var(--text-primary) !important;
+        }
+
+        .container {
+            background: var(--bg-sidebar) !important;
+            border-bottom: 1px solid var(--border-card) !important;
+        }
+
+        .btn-back-dashboard {
+            background: var(--bg-input) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        .btn-back-dashboard:hover {
+            background: var(--nav-hover-bg) !important;
+            border-color: var(--color-primary) !important;
+        }
+
+        .cal-nav-btn {
+            background: var(--bg-input) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        .cal-nav-btn:hover {
+            background: var(--nav-hover-bg) !important;
+            border-color: var(--color-primary) !important;
+        }
+
+        .cal-today-btn {
+            background: var(--bg-input) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        .cal-today-btn:hover {
+            background: var(--nav-hover-bg) !important;
+            border-color: var(--color-primary) !important;
+        }
+
+        .calendar-month-title {
+            color: var(--color-primary) !important;
+        }
+
+        .cal-filter-pill {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-card) !important;
+            color: var(--text-secondary) !important;
+        }
+        .cal-filter-pill:hover {
+            background: var(--nav-hover-bg) !important;
+            border-color: var(--border-color) !important;
+        }
+        .cal-filter-pill.active {
+            background: var(--nav-active-bg) !important;
+            border-color: var(--color-primary) !important;
+            color: var(--color-primary) !important;
+            box-shadow: var(--shadow-primary) !important;
+        }
+        .cal-filter-pill.active i {
+            color: var(--color-primary) !important;
+        }
+
+        .cal-view-pills {
+            background: var(--bg-input) !important;
+            border: 1px solid var(--border-card) !important;
+        }
+        .cal-view-pill {
+            color: var(--text-secondary) !important;
+        }
+        .cal-view-pill:hover:not(.active) {
+            color: var(--text-primary) !important;
+            background: var(--nav-hover-bg) !important;
+        }
+        .cal-view-pill.active {
+            background: var(--btn-bg) !important;
+            color: var(--btn-text) !important;
+            box-shadow: var(--shadow-primary) !important;
+        }
+
+        .cal-sheet-toggle-btn {
+            background: var(--bg-input) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        .cal-sheet-toggle-btn:hover {
+            background: var(--nav-hover-bg) !important;
+            border-color: var(--color-primary) !important;
+        }
+
+        .calendar-bottom-bar {
+            background: var(--bg-sidebar) !important;
+            border-top: 1px solid var(--border-card) !important;
+        }
+        .cal-legend-item {
+            color: var(--text-primary) !important;
+        }
+        .cal-status-bar {
+            background: var(--bg-input) !important;
+            border: 1px solid var(--border-card) !important;
+            color: var(--text-secondary) !important;
+        }
+
+        /* FullCalendar Standard Overrides */
+        .fc-theme-standard .fc-scrollgrid {
+            border: none !important;
+            background: transparent !important;
+        }
+        .fc-timegrid .fc-scrollgrid {
+            border: 1px solid var(--border-card) !important;
+            background: var(--bg-card) !important;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .fc-timegrid td, .fc-timegrid th {
+            border: 1px solid var(--border-card) !important;
+        }
+        .fc-col-header-cell {
+            border: none !important;
+            background: transparent !important;
+            text-align: center !important;
+        }
+        .fc-timegrid .fc-col-header-cell {
+            border: 1px solid var(--border-card) !important;
+            background: var(--bg-card-alt) !important;
+            text-align: center !important;
+        }
+        .fc-col-header-cell-cushion {
+            color: var(--text-primary) !important;
+            font-size: 12px !important;
+            font-weight: 800 !important;
+            text-align: center !important;
+        }
+        .fc-timegrid-slot {
+            border-bottom: 1px solid var(--border-card) !important;
+            border-right: 1px solid var(--border-card) !important;
+            background: var(--bg-card) !important;
+        }
+        .fc-timegrid-slot-minor {
+            border-bottom: 1px solid var(--border-card) !important;
+        }
+        .fc-timegrid-slot-lane {
+            background: var(--bg-card) !important;
+        }
+        .fc-timegrid-slot-label {
+            background: var(--bg-card-alt) !important;
+            border-color: var(--border-card) !important;
+        }
+        .fc-timegrid-slot-label-cushion {
+            color: var(--text-muted) !important;
+            background: var(--bg-card-alt) !important;
+        }
+        .fc-timegrid-axis-frame, .fc-timegrid-axis {
+            color: var(--text-muted) !important;
+            background: var(--bg-card-alt) !important;
+            border-color: var(--border-card) !important;
+        }
+        .fc-theme-standard th.fc-timegrid-axis {
+            background: var(--bg-card-alt) !important;
+            border-bottom: 1px solid var(--border-card) !important;
+            border-right: 1px solid var(--border-card) !important;
+        }
+        .fc-daygrid-day-frame {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-card) !important;
+            border-radius: 14px !important;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02) !important;
+        }
+        .fc-daygrid-day-frame:hover {
+            border-color: color-mix(in srgb, var(--color-primary) 55%, var(--border-card)) !important;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+        }
+        .fc-daygrid-day-number {
+            color: var(--text-primary) !important;
+            font-size: 13.5px !important;
+            font-weight: 700 !important;
+        }
+        .fc-day-other .fc-daygrid-day-frame {
+            background: var(--bg-card) !important;
+            border-color: var(--border-card) !important;
+            box-shadow: none !important;
+            opacity: 0.38 !important;
+        }
+        .fc-day-other .fc-daygrid-day-number {
+            color: var(--text-muted) !important;
+            font-weight: 600 !important;
+        }
+        .fc-daygrid-day.fc-day-today .fc-daygrid-day-frame {
+            border: 2px solid var(--color-primary) !important;
+            background: linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 6%, var(--bg-card)) 0%, var(--bg-card) 50%) !important;
+            box-shadow: 0 4px 16px color-mix(in srgb, var(--color-primary) 18%, transparent) !important;
+        }
+        .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+            background: linear-gradient(135deg, var(--color-primary), color-mix(in srgb, var(--color-primary) 65%, #EC4899)) !important;
+            color: #FFFFFF !important;
+            border-radius: 50% !important;
+            width: 24px !important;
+            height: 24px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 12px !important;
+            font-weight: 800 !important;
+            box-shadow: 0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent) !important;
+        }
+        .fc th.fc-day-today .fc-col-header-cell-cushion {
+            color: var(--color-primary) !important;
+            background: color-mix(in srgb, var(--color-primary) 12%, transparent) !important;
+            font-weight: 800 !important;
+        }
+        .fc .fc-daygrid-more-link {
+            color: var(--color-primary) !important;
+            background: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+            font-weight: 700 !important;
+            border-radius: 999px !important;
+            padding: 2.5px 8px !important;
+        }
+        .fc .fc-daygrid-more-link:hover {
+            color: var(--color-primary) !important;
+            background: color-mix(in srgb, var(--color-primary) 20%, transparent) !important;
+        }
+        .fc .fc-popover {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-card) !important;
+            box-shadow: var(--shadow-card) !important;
+        }
+        .fc .fc-popover-header {
+            background: var(--bg-card-alt) !important;
+            border-bottom: 1px solid var(--border-card) !important;
+            color: var(--text-primary) !important;
+        }
+        .fc-timegrid-now-indicator-line {
+            border-color: var(--color-primary) !important;
+        }
+
+        /* Modals & Dialogs */
+        .modal-overlay {
+            background: var(--bg-overlay) !important;
+        }
+        .calendar-modal {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-card) !important;
+            box-shadow: var(--shadow-card) !important;
+            color: var(--text-primary) !important;
+        }
+        .modal-footer {
+            background: var(--bg-card) !important;
+            border-top: 1px solid var(--border-card) !important;
+        }
+        .recurrence-dialog-overlay {
+            background: var(--bg-overlay) !important;
+        }
+        .recurrence-dialog {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-card) !important;
+            box-shadow: var(--shadow-card) !important;
+            color: var(--text-primary) !important;
+        }
+        .recurrence-dialog h4 {
+            color: var(--text-primary) !important;
+        }
+        .recurrence-dialog p {
+            color: var(--text-secondary) !important;
+        }
+        .recurrence-option {
+            background: var(--bg-input) !important;
+            border: 1px solid var(--border-card) !important;
+            color: var(--text-primary) !important;
+        }
+        .recurrence-option:hover, .recurrence-option.selected {
+            background: var(--nav-hover-bg) !important;
+            border-color: var(--color-primary) !important;
+        }
+        .recurrence-option.selected .recurrence-radio-dot {
+            border-color: var(--color-primary) !important;
+            background: var(--color-primary) !important;
+        }
+
+        /* ===== PHASE 17 — CALENDAR MOBILE ===== */
+        @media (max-width: 768px) {
+          .fc-toolbar { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
+          .fc-toolbar-title { font-size: 16px !important; }
+          .fc-button { font-size: 12px !important; padding: 7px 12px !important; min-height: 38px !important; }
+          .fc-button-group .fc-button { padding: 7px 10px !important; }
+
+          /* List view — đẹp nhất mobile */
+          .fc-list-day-cushion {
+            background: var(--nav-hover-bg, #EFF6FF) !important;
+            color: var(--color-primary, #2563EB) !important;
+            font-size: 12.5px !important;
+            font-weight: 800 !important;
+            padding: 10px 14px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          [data-theme="dark"] .fc-list-day-cushion,
+          .dark-theme .fc-list-day-cushion {
+            background: var(--bg-card-alt) !important;
+            color: var(--color-primary) !important;
+          }
+          .fc-list-event {
+            cursor: pointer;
+            transition: background 0.15s ease;
+          }
+          .fc-list-event:hover td {
+            background: var(--nav-hover-bg, #F8FAFF) !important;
+          }
+          .fc-list-event td {
+            padding: 12px 14px !important;
+            border-bottom: 1px solid var(--border-card, #ECE7F6) !important;
+            vertical-align: middle !important;
+          }
+          .fc-list-event-time {
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            color: var(--text-primary) !important;
+            white-space: nowrap !important;
+            width: 105px;
+          }
+          .fc-list-event-graphic {
+            padding-right: 0 !important;
+            width: 24px !important;
+          }
+          .fc-list-event-dot {
+            width: 10px !important;
+            height: 10px !important;
+            border-radius: 50% !important;
+            border-width: 5px !important;
+          }
+          .fc-list-event-title {
+            font-size: 13.5px !important;
+            padding-left: 10px !important;
+          }
+          .fc-list-event-title a {
+            color: var(--text-primary) !important;
+            text-decoration: none !important;
+            display: block !important;
+            width: 100% !important;
+          }
+          .fc-list-table {
+            border: none !important;
+            width: 100% !important;
+          }
+          .fc-list-empty-cushion {
+            font-size: 13px !important;
+            color: var(--text-muted) !important;
+          }
+
+          /* Main calendar area padding */
+          .fc { padding: 0 !important; }
+        }
+        @media (max-width: 480px) {
+          .fc-toolbar-title { font-size: 14px !important; }
+          .fc-button { font-size: 11px !important; padding: 6px 8px !important; }
+        }
+
+        /* ===== HEADER LỊCH NÂNG CẤP: Tiêu đề Tháng/Tuần + Bộ chuyển chế độ ===== */
+        .cal-title-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 3px;
+            min-width: 0;
+        }
+        .calendar-month-title {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 9px !important;
+            font-size: 22px !important;
+            line-height: 1.1 !important;
+            white-space: nowrap;
+        }
+        .cal-title-icon {
+            width: 30px; height: 30px;
+            border-radius: 10px;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 14px;
+            color: var(--btn-text, #fff);
+            background: linear-gradient(135deg, var(--color-primary, #8E4DFF), color-mix(in srgb, var(--color-primary, #8E4DFF) 55%, #EC4899));
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary, #8E4DFF) 35%, transparent);
+            flex-shrink: 0;
+        }
+        .cal-title-main {
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, var(--color-primary, #8E4DFF), color-mix(in srgb, var(--color-primary, #8E4DFF) 50%, #EC4899));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .cal-title-year {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 999px;
+            color: var(--color-primary, #8E4DFF);
+            background: color-mix(in srgb, var(--color-primary, #8E4DFF) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--color-primary, #8E4DFF) 25%, transparent);
+            -webkit-text-fill-color: currentColor;
+        }
+        .cal-title-sub {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted, #8A8F98);
+            padding-left: 39px;
+            white-space: nowrap;
+        }
+        .cal-title-sub:empty { display: none; }
+        .cal-title-sub b { color: var(--text-primary); font-weight: 700; }
+        .cal-title-dot { margin: 0 7px; opacity: 0.5; }
+        .cal-title-anim .calendar-month-title,
+        .cal-title-anim .cal-title-sub {
+            animation: calTitleIn 0.38s cubic-bezier(.2,.8,.2,1) both;
+        }
+        .cal-title-anim .cal-title-sub { animation-delay: 0.06s; }
+        @keyframes calTitleIn {
+            from { opacity: 0; transform: translateY(6px); filter: blur(2px); }
+            to   { opacity: 1; transform: none; filter: none; }
+        }
+
+        /* Bộ chuyển Tháng / Tuần / Ngày với thanh trượt */
+        .cal-view-pills.has-indicator {
+            position: relative !important;
+            padding: 4px !important;
+            border-radius: 999px !important;
+            gap: 2px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
+        }
+        .cal-view-indicator {
+            position: absolute;
+            top: 4px; bottom: 4px; left: 0;
+            width: 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--color-primary, #8E4DFF), color-mix(in srgb, var(--color-primary, #8E4DFF) 60%, #EC4899));
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary, #8E4DFF) 40%, transparent);
+            transition: transform 0.35s cubic-bezier(.3,1.3,.5,1), width 0.35s cubic-bezier(.3,1.3,.5,1), opacity 0.2s;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .cal-view-pills.has-indicator .cal-view-pill {
+            position: relative;
+            z-index: 1;
+            display: inline-flex !important;
+            align-items: center;
+            gap: 6px;
+            height: 30px !important;
+            padding: 0 14px !important;
+            border-radius: 999px !important;
+            transition: color 0.25s ease, background 0.2s ease !important;
+        }
+        .cal-view-pills.has-indicator .cal-view-pill i { font-size: 11px; opacity: 0.75; transition: transform 0.25s ease; }
+        .cal-view-pills.has-indicator .cal-view-pill.active {
+            background: transparent !important;
+            box-shadow: none !important;
+            color: var(--btn-text, #fff) !important;
+        }
+        .cal-view-pills.has-indicator .cal-view-pill.active i { opacity: 1; transform: scale(1.1); }
+        .cal-view-pills.has-indicator .cal-view-pill:hover:not(.active) i { transform: translateY(-1px); }
+
+        @media (max-width: 768px) {
+            .calendar-month-title { font-size: 17px !important; gap: 7px !important; }
+            .cal-title-icon { width: 26px; height: 26px; font-size: 12px; border-radius: 8px; }
+            .cal-title-year { font-size: 11px; padding: 2px 7px; }
+            .cal-title-sub { font-size: 11px; padding-left: 33px; }
+            .cal-view-pills.has-indicator .cal-view-pill { height: 28px !important; padding: 0 11px !important; gap: 5px; }
+        }
+        @media (max-width: 400px) {
+            .cal-view-pills.has-indicator .cal-view-pill i { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .cal-view-indicator { transition: none; }
+            .cal-title-anim .calendar-month-title, .cal-title-anim .cal-title-sub { animation: none; }
+        }
+    
+        /* === DARK THEME: POPUP, FORM & BẢNG TÓM TẮT === */
+        [data-theme="dark"] {
+            --cal-popup-bg: linear-gradient(var(--bg-card-alt), var(--bg-card-alt)), var(--bg-page);
+            --cal-popup-border: var(--border-color);
+            --cal-soft-bg: rgba(255, 255, 255, 0.05);
+            --cal-soft-bg-hover: rgba(255, 255, 255, 0.10);
+        }
+        [data-theme="dark"] #eventDetailPopover,
+        [data-theme="dark"] .calendar-modal,
+        [data-theme="dark"] .recurrence-dialog,
+        [data-theme="dark"] .sheet-panel,
+        [data-theme="dark"] .fc .fc-popover {
+            background: var(--cal-popup-bg) !important;
+            border-color: var(--cal-popup-border) !important;
+            color: var(--text-primary) !important;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55) !important;
+        }
+        [data-theme="dark"] .sheet-panel { border-top-color: var(--color-primary) !important; }
+        [data-theme="dark"] .modal-overlay,
+        [data-theme="dark"] .recurrence-dialog-overlay { background: rgba(0, 0, 0, 0.6) !important; }
+
+        /* Popup chi tiết ca học */
+        [data-theme="dark"] #detailTitle,
+        [data-theme="dark"] .modal-header h3,
+        [data-theme="dark"] .recurrence-dialog h4,
+        [data-theme="dark"] .recurrence-option-text strong,
+        [data-theme="dark"] .sheet-title { color: var(--text-primary) !important; }
+        [data-theme="dark"] .detail-info-item,
+        [data-theme="dark"] .detail-info-item i,
+        [data-theme="dark"] .detail-recurrence-info,
+        [data-theme="dark"] .recurrence-dialog p,
+        [data-theme="dark"] .recurrence-option-text span,
+        [data-theme="dark"] .form-group label { color: var(--text-secondary) !important; }
+        [data-theme="dark"] #detailFee { color: #34D399 !important; }
+        [data-theme="dark"] .detail-header-actions { border-color: var(--border-card) !important; }
+        [data-theme="dark"] .btn-detail-action,
+        [data-theme="dark"] .btn-close,
+        [data-theme="dark"] .btn-close-panel,
+        [data-theme="dark"] .fc .fc-popover-close { color: var(--text-secondary) !important; background: transparent !important; }
+        [data-theme="dark"] .btn-detail-action:hover,
+        [data-theme="dark"] .btn-close:hover,
+        [data-theme="dark"] .btn-close-panel:hover { background: var(--cal-soft-bg-hover) !important; color: var(--text-primary) !important; }
+        [data-theme="dark"] .bottom-sheet-handle { background: rgba(255, 255, 255, 0.25) !important; }
+
+        /* Form thêm / sửa ca dạy */
+        [data-theme="dark"] .modal-header,
+        [data-theme="dark"] .modal-footer { border-color: var(--border-card) !important; background: transparent !important; }
+        [data-theme="dark"] .form-control {
+            background: var(--bg-input) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
+            color-scheme: dark;
+        }
+        [data-theme="dark"] select,
+        [data-theme="dark"] select.form-control {
+            color-scheme: dark !important;
+        }
+        select option {
+            background-color: var(--bg-card, #1A163A);
+            color: var(--text-primary, #FFFFFF);
+        }
+        [data-theme="dark"] select option,
+        [data-theme="dark"] select.form-control option {
+            background-color: #161233 !important;
+            color: #FFFFFF !important;
+        }
+        [data-theme="light"] select option,
+        [data-theme="light"] select.form-control option {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+        }
+        [data-theme="dark"] .day-checkbox-label,
+        [data-theme="dark"] .color-scope-btn,
+        [data-theme="dark"] .color-preview-badge,
+        [data-theme="dark"] .recurrence-option {
+            background: var(--cal-soft-bg) !important;
+            border-color: var(--border-card) !important;
+            color: var(--text-secondary) !important;
+        }
+        [data-theme="dark"] .color-scope-btn.active,
+        [data-theme="dark"] .recurrence-option.selected,
+        [data-theme="dark"] .day-checkbox-item input:checked + .day-checkbox-label {
+            background: rgba(var(--color-primary-rgb), 0.22) !important;
+            border-color: var(--color-primary) !important;
+            color: var(--text-primary) !important;
+        }
+        [data-theme="dark"] .recurrence-radio-dot { border-color: var(--text-muted) !important; background: transparent !important; }
+        [data-theme="dark"] .btn-cancel,
+        [data-theme="dark"] .btn-rec-cancel {
+            background: var(--cal-soft-bg) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        [data-theme="dark"] .btn-cancel:hover,
+        [data-theme="dark"] .btn-rec-cancel:hover { background: var(--cal-soft-bg-hover) !important; }
+        [data-theme="dark"] .btn-save,
+        [data-theme="dark"] .btn-rec-ok { background: var(--btn-bg) !important; color: var(--btn-text, #FFFFFF) !important; border: none !important; }
+
+        /* Bảng "Lịch tóm tắt" */
+        [data-theme="dark"] .btn-sheet-toggle-header {
+            background: var(--cal-soft-bg) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        [data-theme="dark"] .btn-sheet-toggle-header:hover { background: var(--cal-soft-bg-hover) !important; }
+        [data-theme="dark"] .sheet-wrapper,
+        [data-theme="dark"] .sheet-table { background: transparent !important; border-color: var(--border-card) !important; box-shadow: none !important; }
+        [data-theme="dark"] .sheet-table th,
+        [data-theme="dark"] .sheet-table td { border-color: var(--border-card) !important; color: var(--text-secondary) !important; background: transparent !important; }
+        [data-theme="dark"] .sheet-table th { background: rgba(var(--color-primary-rgb), 0.16) !important; color: var(--text-primary) !important; }
+        [data-theme="dark"] .sheet-table td.cell-student { background: var(--cal-soft-bg) !important; color: var(--text-primary) !important; }
+        [data-theme="dark"] .sheet-table td.cell-active { color: var(--text-primary) !important; }
+        [data-theme="dark"] .sheet-table td.cell-empty { color: var(--text-muted) !important; }
+        [data-theme="dark"] .sheet-table td.cell-onetime { color: #F0A6CA !important; background: rgba(192, 94, 142, 0.16) !important; }
+        [data-theme="dark"] .sheet-table tbody tr:hover td { background: var(--cal-soft-bg-hover) !important; }
+
+        /* Popover "+N buổi" của FullCalendar */
+        [data-theme="dark"] .fc .fc-popover-header { background: rgba(var(--color-primary-rgb), 0.16) !important; color: var(--text-primary) !important; }
+        [data-theme="dark"] .fc .fc-popover-body { background: transparent !important; }
+
+/* ==========================================================================
+   LIÊN KẾT LỊCH <-> NHẬT KÝ / HỒ SƠ HỌC SINH
+   ========================================================================== */
+.zt-logged-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    margin-left: 4px;
+    border-radius: 50%;
+    background: #10B981;
+    color: #FFFFFF;
+    font-size: 8.5px;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+.fc-m-dot { position: relative; }
+.zt-ev-logged .fc-m-dot { box-shadow: 0 0 0 2px #10B981; }
+.detail-link-actions {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-card, rgba(0, 0, 0, 0.12));
+}
+.detail-lesson-status {
+    font-size: 12.5px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-secondary, #64748B);
+}
+.detail-lesson-status:empty { display: none; }
+.detail-lesson-status.done { color: #059669; }
+.detail-lesson-status.todo { color: #D97706; }
+.detail-link-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-detail-link {
+    flex: 1 1 140px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border-card, rgba(0, 0, 0, 0.12));
+    background: var(--bg-card, #FFFFFF);
+    color: var(--text-primary, #1E293B);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.12s ease, filter 0.15s ease;
+}
+.btn-detail-link:active { transform: scale(0.97); }
+.btn-detail-link.primary {
+    background: var(--color-primary, #2563EB);
+    border-color: var(--color-primary, #2563EB);
+    color: #FFFFFF;
+}
+.btn-detail-link:hover { filter: brightness(0.97); }

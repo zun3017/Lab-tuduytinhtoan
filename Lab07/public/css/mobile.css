@@ -1,0 +1,456 @@
+/* ==========================================================================
+   ZunTutor - TỐI ƯU ĐIỆN THOẠI (≤ 768px)
+   File nạp SAU CÙNG ở tutor-dashboard.html và tutor-calendar.html.
+   Mọi quy tắc mobile mới đặt ở đây, không rải thêm @media vào style.css.
+   ========================================================================== */
+
+:root {
+    --zt-bnav-h: 60px;
+    --zt-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Thanh điều hướng dưới: ẩn trên desktop */
+.zt-bottom-nav { display: none; }
+
+@media (max-width: 768px) {
+
+    /* ---------------------------------------------------------------
+       1. THANH ĐIỀU HƯỚNG DƯỚI (BOTTOM NAV) - DASHBOARD GIA SƯ
+       --------------------------------------------------------------- */
+    .zt-bottom-nav {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1900;
+        height: calc(var(--zt-bnav-h) + var(--zt-safe-bottom));
+        padding: 0 4px var(--zt-safe-bottom) 4px;
+        box-sizing: border-box;
+        background: var(--bg-sidebar, var(--bg-card, #FFFFFF));
+        border-top: 1px solid var(--border-card, rgba(0, 0, 0, 0.08));
+        box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.08);
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+    }
+    .zt-bnav-item {
+        flex: 1 1 0;
+        min-width: 0;
+        min-height: 44px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        padding: 6px 2px;
+        background: none;
+        border: none;
+        border-radius: 12px;
+        color: var(--text-secondary, #64748B);
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.1;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transition: color 0.18s ease, transform 0.12s ease;
+    }
+    .zt-bnav-item i { font-size: 19px; line-height: 1; }
+    .zt-bnav-item span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .zt-bnav-item:active { transform: scale(0.94); }
+    .zt-bnav-item.active { color: var(--color-primary, #2563EB); }
+    .zt-bnav-item.active i {
+        background: color-mix(in srgb, var(--color-primary, #2563EB) 14%, transparent);
+        padding: 5px 16px;
+        margin: -5px 0 -2px 0;
+        border-radius: 999px;
+    }
+
+    /* Chừa chỗ cho bottom nav để nội dung cuối trang không bị che */
+    body.zt-has-bnav #tutorMainContent {
+        padding-bottom: calc(var(--zt-bnav-h) + var(--zt-safe-bottom) + 16px) !important;
+    }
+
+    /* Header mobile nằm DƯỚI các modal (trước đây z-index 10005 che mất đầu modal) */
+    .tutor-mobile-header { z-index: 1900 !important; }
+
+    /* Các thông báo nổi ở đáy màn hình: đẩy lên trên bottom nav */
+    body.zt-has-bnav .sync-toast {
+        bottom: calc(var(--zt-bnav-h) + var(--zt-safe-bottom) + 12px) !important;
+        right: 12px !important;
+    }
+    body.zt-has-bnav #ztUpdateBanner {
+        bottom: calc(var(--zt-bnav-h) + var(--zt-safe-bottom) + 12px) !important;
+    }
+
+    /* ---------------------------------------------------------------
+       2. TAB LỊCH DẠY TRONG DASHBOARD: 1 vùng cuộn duy nhất, dùng dvh
+       --------------------------------------------------------------- */
+    html.calendar-tab-active #tutorDashboardBox,
+    html.calendar-tab-active #tutorMainContent {
+        height: 100vh !important;
+        max-height: 100vh !important;
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+    }
+    html.calendar-tab-active body.zt-has-bnav #tutorMainContent {
+        padding-bottom: calc(var(--zt-bnav-h) + var(--zt-safe-bottom)) !important;
+    }
+    #tutorSectionCalendar {
+        height: auto !important;
+        min-height: 0 !important;
+        flex: 1 1 auto !important;
+    }
+    #tutorSectionCalendar .calendar-embed-wrapper {
+        min-height: 0 !important;
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        box-shadow: none !important;
+    }
+    #tutorCalendarIframe { min-height: 0 !important; }
+    /* Banner chào mừng dùng thử chiếm nửa màn hình ở tab Lịch -> ẩn trên điện thoại (vẫn hiện ở các tab khác) */
+    html.calendar-tab-active #tutorLockBannerContainer:has(#tutorTrialWelcomeBanner),
+    html.calendar-tab-active #tutorTrialWelcomeBanner {
+        display: none !important;
+    }
+
+    /* ---------------------------------------------------------------
+       3. MODAL DẠNG BOTTOM-SHEET (trượt từ dưới lên, nút Lưu luôn thấy)
+       --------------------------------------------------------------- */
+    .modal-overlay {
+        align-items: flex-end !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+    .modal-overlay > .modal-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        border-radius: 22px 22px 0 0 !important;
+        border-bottom: none !important;
+        max-height: 92vh !important;
+        max-height: 92dvh !important;
+        padding: 18px 16px calc(16px + var(--zt-safe-bottom)) 16px !important;
+        overscroll-behavior: contain;
+        animation: ztSheetUp 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .modal-overlay > .modal-content::before {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--border-card, rgba(0, 0, 0, 0.18));
+        margin: -6px auto 12px auto;
+        opacity: 0.9;
+    }
+    .modal-overlay > .modal-content .modal-footer {
+        bottom: calc(-16px - var(--zt-safe-bottom)) !important;
+        padding-bottom: calc(10px + var(--zt-safe-bottom)) !important;
+    }
+    /* Ô nhập ≥ 16px: iOS không tự phóng to khi chạm vào ô nhập */
+    .modal-content input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]),
+    .modal-content select,
+    .modal-content textarea {
+        font-size: 16px !important;
+    }
+    /* Vùng chạm tối thiểu cho nút trong modal */
+    .modal-content .modal-btn,
+    .modal-content button.modal-btn {
+        min-height: 44px !important;
+    }
+    .modal-close {
+        min-width: 40px;
+        min-height: 40px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* ---------------------------------------------------------------
+       4. VÙNG CHẠM & BẢNG
+       --------------------------------------------------------------- */
+    .tutor-mobile-menu-btn,
+    .mobile-action-btn {
+        min-width: 40px !important;
+        min-height: 40px !important;
+    }
+    /* Bảng rộng: cuộn ngang mượt trong khung, không đẩy vỡ trang */
+    #tutorMainContent table {
+        max-width: 100%;
+    }
+    #tutorMainContent .table-responsive,
+    #tutorMainContent .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* ---------------------------------------------------------------
+       5. TRANG LỊCH (tutor-calendar.html) TRÊN ĐIỆN THOẠI
+       --------------------------------------------------------------- */
+    /* Header: nút to, dễ bấm */
+    .calendar-header-custom .cal-nav-btn,
+    .calendar-header-custom .btn-back-dashboard,
+    .calendar-header-custom .cal-sheet-toggle-btn {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+    }
+    .calendar-header-custom .cal-today-btn {
+        height: 40px !important;
+        padding: 0 14px !important;
+        font-size: 13px !important;
+    }
+    .cal-header-right .cal-view-pills {
+        flex: 1 1 auto;
+        display: flex !important;
+    }
+    .cal-header-right .cal-view-pill {
+        flex: 1 1 0;
+        justify-content: center;
+        height: 36px !important;
+        padding: 0 10px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+    }
+    .calendar-month-title { font-size: 17px !important; }
+    /* Gộp tiêu đề + nút điều hướng lên 1 hàng cho gọn */
+    .calendar-header-custom .cal-header-left {
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+        align-items: center !important;
+    }
+    .calendar-header-custom .cal-title-block { order: -1; flex: 1 1 auto; min-width: 0; }
+    .calendar-header-custom .btn-back-dashboard { order: -2; }
+    .calendar-header-custom .cal-nav-group { flex: 0 0 auto; gap: 6px !important; }
+    .calendar-header-custom .cal-title-icon { display: none !important; }
+    .calendar-header-custom .calendar-month-title { gap: 6px !important; overflow: hidden; }
+    .calendar-header-custom .cal-title-main { overflow: hidden; text-overflow: ellipsis; }
+    .calendar-header-custom .cal-title-sub { padding-left: 0 !important; }
+    .calendar-header-custom .cal-nav-btn { width: 36px !important; height: 36px !important; min-width: 36px !important; }
+    .calendar-header-custom .cal-today-btn { height: 36px !important; padding: 0 10px !important; }
+
+    /* Chữ tối thiểu dễ đọc */
+    .fc-timegrid-slot-label-cushion { font-size: 11px !important; }
+    .fc-event-time { font-size: 11px !important; }
+    .fc-event-title { font-size: 12px !important; }
+    .cal-legend-item,
+    .cal-status-bar { font-size: 12px !important; }
+
+    /* --- Chế độ DANH SÁCH (Lịch tuần / ngày trên điện thoại): dạng thẻ --- */
+    .fc .fc-list { border: none !important; background: transparent !important; }
+    html.cal-mobile .fc .fc-list-table,
+    html.cal-mobile .fc .fc-list-table tbody {
+        display: block !important;
+        width: 100% !important;
+        border: none !important;
+    }
+    html.cal-mobile .fc .fc-list-table thead { display: none !important; }
+    html.cal-mobile .fc .fc-list-table tr {
+        display: block !important;
+        border: none !important;
+        background: transparent !important;
+    }
+    /* Tiêu đề ngày: gọn, căn trái, dính trên cùng khi cuộn */
+    html.cal-mobile .fc .fc-list-day > th {
+        display: block !important;
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+    html.cal-mobile .fc .fc-list-day-cushion {
+        display: block !important;
+        padding: 16px 16px 2px 16px !important;
+        background: transparent !important;
+        text-align: left !important;
+        text-transform: none !important;
+        letter-spacing: 0 !important;
+        border: none !important;
+    }
+    .zt-ld {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        text-transform: none;
+        letter-spacing: 0;
+    }
+    .zt-ld-day {
+        font-size: 15px;
+        font-weight: 800;
+        color: var(--text-primary, #0F172A);
+    }
+    .zt-ld-date {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-secondary, #64748B);
+    }
+    .zt-ld.is-today .zt-ld-day { color: var(--color-primary, #2563EB); }
+    .zt-ld-today {
+        align-self: center;
+        margin-left: auto;
+        padding: 2px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #FFFFFF;
+        background: var(--color-primary, #2563EB);
+    }
+    /* Dòng ca học: ẩn cột giờ + chấm của FullCalendar, để thẻ tự hiển thị */
+    html.cal-mobile .fc .fc-list-event td.fc-list-event-time,
+    html.cal-mobile .fc .fc-list-event td.fc-list-event-graphic { display: none !important; }
+    html.cal-mobile .fc .fc-list-event td.fc-list-event-title {
+        display: block !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+    }
+    html.cal-mobile .fc .fc-list-event:hover td { background: transparent !important; }
+    html.cal-mobile .fc .fc-list-event-title a { display: block; text-decoration: none !important; color: inherit !important; }
+    html.cal-mobile .fc .fc-list-table tr.fc-list-event:last-child { padding-bottom: 8px !important; }
+
+    .zt-lc {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 6px 12px;
+        padding: 12px 12px 12px 14px;
+        background: var(--bg-card, #FFFFFF);
+        border: 1px solid var(--border-color, rgba(15, 23, 42, 0.08));
+        border-left: 4px solid var(--zt-ev-color, #8E4DFF);
+        border-radius: 14px;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+        transition: transform 0.12s ease;
+    }
+    .fc-list-event:active .zt-lc { transform: scale(0.985); }
+    .zt-lc-time {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: 46px;
+        padding-right: 12px;
+        border-right: 1px solid var(--border-color, rgba(15, 23, 42, 0.08));
+        line-height: 1.25;
+    }
+    .zt-lc-time b {
+        font-size: 15px;
+        font-weight: 800;
+        color: var(--text-primary, #0F172A);
+    }
+    .zt-lc-time span {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-secondary, #64748B);
+    }
+    .zt-lc-main { flex: 1 1 auto; min-width: 0; }
+    .zt-lc-name {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+    }
+    .zt-lc-name-text {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-primary, #0F172A);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+    }
+    .zt-lc-sub {
+        margin-top: 2px;
+        font-size: 12.5px;
+        color: var(--text-secondary, #64748B);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .zt-lc-tag {
+        flex: 0 0 auto;
+        padding: 1px 7px;
+        border-radius: 6px;
+        font-size: 10.5px;
+        font-weight: 700;
+    }
+    .zt-lc-tag.cancel { background: rgba(239, 68, 68, 0.14); color: #EF4444; }
+    .zt-lc-tag.once { background: rgba(245, 158, 11, 0.16); color: #D97706; }
+    .zt-lc-fee {
+        flex: 0 0 auto;
+        padding: 4px 9px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        color: var(--color-primary, #2563EB);
+        background: rgba(37, 99, 235, 0.09);
+    }
+    .zt-lc.is-cancelled { opacity: 0.6; border-left-style: dashed; }
+    .zt-lc.is-cancelled .zt-lc-name-text,
+    .zt-lc.is-cancelled .zt-lc-time b { text-decoration: line-through; }
+    [data-theme="dark"] .zt-lc { box-shadow: none; }
+    [data-theme="dark"] .zt-lc-fee { background: rgba(96, 165, 250, 0.15); color: #93C5FD; }
+
+    .fc .fc-list-empty-cushion {
+        margin: 40px 16px !important;
+        font-size: 14px !important;
+        color: var(--text-secondary, #64748B) !important;
+        text-align: center !important;
+    }
+
+    /* --- Chế độ THÁNG gọn: mỗi ca là 1 chấm màu, chạm ngày để xem danh sách --- */
+    html.cal-mobile .fc-dayGridMonth-view .fc-daygrid-day-events {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 3px !important;
+        padding: 0 4px 4px 4px !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+    }
+    html.cal-mobile .fc-dayGridMonth-view .fc-daygrid-event-harness {
+        margin: 0 !important;
+        position: static !important;
+    }
+    html.cal-mobile .fc-dayGridMonth-view .fc-daygrid-event {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    .fc-m-dot {
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+    html.cal-mobile .fc-dayGridMonth-view .fc-daygrid-day-frame { min-height: 52px !important; cursor: pointer; }
+    html.cal-mobile .fc-dayGridMonth-view .fc-daygrid-day-number {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        padding: 4px 6px !important;
+    }
+    html.cal-mobile .fc-dayGridMonth-view .fc-day-today .fc-daygrid-day-number {
+        background: var(--color-primary, #2563EB);
+        color: #FFFFFF !important;
+        border-radius: 999px;
+        min-width: 24px;
+        text-align: center;
+    }
+    html.cal-mobile .fc-vn-holiday-badge { display: none !important; }
+
+    /* Nút + nổi: tránh vùng thanh home */
+    .fab-add {
+        bottom: calc(16px + var(--zt-safe-bottom)) !important;
+    }
+}
+
+@keyframes ztSheetUp {
+    from { transform: translateY(40px); opacity: 0.4; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-overlay > .modal-content { animation: none !important; }
+}

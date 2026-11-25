@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=1200, user-scalable=yes" name="viewport"/>
+<title>Google Calendar style for Tutors - Recurrence Timetable</title>
+<!-- Google Fonts -->
+<link href="/vendor/inter.css" rel="stylesheet"/>
+<!-- FontAwesome Icons -->
+<link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/>
+<!-- FullCalendar JS v6 -->
+<script src="/vendor/fullcalendar.min.js"></script>
+<style>
+        /* === BỘ PHÔNG CHỮ VIỆT HÓA CHUẨN ĐỒNG BỘ TOÀN DIỆN === */
+        *, body, button, input, select, textarea,
+        .fc, .fc *,
+        .fc-col-header-cell-cushion, .fc-daygrid-day-number,
+        .fc-event, .fc-event-title, .fc-event-time {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+        }
+        i, [class*="fa-"], .fa-solid, .fa-regular {
+            font-family: "Font Awesome 6 Free" !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* === FULL-SCREEN LAYOUT NHƯ GOOGLE CALENDAR === */
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Tắt hoàn toàn thanh cuộn ngoài */
+        }
+
+        body {
+            background: radial-gradient(circle at 50% 30%, #150F3B 0%, #08051A 100%) no-repeat fixed;
+            color: #FFF;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header cố định, không co giãn */
+        .container {
+            flex-shrink: 0;
+            width: 100%;
+            background: rgba(11, 8, 38, 0.85);
+            border-bottom: 1px solid rgba(142, 77, 255, 0.2);
+            padding: 12px 25px;
+            padding-top: calc(constant(safe-area-inset-top, 0px) + 12px);
+            padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
+            padding-left: calc(constant(safe-area-inset-left, 0px) + 25px);
+            padding-left: calc(env(safe-area-inset-left, 0px) + 25px);
+            padding-right: calc(constant(safe-area-inset-right, 0px) + 25px);
+            padding-right: calc(env(safe-area-inset-right, 0px) + 25px);
+            backdrop-filter: blur(25px);
+        }
+
+        /* Vùng lịch chiếm toàn bộ chiều cao còn lại */
+        .calendar-wrapper {
+            flex: 1;
+            overflow: hidden;
+            background: transparent;
+            padding: 0 10px 10px 10px;
+        }
+
+        .calendar-wrapper #calendar {
+            height: 100%;
+        }
+
+        /* --- HEADER & TITLES --- */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .calendar-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .calendar-title-wrap i {
+            font-size: 24px;
+            color: #8E4DFF;
+            text-shadow: 0 0 10px rgba(142, 77, 255, 0.5);
+        }
+
+        .calendar-title-wrap h2 {
+            font-size: 19px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFF 0%, #E2D1FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .calendar-subtitle {
+            font-size: 12.5px;
+            color: #A6ADCE;
+            margin-top: 4px;
+        }
+
+        /* --- GOOGLE CALENDAR CUSTOM STYLING (DARK BLUE/PURPLE) --- */
+        #calendar {
+            background: rgba(12, 8, 39, 0.45);
+            border-radius: 16px;
+            border: 1px solid rgba(142, 77, 255, 0.2);
+            padding: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Toolbar buttons */
+        .fc .fc-button-primary {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.45) !important;
+            color: #E2D1FF !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            text-transform: capitalize !important;
+            border-radius: 30px !important;
+            padding: 6px 16px !important;
+            transition: all 0.3s !important;
+        }
+
+        .fc .fc-button-primary:hover {
+            background: rgba(142, 77, 255, 0.2) !important;
+            border-color: #8E4DFF !important;
+            color: #FFF !important;
+        }
+
+        .fc .fc-button-active,
+        .fc .fc-button-primary:not(:disabled).fc-button-active {
+            background: linear-gradient(135deg, #8E4DFF 0%, #5B21B6 100%) !important;
+            border-color: #8E4DFF !important;
+            color: #FFFFFF !important;   /* Chữ trắng, rõ ràng trên nền tím */
+            box-shadow: 0 4px 12px rgba(142, 77, 255, 0.4) !important;
+        }
+
+        .fc .fc-toolbar-title {
+            font-size: 16px !important;
+            font-weight: 800 !important;
+            color: #FFF !important;
+            text-transform: capitalize !important;
+        }
+
+        /* Table header cells */
+        .fc th {
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            background: rgba(142, 77, 255, 0.07) !important;
+            padding: 8px 0 !important;
+        }
+
+        .fc-col-header-cell-cushion {
+            color: #E2D1FF !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+        }
+
+        .fc-timegrid-slot {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important; /* Đường kẻ ngang giờ */
+            border-right: 1px solid rgba(255, 255, 255, 0.12) !important;  /* Đường kẻ dọc ngăn cột */
+            height: 24px !important;
+        }
+
+        .fc-timegrid-slot-label {
+            vertical-align: top !important; /* Căn ở đỉnh ô để khớp vị trí dòng kẻ ngang */
+        }
+
+        .fc-timegrid-slot-label-cushion {
+            color: #A6ADCE !important;
+            font-size: 11px !important;
+            font-weight: 500 !important;
+            display: inline-block !important;
+            transform: translateY(-50%) !important; /* Nhấc chữ lên giữa dòng kẻ */
+            background: #0F0A30 !important; /* Trùng màu nền xám tối/tím vũ trụ của calendar để che bớt đường kẻ phía dưới */
+            padding: 0 4px !important;
+            position: relative !important;
+            z-index: 5 !important;
+        }
+
+        .fc-timegrid-axis-frame {
+            color: #A6ADCE !important;
+        }
+
+        .fc-theme-standard td, .fc-theme-standard th {
+            border: 1px solid rgba(255, 255, 255, 0.15) !important; /* Đường viền ô lưới rõ trên nền đen */
+        }
+
+        /* Gỡ bỏ màu highlight vàng/đục của cột hôm nay để giữ nền vũ trụ trong suốt */
+        .fc-theme-standard td.fc-day-today {
+            background-color: transparent !important;
+        }
+
+        /* Làm nổi bật tiêu đề cột của ngày hôm nay bằng màu tím sáng giống nút Lịch Tuần */
+        .fc th.fc-day-today {
+            background: linear-gradient(135deg, #8E4DFF 0%, #5B21B6 100%) !important;
+        }
+        .fc th.fc-day-today .fc-col-header-cell-cushion {
+            color: #FFFFFF !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Đường chỉ giờ hiện tại (Now Indicator) màu đỏ giống Google Calendar */
+        .fc .fc-timegrid-now-indicator-line {
+            border-color: #EA4335 !important;
+            border-width: 2px !important;
+        }
+        .fc .fc-timegrid-now-indicator-arrow {
+            border-left-color: #EA4335 !important;
+        }
+
+        /* --- SỰ KIỆN LỊCH (EVENTS) --- */
+        .fc-v-event {
+            background: rgba(142, 77, 255, 0.15) !important;
+            border: 1px solid rgba(142, 77, 255, 0.4) !important;
+            border-left: 4px solid #8E4DFF !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+            padding: 3px 6px !important;
+            cursor: pointer !important;
+            transition: transform 0.2s, box-shadow 0.2s !important;
+        }
+
+        .fc-v-event:hover {
+            transform: scale(1.02) !important;
+            box-shadow: 0 6px 15px rgba(142, 77, 255, 0.3) !important;
+        }
+
+        .fc-event-main-frame {
+            padding: 2px 4px !important;
+        }
+
+        .fc-event-time {
+            font-size: 10.5px !important;
+            font-weight: 700 !important;
+            color: #E2D1FF !important;
+            margin-bottom: 2px !important;
+        }
+
+        .fc-event-title {
+            font-size: 11.5px !important;
+            font-weight: 700 !important;
+            color: #FFF !important;
+            white-space: normal !important; /* Cho phép xuống dòng tự động */
+            word-break: break-word !important; /* Tự động ngắt từ dài */
+        }
+
+
+
+        /* --- BẢNG MÀU CHO MODAL --- */
+        .color-picker-section {
+            margin-top: 4px;
+        }
+        .color-scope-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .color-scope-btn {
+            flex: 1;
+            padding: 5px 0;
+            font-size: 11.5px;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            background: transparent;
+            color: #8892B0;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .color-scope-btn.active {
+            background: rgba(142, 77, 255, 0.2);
+            border-color: rgba(142, 77, 255, 0.6);
+            color: #E2D1FF;
+        }
+        .color-swatches {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .color-swatch {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.15s, border-color 0.15s;
+            position: relative;
+        }
+        .color-swatch:hover { transform: scale(1.18); }
+        .color-swatch.selected {
+            border-color: #FFF;
+            transform: scale(1.15);
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.3);
+        }
+        .color-swatch.selected::after {
+            content: '✓';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #FFF;
+            font-weight: 800;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .color-preview-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #8892B0;
+            margin-top: 7px;
+        }
+        .color-preview-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* --- SPREADSHEET SIMULATOR TABLE (BẢNG MÔ PHỎNG SHEETS CỦA BẠN) --- */
+        /* --- BẢNG SHEETS SIMULATOR - NỔI LÊN TỪ DƯỚI (SLIDE-UP PANEL) --- */
+        .sheet-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 800;
+            background: rgba(11, 8, 38, 0.97);
+            border-top: 2px solid rgba(142, 77, 255, 0.5);
+            border-radius: 20px 20px 0 0;
+            padding: 16px 20px 20px;
+            box-shadow: 0 -8px 40px rgba(91, 46, 255, 0.3);
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 55vh;
+            overflow-y: auto;
+        }
+
+        .sheet-panel.open {
+            transform: translateY(0);
+        }
+
+        .sheet-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .sheet-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #FFD23F;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-close-panel {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #A6ADCE;
+            border-radius: 50%;
+            width: 28px; height: 28px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+        .btn-close-panel:hover { background: rgba(255,255,255,0.05); color: #FFF; }
+
+        .sheet-panel.open ~ .btn-sheet-toggle {
+            display: none !important;
+        }
+
+        .btn-sheet-toggle-header {
+            background: rgba(255, 210, 63, 0.15);
+            border: 1px solid rgba(255, 210, 63, 0.4);
+            color: #FFD23F;
+            border-radius: 30px;
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin-right: 15px;
+        }
+        .btn-sheet-toggle-header:hover {
+            background: rgba(255, 210, 63, 0.3);
+            transform: translateY(-1px);
+        }
+        @media (max-width: 576px) {
+            .btn-sheet-toggle-header {
+                display: none;
+            }
+        }
+
+        .sheet-wrapper {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(4, 2, 10, 0.3);
+        }
+
+        .sheet-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .sheet-table th, .sheet-table td {
+            padding: 8px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            white-space: nowrap;
+        }
+
+        .sheet-table th {
+            background: rgba(142, 77, 255, 0.12);
+            color: #E2D1FF;
+            font-weight: 600;
+        }
+
+        .sheet-table td.cell-active {
+            color: #E2D1FF;
+            font-weight: 500;
+        }
+
+        .sheet-table td.cell-empty {
+            color: #4a4d6b;
+            font-style: italic;
+        }
+        
+        .sheet-table td.cell-onetime {
+            color: #FFD23F;
+            font-weight: 600;
+        }
+
+        /* --- MODAL HỘP THOẠI (GOOGLE CALENDAR STYLE MODAL) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+        }
+
+        .calendar-modal {
+            background: rgba(15, 11, 46, 0.98);
+            border: 1px solid #8E4DFF;
+            box-shadow: 0 0 40px rgba(142, 77, 255, 0.4);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 440px;
+            max-height: calc(100vh - 24px);
+            max-height: calc(100dvh - 24px);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 22px 14px 22px;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+            box-sizing: border-box;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-overlay.active .calendar-modal {
+            transform: scale(1);
+        }
+
+        #eventForm {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 4px;
+            margin-right: -4px;
+        }
+
+        #eventForm::-webkit-scrollbar {
+            width: 5px;
+        }
+        #eventForm::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #eventForm::-webkit-scrollbar-thumb {
+            background: rgba(142, 77, 255, 0.3);
+            border-radius: 4px;
+        }
+        #eventForm::-webkit-scrollbar-thumb:hover {
+            background: rgba(142, 77, 255, 0.5);
+        }
+
+        /* === HỘP THOẠI CHỈNH SỬA SỰ KIỆN LẶP LẠI (GOOGLE CALENDAR STYLE) === */
+        .recurrence-dialog-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .recurrence-dialog-overlay.active { display: flex; }
+
+        .recurrence-dialog {
+            background: rgba(18, 13, 55, 0.98);
+            border: 1px solid rgba(142, 77, 255, 0.5);
+            box-shadow: 0 8px 40px rgba(91, 46, 255, 0.35);
+            border-radius: 16px;
+            padding: 24px 28px;
+            width: 100%;
+            max-width: 360px;
+            transform: scale(0.92);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .recurrence-dialog-overlay.active .recurrence-dialog { transform: scale(1); }
+
+        .recurrence-dialog h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #E2D1FF;
+            margin-bottom: 6px;
+        }
+        .recurrence-dialog p {
+            font-size: 12px;
+            color: #8892B0;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .recurrence-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+        .recurrence-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 13px 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .recurrence-option:hover {
+            background: rgba(142,77,255,0.12);
+            border-color: rgba(142,77,255,0.4);
+        }
+        .recurrence-option.selected {
+            background: rgba(142,77,255,0.15);
+            border-color: #8E4DFF;
+        }
+        .recurrence-option input[type="radio"] { display: none; }
+        .recurrence-radio-dot {
+            width: 18px; height: 18px; flex-shrink: 0;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 1px;
+            transition: 0.2s;
+        }
+        .recurrence-option.selected .recurrence-radio-dot {
+            border-color: #8E4DFF;
+            background: #8E4DFF;
+        }
+        .recurrence-option.selected .recurrence-radio-dot::after {
+            content: '';
+            width: 7px; height: 7px;
+            background: #FFF;
+            border-radius: 50%;
+        }
+        .recurrence-option-text strong {
+            font-size: 13px;
+            color: #E2D1FF;
+            font-weight: 600;
+        }
+        .recurrence-option-text span {
+            display: block;
+            font-size: 11px;
+            color: #6B7280;
+            margin-top: 2px;
+        }
+
+        .recurrence-dialog-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .btn-rec-cancel {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #A6ADCE;
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            transition: 0.2s;
+        }
+        .btn-rec-cancel:hover { border-color: rgba(255,255,255,0.35); color: #FFF; }
+        .btn-rec-ok {
+            background: linear-gradient(135deg, #8E4DFF, #5B21B6);
+            border: none;
+            color: #FFF;
+            border-radius: 30px;
+            padding: 8px 22px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            transition: 0.2s;
+        }
+        .btn-rec-ok:hover { opacity: 0.88; }
+
+        .popover-backdrop {
+            display: none;
+        }
+        .bottom-sheet-handle {
+            display: none;
+        }
+
+        /* --- FLOATING POPOVER CHI TIẾT SỰ KIỆN (KHÔNG CHE CONTENT) --- */
+        #eventDetailPopover {
+            position: fixed;
+            z-index: 3000;
+            width: 300px;
+            background: rgba(15, 11, 46, 0.98);
+            border: 1px solid rgba(142, 77, 255, 0.45);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(142,77,255,0.08);
+            border-radius: 14px;
+            padding: 12px 16px 18px 16px;
+            display: none;
+            animation: popoverIn 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: top left;
+        }
+        #eventDetailPopover.visible { display: block; }
+
+        @keyframes popoverIn {
+            from { opacity: 0; transform: scale(0.88); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .detail-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            padding-bottom: 8px;
+        }
+        .detail-actions-left {
+            display: flex;
+            gap: 4px;
+        }
+        .btn-detail-action {
+            background: transparent;
+            border: none;
+            color: #A6ADCE;
+            font-size: 14px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .btn-detail-action:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFF;
+        }
+        .detail-content {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            margin-top: 6px;
+        }
+        .detail-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .detail-color-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: #8E4DFF;
+            flex-shrink: 0;
+            box-shadow: 0 0 7px rgba(142, 77, 255, 0.6);
+        }
+        #detailTitle {
+            font-size: 15px;
+            font-weight: 700;
+            color: #FFF;
+        }
+        .detail-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #E2D1FF;
+            font-size: 12.5px;
+            line-height: 1.45;
+        }
+        .detail-info-item i {
+            font-size: 13px;
+            color: #A6ADCE;
+            margin-top: 2px;
+            width: 14px;
+            text-align: center;
+        }
+        .detail-recurrence-info {
+            font-size: 11px;
+            color: #8892B0;
+            margin-top: 2px;
+        }
+
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .modal-header h3 {
+            font-size: 15.5px;
+            font-weight: 800;
+            color: #FFD23F;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: none;
+            color: #A6ADCE;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .btn-close:hover { color: #FFF; }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #A6ADCE;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(4, 2, 10, 0.6);
+            border: 1px solid rgba(142, 77, 255, 0.3);
+            border-radius: 10px;
+            padding: 8px 12px;
+            color: #FFF;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: #8E4DFF;
+            box-shadow: 0 0 10px rgba(142, 77, 255, 0.2);
+        }
+
+        .row-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Checkbox grid for Custom Recurrence */
+        .day-checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 5px;
+        }
+
+        .day-checkbox-item {
+            position: relative;
+        }
+
+        .day-checkbox-item input {
+            position: absolute;
+            opacity: 0;
+            width: 0; height: 0;
+        }
+
+        .day-checkbox-label {
+            display: block;
+            text-align: center;
+            padding: 7px 3px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #A6ADCE;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .day-checkbox-item input:checked + .day-checkbox-label {
+            background: rgba(142, 77, 255, 0.25);
+            border-color: #8E4DFF;
+            color: #FFF;
+            box-shadow: 0 0 10px rgba(142, 77, 255, 0.2);
+        }
+
+        /* Actions Footer Buttons */
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 12px;
+            padding-bottom: 2px;
+            flex-shrink: 0;
+            position: sticky;
+            bottom: -1px;
+            background: rgba(15, 11, 46, 0.98);
+            z-index: 10;
+        }
+
+        .btn {
+            padding: 9px 18px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: #A6ADCE;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-cancel:hover { background: rgba(255, 255, 255, 0.03); color: #FFF; }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            margin-right: auto;
+        }
+        .btn-delete:hover { background: #EF4444; color: #FFF; }
+
+        .btn-save {
+            background: linear-gradient(135deg, #8E4DFF 0%, #5B21B6 100%);
+            color: #FFF;
+            box-shadow: 0 4px 15px rgba(142, 77, 255, 0.3);
+        }
+        .btn-save:hover {
+            box-shadow: 0 6px 20px rgba(142, 77, 255, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* --- FLOATING ACTION BUTTON (GOOGLE CAL FAB STYLE) ON MOBILE --- */
+        .fab-add {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #8E4DFF 0%, #5B21B6 100%);
+            color: #FFF;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            box-shadow: 0 4px 20px rgba(91, 46, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            z-index: 900;
+            transition: all 0.3s;
+        }
+
+        .fab-add:hover {
+            transform: scale(1.08) rotate(90deg);
+        }
+
+        /* --- RESPONSIVE MOBILE OPTIMIZATIONS --- */
+        @media (max-width: 768px) {
+            body { padding: 0 !important; }
+            .container { 
+                padding: 10px 15px !important; 
+                border-radius: 0 !important; 
+                border-bottom: 1px solid rgba(142, 77, 255, 0.15) !important;
+            }
+            .calendar-header { margin-bottom: 0px; }
+            .calendar-subtitle { display: none; } /* Ẩn subtitle trên mobile để tiết kiệm diện tích */
+            .calendar-wrapper { padding: 0 4px 4px 4px !important; }
+            
+            .fab-add { display: flex; }
+
+            .fc .fc-toolbar {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 8px !important;
+                align-items: stretch !important;
+            }
+            .fc .fc-toolbar-title {
+                text-align: center !important;
+                font-size: 14px !important;
+            }
+            .fc .fc-button-group {
+                width: 100% !important;
+                display: flex !important;
+            }
+            .fc .fc-button {
+                flex: 1 !important;
+                padding: 4px 8px !important;
+                font-size: 11.5px !important;
+            }
+            .fc .fc-today-button {
+                width: 100% !important;
+            }
+
+            .fc-timegrid-slot {
+                height: 28px !important; /* Compact trên mobile */
+            }
+
+            /* Thu hẹp cột chứa giờ bên trái trục dọc */
+            .fc-timegrid-axis, .fc-timegrid-slot-label {
+                width: 44px !important;
+            }
+            .fc-timegrid-slot-label-cushion {
+                font-size: 9px !important;
+                padding: 0 2px !important;
+            }
+
+            /* Cỡ chữ sự kiện nhỏ hơn và padding ít hơn trên mobile */
+            .fc-v-event {
+                padding: 1px 3px !important;
+            }
+            .fc-event-time {
+                font-size: 9px !important;
+            }
+            .fc-event-title {
+                font-size: 10px !important;
+            }
+
+            /* Hộp thoại (Modal Overlay) Full-screen trên Mobile */
+            .modal-overlay {
+                padding: 0 !important;
+                align-items: flex-end !important;
+            }
+
+            .calendar-modal {
+                max-width: 100% !important;
+                height: 100% !important;
+                border-radius: 0 !important;
+                border: none !important;
+                overflow-y: auto !important;
+                display: flex !important;
+                flex-direction: column !important;
+                transform: translateY(100%) !important;
+                transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                padding: 24px 20px 40px 20px !important;
+            }
+
+            .modal-overlay.active .calendar-modal {
+                transform: translateY(0) !important;
+            }
+
+            /* Tinh chỉnh day-checkbox-grid 3 cột trên mobile */
+            .day-checkbox-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 6px !important;
+            }
+
+            /* Popover Backdrop của Bottom Sheet */
+            .popover-backdrop {
+                display: block;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0, 0, 0, 0.55);
+                backdrop-filter: blur(2px);
+                z-index: 2999;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.25s ease;
+            }
+            .popover-backdrop.visible {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            /* Bottom Sheet cho Chi tiết Ca Học trên Mobile */
+            #eventDetailPopover {
+                position: fixed !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                top: auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                border-radius: 24px 24px 0 0 !important;
+                border: none !important;
+                border-top: 1px solid rgba(142, 77, 255, 0.2) !important;
+                box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6) !important;
+                padding: 12px 20px 30px 20px !important;
+                transform: translateY(100%) !important;
+                transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                z-index: 3000 !important;
+                margin: 0 !important;
+            }
+
+            #eventDetailPopover.visible {
+                transform: translateY(0) !important;
+                display: block !important;
+            }
+
+            .bottom-sheet-handle {
+                display: block;
+                width: 40px;
+                height: 4px;
+                background: rgba(255, 255, 255, 0.25);
+                border-radius: 2px;
+                margin: 0 auto 12px auto;
+            }
+        }
+    </style>
+<style>@media(max-width:720px){.fc .fc-toolbar {flex-wrap:wrap;gap:6px}.fc .fc-toolbar-title{font-size:1rem}.calendar-header{padding:10px}.fc .fc-button{font-size:.75rem}.calendar-wrapper{overflow:auto}} #calendarStatus{display:inline-block;margin-left:.5em;}</style></head>
+<body>
+<!-- HEADER CỐ ĐỊNH -->
+<div class="container">
+<div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+<div class="calendar-title-wrap">
+<i class="fa-regular fa-calendar-check"></i>
+<div>
+<h2>Thời Khóa Biểu  &amp; Lịch Dạy</h2>
+<p class="calendar-subtitle">Lên lịch lặp lại (Hàng ngày/tuần) hoặc lịch học thử.<span id="calendarStatus" role="status"></span></p>
+</div>
+</div>
+<div>
+<a class="modal-btn modal-btn-secondary" href="index.html" onmouseout="this.style.background='rgba(255,255,255,0.06)'" onmouseover="this.style.background='rgba(255,255,255,0.12)'" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 20px; font-weight: bold; font-size: 13.5px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #FFF; transition: background 0.2s;">
+<i class="fa-solid fa-arrow-left"></i> Về trang chủ</a>
+</div>
+</div>
+</div>
+<!-- VÙNG LỊCH CHIẾM TOÀN BỘ PHẦN CÒN LẠI -->
+<div class="calendar-wrapper">
+<div id="calendar"></div>
+</div>
+<!-- BẢNG SHEETS SIMULATOR - PANEL NỔI LÊN TỪ DƯỚI -->
+<div class="sheet-panel" id="sheetPanel">
+<div class="sheet-panel-header">
+<div class="sheet-title">
+<button class="btn-sheet-toggle-header" onclick="toggleSheetPanel()">
+<i class="fa-solid fa-xmark"></i> Đóng lịch tóm tắt
+                </button>
+<i class="fa-solid fa-table-list"></i>  Dữ liệu thực tế của lịch học (cập nhật theo thời gian thực)
+            </div>
+<button class="btn-close-panel" onclick="toggleSheetPanel()"><i class="fa-solid fa-chevron-down"></i></button>
+</div>
+<div class="sheet-wrapper">
+<table class="sheet-table">
+<thead>
+<tr>
+<th style="text-align: left; width: 140px;">Tên Học Sinh</th>
+<th>Thứ Hai</th>
+<th>Thứ Ba</th>
+<th>Thứ Tư</th>
+<th>Thứ Năm</th>
+<th>Thứ Sáu</th>
+<th>Thứ Bảy</th>
+<th>Chủ Nhật</th>
+</tr>
+</thead>
+<tbody id="sheetDataTableBody"></tbody>
+</table>
+</div>
+</div>
+<!-- Nút FAB tròn nổi góc dưới phải -->
+<button class="fab-add" onclick="openAddEventModal()"><i class="fa-solid fa-plus"></i></button>
+<!-- Nút toggle bảng Sheets, góc dưới trái -->
+<button class="btn-sheet-toggle" id="sheetToggleBtn" onclick="toggleSheetPanel()">
+<i class="fa-solid fa-table-list"></i> Xem lịch tóm tắt
+    </button>
+<!-- HỘP THOẠI XÁC NHẬN KHI CHỈNH SỬA SỰ KIỆN LẶP LẠI -->
+<div class="recurrence-dialog-overlay" id="recurrenceDialogOverlay">
+<div class="recurrence-dialog">
+<h4 id="recurrenceDialogTitle"><i class="fa-solid fa-rotate" style="color:#8E4DFF;margin-right:8px;"></i>Chỉnh sửa sự kiện lặp lại</h4>
+<p id="recurrenceDialogDesc">Sự kiện này lặp lại hàng tuần. Bạn muốn thay đổi:</p>
+<div class="recurrence-options">
+<div class="recurrence-option selected" id="recOptThis" onclick="selectRecOption('this')">
+<div class="recurrence-radio-dot"></div>
+<div class="recurrence-option-text">
+<strong id="recOptThisTitle">Chỉ sự kiện này</strong>
+<span id="recOptThisDesc">Chỉ thay đổi ca học tuần này, các tuần khác giữ nguyên lịch cũ.</span>
+</div>
+</div>
+<div class="recurrence-option" id="recOptAll" onclick="selectRecOption('all')">
+<div class="recurrence-radio-dot"></div>
+<div class="recurrence-option-text">
+<strong id="recOptAllTitle">Tất cả các tuần</strong>
+<span id="recOptAllDesc">Cập nhật lịch cố định — áp dụng cho mọi tuần từ đây trở đi.</span>
+</div>
+</div>
+</div>
+<div class="recurrence-dialog-footer">
+<button class="btn-rec-cancel" onclick="cancelRecurrenceChange()">Huỷ</button>
+<button class="btn-rec-ok" onclick="confirmRecurrenceChange()">Xác nhận</button>
+</div>
+</div>
+</div>
+<!-- FLOATING POPOVER CHI TIẾT CA HỌC (NỔI BÊN CẠNH SỰ KIỆN) -->
+<div class="popover-backdrop" id="popoverBackdrop" onclick="closeDetailModalForce()"></div>
+<div id="eventDetailPopover">
+<div class="bottom-sheet-handle"></div>
+<div class="detail-header-actions">
+<div class="detail-actions-left">
+<button class="btn-detail-action" id="btnDetailEdit" onclick="editFromDetail()" title="Sửa ca học"><i class="fa-solid fa-pen"></i></button>
+<button class="btn-detail-action" id="btnDetailDelete" onclick="deleteFromDetail()" title="Xóa ca học"><i class="fa-solid fa-trash-can"></i></button>
+</div>
+<button class="btn-close" onclick="closeDetailModalForce()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<div class="detail-content">
+<div class="detail-title-wrap">
+<span class="detail-color-dot" id="detailColorDot"></span>
+<h3 id="detailTitle">Tên Học Sinh</h3>
+</div>
+<div class="detail-info-item">
+<i class="fa-regular fa-clock"></i>
+<div>
+<div id="detailDateTime">Ngày giờ hiển thị</div>
+<div class="detail-recurrence-info" id="detailRecurrence">Tần suất lặp</div>
+</div>
+</div>
+<div class="detail-info-item" id="detailNotesContainer">
+<i class="fa-regular fa-note-sticky"></i>
+<div id="detailNotes">Ghi chú ca học</div>
+</div>
+</div>
+</div>
+<!-- Modal Form Thêm/Sửa sự kiện (Google Calendar Style) -->
+<div class="modal-overlay" id="eventModalOverlay" onclick="closeEventModal(event)">
+<div class="calendar-modal" id="calendarModal">
+<div class="modal-header">
+<h3 id="modalTitleText"><i class="fa-solid fa-circle-info"></i> Thiết lập ca dạy</h3>
+<button class="btn-close" onclick="closeModalForce()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<form id="eventForm" onsubmit="saveEvent(event)">
+<!-- ID/Index Ẩn -->
+<input id="eventStudentIndex" type="hidden"/>
+<input id="eventOldDay" type="hidden"/>
+<div class="form-group">
+<label>Học sinh</label>
+<select class="form-control" id="eventStudent" required="">
+<option value="">Chọn học sinh...</option>
+<!-- Danh sách học sinh sẽ được load động -->
+</select>
+</div>
+<!-- LỰA CHỌN CHẾ ĐỘ LẶP (BỔ SUNG KHÔNG LẶP - CHỈ 1 LẦN) -->
+<div class="form-group">
+<label>Chế độ lặp lại (Recurrence)</label>
+<select class="form-control" id="eventRepeatMode" onchange="toggleRepeatUI()" required="">
+<option value="none">Không lặp </option>
+<option value="weekly">Lặp hàng tuần (Vào ngày cụ thể)</option>
+<option value="daily">Lặp hàng ngày (Tất cả các ngày thứ 2 - CN)</option>
+<option value="custom">Tùy chỉnh lặp (Chọn nhiều ngày...)</option>
+</select>
+</div>
+<!-- HIỂN THỊ CHỌN THỨ KHI LẶP HÀNG TUẦN -->
+<div class="form-group" id="daySelectGroup" style="display: none;">
+<label>Chọn ngày dạy trong tuần</label>
+<select class="form-control" id="eventDayOfWeek">
+<option value="mon">Thứ Hai</option>
+<option value="tue">Thứ Ba</option>
+<option value="wed">Thứ Tư</option>
+<option value="thu">Thứ Năm</option>
+<option value="fri">Thứ Sáu</option>
+<option value="sat">Thứ Bảy</option>
+<option value="sun">Chủ Nhật</option>
+</select>
+</div>
+<!-- HIỂN THỊ CHỌN NGÀY CỤ THỂ KHI CHỌN "KHÔNG LẶP" (DIỄN RA 1 LẦN) -->
+<div class="form-group" id="specificDateGroup">
+<label>Ngày diễn ra (Chỉ học 1 lần)</label>
+<input class="form-control" id="eventSpecificDate" type="date"/>
+</div>
+<!-- HIỂN THỊ CHECKBOX KHI CHỌN "CUSTOM" -->
+<div class="form-group" id="dayCheckboxGroup" style="display: none;">
+<label>Lặp lại vào các ngày</label>
+<div class="day-checkbox-grid">
+<div class="day-checkbox-item">
+<input id="checkMon" type="checkbox" value="mon"/>
+<label class="day-checkbox-label" for="checkMon">Thứ 2</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkTue" type="checkbox" value="tue"/>
+<label class="day-checkbox-label" for="checkTue">Thứ 3</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkWed" type="checkbox" value="wed"/>
+<label class="day-checkbox-label" for="checkWed">Thứ 4</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkThu" type="checkbox" value="thu"/>
+<label class="day-checkbox-label" for="checkThu">Thứ 5</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkFri" type="checkbox" value="fri"/>
+<label class="day-checkbox-label" for="checkFri">Thứ 6</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkSat" type="checkbox" value="sat"/>
+<label class="day-checkbox-label" for="checkSat">Thứ 7</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkSun" type="checkbox" value="sun"/>
+<label class="day-checkbox-label" for="checkSun">Chủ Nhật</label>
+</div>
+</div>
+</div>
+<div class="row-grid">
+<div class="form-group">
+<label>Giờ học (Bắt đầu)</label>
+<input class="form-control" id="eventStartTime" required="" type="time"/>
+</div>
+<div class="form-group">
+<label>Giờ học (Kết thúc)</label>
+<input class="form-control" id="eventEndTime" required="" type="time"/>
+</div>
+</div>
+<!-- Trường Ghi chú tùy chọn -->
+<div class="form-group">
+<label>Ghi chú môn học/nội dung (Tùy chọn)</label>
+<input class="form-control" id="eventNotes" placeholder="Ví dụ: Toán ôn thi, Lý nâng cao..." type="text"/>
+</div>
+<!-- Màu sắc -->
+<div class="form-group color-picker-section">
+<label>Màu sắc</label>
+<div class="color-scope-tabs">
+<button class="color-scope-btn active" id="colorScopeStudentBtn" onclick="setColorScope('student')" type="button">🎨 Màu học sinh (toàn bộ)</button>
+<button class="color-scope-btn" id="colorScopeSessionBtn" onclick="setColorScope('session')" type="button">✨ Buổi này</button>
+</div>
+<div class="color-swatches" id="colorSwatches"></div>
+<div class="color-preview-badge" id="colorPreviewBadge">
+<span class="color-preview-dot" id="colorPreviewDot"></span>
+<span id="colorPreviewText">Chọn màu bên trên</span>
+</div>
+<input id="eventColor" type="hidden" value=""/>
+<input id="colorScope" type="hidden" value="student"/>
+</div>
+<div class="modal-footer">
+<button class="btn btn-delete" id="btnDeleteEvent" onclick="deleteEvent()" style="display: none;" type="button">Xóa lịch</button>
+<button class="btn btn-cancel" onclick="closeModalForce()" type="button">Hủy</button>
+<button class="btn btn-save" type="submit">Lưu lại</button>
+</div>
+</form>
+</div>
+</div>
+<link href="/css/lab-portals.css" rel="stylesheet"/>
+<script src="/js/demo-calendar.js"></script>
+<script defer="" src="/js/lang-all.js"></script>
+</body>
+</html>

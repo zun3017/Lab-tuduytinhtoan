@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tổng quan · Bếp Sinh Viên</title>
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/overview.css">
+  <link rel="stylesheet" href="css/explore-dishes.css">
+  <script defer src="js/explore-dishes.js"></script>
+  <script defer src="js/overview-page.js"></script>
+  <script defer src="js/overview-ui.js"></script>
+</head>
+<body class="team-dashboard">
+  <a class="skip-link" href="#main">Bỏ qua menu, tới nội dung</a>
+  <div class="sidebar-overlay" id="sidebar-overlay" hidden></div>
+  <aside class="sidebar" id="sidebar" aria-label="Điều hướng chính">
+    <button class="icon-btn sidebar-close" id="sidebar-close" type="button" aria-label="Đóng menu"><span data-icon="close"></span></button>
+    <a class="brand" href="tong-quan.html"><img src="assets/favicon.svg" alt="">Bếp Sinh Viên</a>
+    <p class="sidebar-caption">Ăn ngon. Chi tiêu vừa đủ.</p>
+    <nav>
+      <a class="nav-item active" href="tong-quan.html" aria-current="page"><span data-icon="grid"></span>Tổng quan</a>
+      <a class="nav-item" href="kham-pha-mon-an.html"><span data-icon="bowl"></span>Khám phá món ăn</a>
+    </nav>
+  </aside>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="row">
+        <button class="icon-btn mobile-menu" id="menu-toggle" type="button" aria-label="Mở menu" aria-controls="sidebar" aria-expanded="false"><span data-icon="menu"></span></button>
+        <span class="breadcrumb">Không gian của bạn <span>/</span> <strong>Tổng quan</strong></span>
+      </div>
+      <div class="header-actions">
+        <div class="account-button">
+          <span class="avatar">SV</span>
+          <span class="account-label"><strong>Sinh viên</strong><small>Tài khoản demo</small></span>
+        </div>
+      </div>
+    </header>
+    <main id="main" class="main-content" tabindex="-1">
+      <div id="overview-view"><p role="status">Đang tải kế hoạch…</p></div>
+      <footer class="app-footer"><span>Bếp Sinh Viên <span class="footer-dot">·</span> Dự án Tư duy tính toán</span></footer>
+    </main>
+  </div>
+  <dialog id="overview-dialog" aria-labelledby="dialog-title">
+    <header><h2 id="dialog-title"></h2><form method="dialog"><button class="btn small" autofocus>Đóng</button></form></header>
+    <div id="dialog-body"></div>
+  </dialog>
+  <p id="notice" role="status" hidden></p>
+</body>
+</html>

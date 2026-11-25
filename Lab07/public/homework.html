@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>ZunTutor - Cổng Tra Cứu &amp; Nộp Bài Tập Trực Tuyến · ZunTutor Lab07</title>
+<meta content="Tra cứu danh sách bài tập về nhà, nộp bài làm trực tuyến và xem kết quả chấm điểm chi tiết từ Gia Sư." name="description"/>
+
+
+
+
+<link href="favicon.ico" rel="shortcut icon"/>
+<link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="img/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="manifest.json" rel="manifest"/>
+<meta content="#2563EB" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="ZunTutor" name="apple-mobile-web-app-title"/>
+<link href="img/zuntutor_app_icon.png" rel="apple-touch-icon"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="192x192"/>
+<link href="img/zuntutor_app_icon_512.png" rel="apple-touch-icon" sizes="512x512"/>
+<link href="css/public-theme.css" rel="stylesheet"/>
+<style>
+        html.auto-logging-in #mainScreen {
+            display: none !important;
+        }
+        html.auto-logging-in #pageAutoLoading {
+            display: flex !important;
+        }
+        /* Ẩn hoàn toàn thanh điều hướng công cộng ở trên khi học sinh vào giao diện làm bài tập */
+        html.auto-logging-in .header,
+        body.logged-in .header,
+        .logged-in .header {
+            display: none !important;
+        }
+    </style>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .spinner-icon {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ================= KHU VỰC KẾT QUẢ ================= */
+        #resultBox { width: 100%; max-width: 1000px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 20px; padding: 30px; margin-top: 20px; position: relative; z-index: 50; box-shadow: var(--shadow-card); display: none; }
+        #resultBox h3 { color: #FFD23F; font-size: 24px; margin-bottom: 20px; text-align: center; font-weight: 800; letter-spacing: -0.5px;}
+        
+        .result-section { background: var(--bg-card-alt); padding: 20px; border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--border-color); }
+        .result-section h4 { color: #2563EB; margin-bottom: 15px; font-size: 16px; display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.3px; text-transform: uppercase;}
+        
+        /* Chỉnh lại Box Bài Giảng / Bài Tập */
+        .bg-card { background: #FFFFFF; padding: 18px; border-radius: 12px; border: 1px dashed #BFDBFE; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.05); }
+        .bg-card-info { color: var(--text-secondary); font-size: 13px; margin-bottom: 8px; border-bottom: 1px solid var(--border-card); padding-bottom: 8px;}
+        .bg-card-title { display: flex; justify-content: space-between; align-items: center; margin-top: 10px;}
+        
+        /* Table Bài Kiểm Tra */
+        .table-wrapper { width: 100%; overflow-x: auto; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { border-bottom: 1px solid var(--border-card); padding: 12px 16px; text-align: left; font-size: 13px; color: var(--text-primary);}
+        th { background-color: #EFF6FF; color: #1E293B; white-space: nowrap; font-weight: 600;}
+        tr:hover td { background-color: rgba(59, 130, 246, 0.04); }
+        
+        a.btn-download { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #EFF6FF; color: #2563EB; text-decoration: none; border-radius: 10px; font-size: 13px; transition: 0.3s; font-weight: 600; border: 1px solid #BFDBFE;}
+        a.btn-download:hover { background: #3B82F6; color: #FFF; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transform: translateY(-2px);}
+        a.btn-dl-table { color: #FFD23F; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: 0.2s;}
+        a.btn-dl-table:hover { color: #2563EB; }
+
+        .btn-back { width: 100%; padding: 14px; background: transparent; border: 1px solid #CBD5E1; color: var(--text-primary); border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; letter-spacing: -0.2px;}
+        .btn-back:hover { background: #F1F5F9; }
+
+        /* ================= GIAO DIỆN NỘP BÀI TẬP (DASHBOARD) ================= */
+        .hw-dashboard {
+            display: flex;
+            gap: 24px;
+            width: 100%;
+            max-width: 1100px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 50;
+        }
+
+        .hw-sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hw-main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Profile Card & Info Card */
+        .hw-info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .hw-info-title {
+            color: #FFD23F;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-card);
+            padding-bottom: 8px;
+        }
+
+        .hw-info-item {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.5;
+            text-align: left;
+        }
+        .hw-info-item strong {
+            color: var(--text-primary);
+        }
+
+        /* Form upload */
+        .upload-area {
+            border: 2px dashed #BFDBFE;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            background: #F8FAFF;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .upload-area:hover {
+            border-color: #3B82F6;
+            background: #EFF6FF;
+        }
+        .upload-icon {
+            font-size: 35px;
+            color: #3B82F6;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+        .upload-text {
+            font-size: 13.5px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .upload-hint {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Profile Card & Info Card Styles */
+        .profile-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-card) !important;
+            box-shadow: var(--shadow-card) !important;
+        }
+        
+        .avatar-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: #3B82F6;
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+        
+        .info-divider {
+            height: 1px;
+            background: var(--border-card);
+            margin: 15px 0;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13.5px;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        
+        .info-label {
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        /* Premium logout button */
+        .btn-back-hw {
+            background: rgba(239, 68, 68, 0.08);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            margin-top: 10px;
+        }
+        
+        .btn-back-hw:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #EF4444;
+            color: #DC2626;
+            transform: translateY(-2px);
+        }
+
+        /* Selected file display */
+        .selected-file-box {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+        .file-name-text {
+            color: #FFD23F;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 250px;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            background: #E2E8F0;
+            border-radius: 10px;
+            height: 8px;
+            margin-top: 15px;
+            overflow: hidden;
+            display: none;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3B82F6, #1D4ED8);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .progress-text {
+            font-size: 11px;
+            color: #2563EB;
+            margin-top: 5px;
+            text-align: right;
+            display: none;
+            font-weight: 600;
+        }
+
+        /* Nút sửa/xóa */
+        .action-btn-hw {
+            background: #F8FAFF;
+            border: 1px solid #CBD5E1;
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            outline: none;
+        }
+        .action-btn-hw:hover:not(:disabled) {
+            background: #EFF6FF;
+            color: #2563EB;
+            border-color: #BFDBFE;
+        }
+        .action-btn-hw.btn-delete:hover:not(:disabled) {
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+            border-color: #EF4444;
+        }
+        .action-btn-hw:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            color: #94A3B8 !important;
+            border-color: #E2E8F0 !important;
+            background: #F1F5F9 !important;
+        }
+
+        .lock-badge {
+            background: #DC2626;
+            color: #FFFFFF !important;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+        .lock-badge i {
+            color: #FFFFFF !important;
+        }
+        .active-badge {
+            background: #059669;
+            color: #FFFFFF !important;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+        .active-badge i {
+            color: #FFFFFF !important;
+        }
+
+        @media (max-width: 900px) {
+            .hw-dashboard {
+                flex-direction: column;
+            }
+            .hw-sidebar {
+                width: 100%;
+            }
+        }
+        
+        /* Hiển thị có điều kiện vùng nộp bài Desktop / Mobile */
+        @media (min-width: 769px) {
+            #uploadAreaMobile { display: none !important; }
+            #uploadAreaDesktop { display: block !important; }
+        }
+        @media (max-width: 768px) {
+            #uploadAreaMobile { display: block !important; }
+            #uploadAreaDesktop { display: none !important; }
+
+            /* ===== HOMEWORK TOUCH OPTIMIZATIONS (TASK 14.5) ===== */
+            .upload-area, [class*="drop-zone"], [class*="upload-zone"] {
+                min-height: 100px !important;
+                padding: 20px !important;
+                cursor: pointer;
+            }
+            .drag-hint { display: none !important; }
+            .tap-hint { display: block !important; }
+
+            /* Nút chụp ảnh và tải file trong mobile upload area */
+            #uploadAreaMobile button {
+                min-height: 48px !important;
+                font-size: 14px !important;
+            }
+            #uploadAreaMobile > div {
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+            .hw-dashboard {
+                padding: 12px 8px !important;
+            }
+            .hw-info-card {
+                padding: 16px !important;
+            }
+        }
+
+        .file-cards-mobile, .mobile-cards-view {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .file-table-desktop, .desktop-table-view { display: none !important; }
+            .file-cards-mobile, .mobile-cards-view { display: flex !important; flex-direction: column; gap: 10px; }
+            .table-wrapper { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+
+            /* Căn giữa toàn bộ Dashboard & Loại bỏ lệch lề trên Mobile */
+            #homeworkDashboard {
+                padding: 0 0 calc(60px + env(safe-area-inset-bottom)) !important;
+                margin: 0 auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Hero Banner Mobile - Bố cục đối xứng 2 hàng & Grid thông tin cân đối */
+            .hw-hero-banner {
+                display: grid !important;
+                grid-template-columns: 46px 1fr auto !important;
+                grid-template-rows: auto auto !important;
+                grid-template-areas:
+                    "icon name logout"
+                    "tags tags tags" !important;
+                align-items: center !important;
+                column-gap: 12px !important;
+                row-gap: 12px !important;
+                padding: 16px 14px 14px !important;
+                margin: 12px auto 14px !important;
+                border-radius: 18px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .hw-hero-icon {
+                grid-area: icon !important;
+                width: 46px !important;
+                height: 46px !important;
+                font-size: 20px !important;
+                border-radius: 14px !important;
+                background: rgba(255,255,255,0.22) !important;
+                border: 1.5px solid rgba(255,255,255,0.4) !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+            }
+            .hw-hero-info {
+                grid-area: name !important;
+                min-width: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+            }
+            .hw-hero-name {
+                font-size: 17px !important;
+                font-weight: 800 !important;
+                color: #ffffff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                line-height: 1.25 !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+            .hw-logout-btn {
+                grid-area: logout !important;
+                position: static !important;
+                padding: 7px 12px !important;
+                font-size: 12px !important;
+                font-weight: 700 !important;
+                border-radius: 10px !important;
+                min-height: 34px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 6px !important;
+                background: rgba(255,255,255,0.18) !important;
+                border: 1px solid rgba(255,255,255,0.3) !important;
+                color: #ffffff !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+            }
+            .hw-hero-tags {
+                grid-area: tags !important;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+                width: 100% !important;
+                padding-top: 12px !important;
+                border-top: 1px solid rgba(255,255,255,0.16) !important;
+                box-sizing: border-box !important;
+            }
+            #hwCodeTag {
+                grid-column: 1 !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            #hwSubjectTag {
+                grid-column: 2 !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            #hwLockBadge {
+                grid-column: 1 / -1 !important;
+                display: flex !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .hw-tag {
+                background: rgba(255,255,255,0.16) !important;
+                border: 1px solid rgba(255,255,255,0.25) !important;
+                border-radius: 10px !important;
+                padding: 6px 10px !important;
+                font-size: 12px !important;
+                font-weight: 600 !important;
+                color: #ffffff !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 6px !important;
+            }
+            .active-badge, .lock-badge {
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 6px 12px !important;
+                font-size: 12px !important;
+                font-weight: 700 !important;
+                border-radius: 10px !important;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+                box-sizing: border-box !important;
+            }
+
+            /* KPI Grid Căn giữa */
+            .hw-kpi-grid {
+                width: 100% !important;
+                margin: 0 auto 14px !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Charts & Upload Grid Căn giữa */
+            .hw-charts-upload-grid {
+                width: 100% !important;
+                margin: 0 auto 14px !important;
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+                box-sizing: border-box !important;
+            }
+            .hw-charts-col {
+                width: 100% !important;
+                min-width: 0 !important;
+                gap: 14px !important;
+                box-sizing: border-box !important;
+            }
+            .hw-chart-card, .hw-section-card {
+                width: 100% !important;
+                min-width: 0 !important;
+                margin: 0 auto 14px !important;
+                padding: 18px 14px !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Căn giữa nội dung Donut chart */
+            .hw-donut-wrap {
+                justify-content: center !important;
+                gap: 18px !important;
+                width: 100% !important;
+            }
+            .hw-donut-legend {
+                min-width: 120px !important;
+                flex: initial !important;
+            }
+
+            /* Form Nộp bài Mobile Căn giữa */
+            .hw-upload-card {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .action-btn-hw, [class*="hw-btn"], .btn-upload, .btn-submit {
+                width: 100% !important;
+                justify-content: center !important;
+                min-height: 48px !important;
+            }
+            .hw-actions-row, [class*="action-row"], div:has(> #btnSubmitHomework) {
+                flex-direction: column !important;
+                gap: 8px !important;
+            }
+            #btnCancelEdit {
+                width: 100% !important;
+            }
+            .score-badge, [class*="score"], .badge {
+                font-size: 13px !important;
+                padding: 5px 10px !important;
+            }
+            .hw-card, [class*="hw-card"], .hw-info-card {
+                padding: 12px !important;
+            }
+            .student-info-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        /* ===== PHASE 16: REDESIGN HOMEWORK DASHBOARD ===== */
+        /* === 16.1: HW HERO BANNER === */
+        .hw-hero-banner {
+            display: grid;
+            grid-template-columns: 56px 1fr auto;
+            grid-template-rows: auto auto;
+            grid-template-areas:
+                "icon name   logout"
+                "icon tags   logout";
+            align-items: center;
+            column-gap: 16px;
+            row-gap: 8px;
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 60%, #60A5FA 100%);
+            border-radius: 20px;
+            padding: 22px 28px;
+            margin: 20px 0 16px;
+            box-shadow: 0 8px 32px rgba(59,130,246,0.28);
+        }
+        .hw-hero-icon {
+            grid-area: icon;
+            width: 56px; height: 56px; border-radius: 16px;
+            background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; color: #fff; flex-shrink: 0;
+        }
+        .hw-hero-info {
+            grid-area: name;
+            min-width: 0;
+        }
+        .hw-hero-name {
+            font-size: 20px; font-weight: 800; color: #fff; margin: 0;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .hw-hero-tags {
+            grid-area: tags;
+            display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+        }
+        .hw-tag {
+            background: rgba(255,255,255,0.18); border-radius: 20px;
+            padding: 4px 12px; font-size: 12px; font-weight: 600;
+            color: rgba(255,255,255,0.95);
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .hw-logout-btn {
+            grid-area: logout;
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            color: #fff; border-radius: 12px; padding: 10px 18px;
+            font-size: 13px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            transition: background 0.2s; white-space: nowrap;
+        }
+        .hw-logout-btn:hover { background: rgba(255,255,255,0.25); }
+
+        /* === 16.1: KPI GRID === */
+        .hw-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .hw-kpi-card {
+            background: #FFFFFF;
+            border: 1px solid #DBEAFE;
+            border-radius: 16px;
+            padding: 18px 16px;
+            display: flex; align-items: center; gap: 14px;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.06);
+            transition: all 0.25s;
+        }
+        .hw-kpi-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,130,246,0.12); }
+        .hw-kpi-icon {
+            width: 48px; height: 48px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #fff; flex-shrink: 0;
+        }
+        .hw-kpi-label { font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+        .hw-kpi-val   { font-size: 26px; font-weight: 800; color: #1E293B; line-height: 1; display: block; }
+
+        @media (max-width: 768px) { .hw-kpi-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 400px) { .hw-kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .hw-kpi-val { font-size: 22px; } }
+
+        /* === 16.2: CHARTS + UPLOAD GRID (BỐ CỤC MỚI THEO HÌNH 2) === */
+        .hw-charts-upload-grid {
+            display: grid;
+            grid-template-columns: 370px 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+            align-items: stretch;
+        }
+        .hw-charts-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .hw-chart-card, .hw-section-card {
+            background: #FFFFFF;
+            border: 1px solid #DBEAFE;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.06);
+        }
+        .hw-upload-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .hw-upload-card #uploadAreaWrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        .hw-upload-card #uploadAreaDesktop {
+            flex: 1;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+        .hw-section-title {
+            font-size: 14px; font-weight: 700; color: #1E293B;
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .hw-section-card { margin-bottom: 16px; }
+
+        /* Donut chart */
+        .hw-donut-wrap { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .hw-donut-canvas-wrap { position: relative; width: 140px; height: 140px; flex-shrink: 0; }
+        .hw-donut-canvas-wrap canvas { width: 140px !important; height: 140px !important; }
+        .hw-donut-center {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            pointer-events: none;
+        }
+        .hw-donut-pct  { font-size: 24px; font-weight: 800; color: #1E293B; line-height: 1; }
+        .hw-donut-lbl  { font-size: 11px; font-weight: 600; color: #64748B; text-align: center; margin-top: 3px; }
+        .hw-donut-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 110px; }
+        .hw-donut-leg-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569; font-weight: 500; }
+        .hw-donut-leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .hw-donut-leg-count { margin-left: auto; font-weight: 700; color: #1E293B; font-size: 13px; }
+
+        @media (max-width: 900px) {
+            .hw-charts-upload-grid { grid-template-columns: 1fr; }
+            .hw-charts-col { gap: 16px; }
+            .hw-upload-card #uploadAreaDesktop { min-height: 140px; }
+        }
+
+        /* === 16.3: UPLOAD FORM RESKIN === */
+        .upload-area {
+            border: 2px dashed #BFDBFE !important;
+            border-radius: 16px !important;
+            background: #F8FAFF !important;
+            transition: all 0.25s !important;
+            text-align: center;
+        }
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #3B82F6 !important;
+            background: #EFF6FF !important;
+        }
+        .upload-icon { color: #3B82F6 !important; font-size: 32px !important; margin-bottom: 12px !important; }
+        .upload-text { color: #1E293B !important; font-weight: 600 !important; font-size: 14px !important; }
+        .upload-hint { color: #94A3B8 !important; font-size: 12px !important; margin-top: 6px !important; }
+
+        #hwLessonInput {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 12px;
+            border: 1px solid #CBD5E1;
+            background: #F8FAFF;
+            color: #1E293B;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            font-family: Inter, sans-serif;
+            box-sizing: border-box;
+        }
+        #hwLessonInput:focus { border-color: #3B82F6; outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+
+        #fileQueueContainer {
+            background: #F8FAFF !important;
+            border: 1px solid #DBEAFE !important;
+            border-radius: 12px !important;
+        }
+
+        #btnSubmitHomework {
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8) !important;
+            border: none !important;
+            border-radius: 12px !important;
+            height: 48px !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3) !important;
+            transition: opacity 0.2s !important;
+        }
+        #btnSubmitHomework:hover { opacity: 0.9 !important; }
+
+        /* === 16.4: ASSIGNED HOMEWORK CARDS === */
+        .hw-assigned-card {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; padding: 16px; border-radius: 14px;
+            margin-bottom: 10px; border: 1px solid #E2E8F0;
+            background: #FFFFFF; transition: all 0.2s; flex-wrap: wrap;
+        }
+        .hw-assigned-card:hover { border-color: #BFDBFE; background: #F8FAFF; }
+        .hw-assigned-card.submitted { border-left: 4px solid #10B981; }
+        .hw-assigned-card.not-submitted { border-left: 4px solid #3B82F6; }
+        .hw-assigned-left { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 220px; }
+        .hw-assigned-icon {
+            width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; font-size: 20px;
+        }
+        .icon-done { background: #ECFDF5; color: #059669; }
+        .icon-todo { background: #EFF6FF; color: #2563EB; }
+        .hw-assigned-title { font-size: 14px; font-weight: 700; color: #1E293B; margin-bottom: 4px; }
+        .hw-assigned-deadline { font-size: 12px; color: #D97706; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+        .hw-assigned-desc { font-size: 12px; color: #64748B; margin-top: 4px; }
+        .hw-assigned-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .hw-status-badge { border-radius: 10px; padding: 5px 12px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+        .badge-done { background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
+        .badge-todo { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
+        .btn-submit-assigned {
+            background: linear-gradient(135deg, #2563EB, #1D4ED8);
+            border: none;
+            color: #FFFFFF !important;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(37,99,235,0.28);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-submit-assigned:hover {
+            background: linear-gradient(135deg, #1D4ED8, #1E40AF);
+            box-shadow: 0 4px 12px rgba(37,99,235,0.38);
+            transform: translateY(-1px);
+        }
+        .btn-submit-assigned:active {
+            transform: translateY(0);
+        }
+        .btn-view-assigned {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            color: #2563EB;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-view-assigned:hover {
+            background: #DBEAFE;
+            color: #1D4ED8;
+            transform: translateY(-1px);
+        }
+        .btn-download-assigned {
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            color: #15803D;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-download-assigned:hover {
+            background: #DCFCE7;
+            color: #166534;
+            box-shadow: 0 2px 8px rgba(22, 101, 52, 0.18);
+            transform: translateY(-1px);
+        }
+
+        /* === 16.5: SUBMISSION HISTORY & MOBILE CARDS === */
+        .table-wrapper table th {
+            background: #F0F7FF !important;
+            color: #64748B !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.4px !important;
+            padding: 11px 14px !important;
+            border-bottom: 2px solid #DBEAFE !important;
+        }
+        .table-wrapper table td {
+            padding: 12px 14px !important;
+            border-bottom: 1px solid #F1F5F9 !important;
+            font-size: 13px !important;
+            color: #475569 !important;
+        }
+        .table-wrapper table tr:hover td { background: #F8FAFF !important; }
+
+        .sub-status-chip { border-radius: 8px; padding: 3px 10px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+        .sub-on-time { background: #ECFDF5; color: #059669; }
+        .sub-late    { background: #FFFBEB; color: #D97706; }
+        .sub-default { background: #EFF6FF; color: #2563EB; }
+
+        /* ===== ACCORDION CARD BÀI NỘP MOBILE (PHASE 17) ===== */
+        .accordion-item {
+            background: #FFFFFF;
+            border: 1px solid #DBEAFE;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.05);
+            transition: all 0.25s ease;
+        }
+        .accordion-item:hover {
+            border-color: #BFDBFE;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+        }
+        .accordion-header {
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            background: #FFFFFF;
+            transition: background-color 0.2s;
+        }
+        .accordion-header:hover, .accordion-item.active .accordion-header {
+            background-color: #F8FAFF;
+        }
+        .accordion-header-title {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+            min-width: 0;
+            flex: 1;
+            padding-right: 10px;
+        }
+        .accordion-header-title > span:first-child {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1E293B;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .accordion-header-date {
+            font-size: 12px;
+            color: #94A3B8;
+            font-weight: 500;
+        }
+        .accordion-header-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .accordion-header-status i.fa-chevron-down {
+            font-size: 12px;
+            color: #64748B;
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-header-status i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+        .accordion-body {
+            display: none;
+            padding: 12px 16px 16px 16px;
+            border-top: 1px solid #DBEAFE;
+            background-color: #F8FAFF;
+            text-align: left;
+            font-size: 13px;
+            animation: hwFadeDown 0.25s ease-out;
+        }
+        @keyframes hwFadeDown {
+            0% { opacity: 0; transform: translateY(-4px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .accordion-body-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border-bottom: 1px dashed #E2E8F0;
+            padding: 10px 0;
+        }
+        .accordion-body-row:first-child {
+            padding-top: 2px;
+        }
+        .accordion-body-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .accordion-body-label {
+            font-size: 10.5px;
+            color: #64748B;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .accordion-body-val {
+            color: #1E293B;
+            line-height: 1.5;
+        }
+        .btn-load-more-hw {
+            background: rgba(245, 158, 11, 0.05);
+            border: 1.5px solid #F59E0B;
+            color: #D97706;
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 700;
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.08);
+            transition: all 0.2s ease;
+        }
+        .btn-load-more-hw:hover {
+            background: #FFFBEB;
+            border-color: #D97706;
+        }
+        .btn-collapse-hw {
+            background: #FFFFFF;
+            border: 1.5px solid #94A3B8;
+            color: #64748B;
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 700;
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        .btn-collapse-hw:hover {
+            background: #F1F5F9;
+            color: #334155;
+        }
+
+        .hw-sub-mobile-card {
+            background: #FFFFFF; border: 1px solid #DBEAFE;
+            border-radius: 14px; padding: 16px; margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(59,130,246,0.05);
+        }
+        .hw-sub-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+        .hw-sub-lesson { font-size: 14px; font-weight: 700; color: #1E293B; flex: 1; }
+        .hw-sub-card-meta { font-size: 12px; color: #94A3B8; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .hw-sub-card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .hw-btn-preview, .hw-btn-edit, .hw-btn-del, .hw-btn-restore {
+            border-radius: 8px; padding: 7px 14px; font-size: 12px;
+            font-weight: 700; cursor: pointer; border: none;
+            min-height: 36px; display: inline-flex; align-items: center; gap: 4px;
+        }
+        .hw-btn-preview { background: #EFF6FF; color: #2563EB; }
+        .hw-btn-edit    { background: #FFFBEB; color: #D97706; }
+        .hw-btn-del     { background: #FEF2F2; color: #DC2626; }
+        .hw-btn-restore { background: #F0FDF4; color: #16A34A; }
+
+        /* === 16.6: LANDING CARDS & SAFE AREA === */
+        #mainScreen .feature-card,
+        #mainScreen [class*="bg-white"][class*="rounded"] {
+            border: 1px solid #DBEAFE !important;
+            box-shadow: 0 4px 16px rgba(59,130,246,0.07) !important;
+            transition: all 0.25s !important;
+        }
+        #mainScreen .feature-card:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 24px rgba(59,130,246,0.12) !important;
+        }
+
+        @media(max-width:768px) {
+            #homeworkDashboard {
+                padding-bottom: calc(60px + env(safe-area-inset-bottom)) !important;
+            }
+        }
+
+        /* ===== PHASE 17 — CHARTS MOBILE ===== */
+        @media (max-width: 480px) {
+          .hw-charts-upload-grid { grid-template-columns: 1fr !important; }
+          .hw-kpi-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+          .hw-kpi-val { font-size: 22px !important; }
+          .hw-donut-canvas-wrap { width: 110px !important; height: 110px !important; }
+          .hw-donut-canvas-wrap canvas { width: 110px !important; height: 110px !important; }
+          .hw-donut-pct { font-size: 20px !important; }
+          /* Bar chart height */
+          #hwBarCard [style*="height:160px"] { height: 130px !important; }
+        }
+        @media (max-width: 360px) {
+          .hw-kpi-val { font-size: 20px !important; }
+          .hw-hero-name { font-size: 16px !important; }
+        }
+    </style>
+<link href="css/tw.css" rel="stylesheet"/>
+<link href="/vendor/inter.css" rel="stylesheet"/><link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/><link href="/css/lab-portals.css" rel="stylesheet"/></head>
+<body class="relative min-h-screen bg-gradient-to-b from-primary-50 via-white to-primary-50 text-slate-800 antialiased overflow-x-hidden selection:bg-primary-200 selection:text-primary-900" data-page="homework">
+<div class="fixed top-[-10%] left-[-5%] w-[40rem] h-[40rem] bg-blue-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 pointer-events-none z-0"></div>
+<div class="fixed top-[30%] right-[-10%] w-[35rem] h-[35rem] bg-cyan-300 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 pointer-events-none z-0"></div>
+<div class="header">
+<div class="nav-container">
+<a class="nav-left" href="index.html" style="text-decoration: none; cursor: pointer;">
+<img alt="ZunTutor Logo" class="nav-logo" src="img/zuntutor_avatar_blue.png"/>
+<div class="header-text">
+<h1>ZunTutor</h1>
+<p>Quản lý Gia sư 4.0</p>
+</div>
+</a>
+<div class="nav-right">
+<a class="nav-btn" href="index.html" id="btnNavHome"><i class="fa-solid fa-house"></i> <span class="nav-label">Trang chủ</span></a>
+<a class="nav-btn" href="student-login.html" id="btnNavStudent"><i class="fa-solid fa-graduation-cap"></i> <span class="nav-label">PH/HS</span></a>
+<a class="nav-btn active" href="homework.html" id="btnNavHomework"><i class="fa-solid fa-file-arrow-up"></i> <span class="nav-label">BÀI TẬP</span></a>
+<a class="nav-btn" href="tutor-login.html" id="btnNavTutor"><i class="fa-solid fa-chalkboard-user"></i> <span class="nav-label">GIA SƯ</span></a>
+</div>
+<button aria-label="Menu" class="hamburger-btn" id="hamburgerBtn">
+<i class="fa-solid fa-bars" id="hamburgerIcon"></i>
+</button>
+</div>
+<div class="mobile-nav-dropdown" id="mobileNavDropdown">
+<a class="mobile-nav-item" href="index.html" id="mobileHome">
+<i class="fa-solid fa-house"></i> Trang chủ
+            </a>
+<a class="mobile-nav-item" href="student-login.html" id="mobileStudent">
+<i class="fa-solid fa-graduation-cap"></i> PH/HS
+            </a>
+<a class="mobile-nav-item" href="homework.html" id="mobileHomework">
+<i class="fa-solid fa-file-arrow-up"></i> Bài tập
+            </a>
+<a class="mobile-nav-item" href="tutor-login.html" id="mobileTutor">
+<i class="fa-solid fa-chalkboard-user"></i> Gia sư
+            </a>
+</div>
+</div>
+<div id="deskSurface" style="display: none;"></div>
+<div id="charBoy" style="display: none;"></div>
+<div id="charGirl" style="display: none;"></div>
+<main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 w-full overflow-hidden flex flex-col items-center">
+<div id="pageAutoLoading" style="display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 50vh; width: 100%; text-align: center;">
+<div style="display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: 20px; margin-bottom: 18px; box-shadow: 0 8px 24px rgba(59,130,246,0.18);">
+<i class="fa-solid fa-circle-notch fa-spin" style="font-size: 30px; color: #2563EB;"></i>
+</div>
+<div style="font-size: 17px; font-weight: 800; color: #1E293B; margin-bottom: 6px;">Đang tải trang bài tập...</div>
+<div style="font-size: 13.5px; color: #64748B;">Vui lòng chờ trong giây lát</div>
+</div>
+<section class="w-full" id="mainScreen">
+<div class="text-center max-w-3xl mx-auto mb-10">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 border border-blue-200 mb-5 shadow-sm reveal" style="transition-delay:0.1s">
+<span class="text-yellow-500 text-sm">⭐</span>
+<span class="text-xs sm:text-sm font-bold text-primary-700 tracking-wide uppercase">Cổng Nộp Bài Tập Học Viên</span>
+</div>
+<h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-800 tracking-tight leading-tight mb-5 reveal" style="transition-delay:0.2s">
+                    Đăng nhập &amp; Nộp bài <br class="hidden sm:block"/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-cyan-500">Bài tập học viên</span> 📝
+                </h2>
+<p class="text-base sm:text-lg text-slate-500 font-medium reveal" style="transition-delay:0.3s">
+                    Nộp bài tập của bạn trực tuyến và theo dõi kết quả chấm điểm nhanh chóng, thuận tiện 🚀
+                </p>
+</div>
+<div class="max-w-2xl mx-auto mb-16 reveal" style="transition-delay: 0.15s;">
+<form class="bg-white p-2.5 rounded-full shadow-2xl shadow-primary-500/20 border border-gray-100 flex items-center transition-all duration-300 focus-within:ring-4 focus-within:ring-primary-100 hover:shadow-glow" id="formBaiTap">
+<div class="pl-5 pr-3 text-slate-400">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<input aria-label="Mã học sinh" autocomplete="username" class="flex-grow bg-transparent text-slate-800 text-base sm:text-lg px-2 py-3 focus:outline-none placeholder-slate-400 font-medium w-full" id="maInput" placeholder="Mã học sinh" required="" type="text"/><input aria-label="Mã PIN" autocomplete="current-password" class="lab-pin" id="studentPin" name="pin" placeholder="Mã PIN" required="" type="password"/>
+<button class="flex-shrink-0 bg-primary-600 hover:bg-primary-700 text-white font-bold py-3.5 px-6 sm:px-8 rounded-full flex items-center gap-2 transition-all duration-200 active:scale-95" id="btnSubmitBaiTap" type="submit">
+<span class="btn-text">Đăng nhập<span class="btn-text-portal"> cổng</span></span>
+<svg class="btn-icon h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<svg class="loading-icon hidden h-5 w-5 text-white spinner-icon animate-spin" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+</button>
+</form>
+<p class="text-red-500 text-sm mt-3 text-center font-medium" id="error" style="display: none;"></p>
+<p class="text-primary-600 text-sm mt-3 text-center italic" id="loadingText" style="display: none;"><i class="fa-solid fa-circle-notch fa-spin"></i> Hệ thống đang xác thực tài khoản...</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal-stagger">
+<div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+<svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<h3 class="text-lg font-bold text-slate-800 mb-2">Bài giảng</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Tải và xem lại các file bài giảng, slide tiết học một cách dễ dàng.</p>
+</div>
+<div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+<svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<h3 class="text-lg font-bold text-slate-800 mb-2">Bài tập về nhà</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Tra cứu và tải bài tập rèn luyện hàng tuần, nộp bài nhanh chóng.</p>
+</div>
+<div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-14 h-14 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
+<svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<h3 class="text-lg font-bold text-slate-800 mb-2">Bài kiểm tra</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Tải xuống và ôn tập các đề kiểm tra định kỳ để chuẩn bị tốt nhất.</p>
+</div>
+<div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-amber-600 group-hover:text-white transition-colors duration-300">
+<svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<h3 class="text-lg font-bold text-slate-800 mb-2">Lưu trữ dễ dàng</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Hệ thống tự động lưu trữ tài liệu vĩnh viễn, truy cập mọi lúc.</p>
+</div>
+</div>
+</section>
+<div id="homeworkDashboard" style="display: none; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 16px 80px;">
+<div class="hw-hero-banner reveal" id="hwHeroBanner">
+<div class="hw-hero-icon"><i class="fa-solid fa-file-arrow-up"></i></div>
+<div class="hw-hero-info">
+<h2 class="hw-hero-name" id="hwStudentName">-</h2>
+</div>
+<button class="hw-logout-btn" data-original-action="backToLogin" type="button">
+<i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                </button>
+<div class="hw-hero-tags" id="hwHeroTags">
+<span class="hw-tag" id="hwCodeTag"><i class="fa-solid fa-hashtag"></i> <span id="hwCode">-</span></span>
+<span class="hw-tag" id="hwSubjectTag" style="display: none;"><i class="fa-solid fa-book"></i> <span id="hwSubject"></span></span>
+<span id="hwLockBadge"></span>
+</div>
+</div>
+<div class="hw-kpi-grid reveal-stagger" id="hwKpiGrid">
+<div class="hw-kpi-card">
+<div class="hw-kpi-icon" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8);">
+<i class="fa-solid fa-book-open"></i>
+</div>
+<div class="hw-kpi-info">
+<span class="hw-kpi-label">Tổng bài được giao</span>
+<span class="hw-kpi-val" id="kpiTotal">-</span>
+</div>
+</div>
+<div class="hw-kpi-card">
+<div class="hw-kpi-icon" style="background:linear-gradient(135deg,#10B981,#059669);">
+<i class="fa-solid fa-circle-check"></i>
+</div>
+<div class="hw-kpi-info">
+<span class="hw-kpi-label">Đã nộp bài</span>
+<span class="hw-kpi-val" id="kpiSubmitted">-</span>
+</div>
+</div>
+<div class="hw-kpi-card">
+<div class="hw-kpi-icon" style="background:linear-gradient(135deg,#10B981,#047857);">
+<i class="fa-solid fa-clock"></i>
+</div>
+<div class="hw-kpi-info">
+<span class="hw-kpi-label">Nộp đúng hạn</span>
+<span class="hw-kpi-val" id="kpiOnTime">-</span>
+</div>
+</div>
+<div class="hw-kpi-card">
+<div class="hw-kpi-icon" style="background:linear-gradient(135deg,#EF4444,#DC2626);">
+<i class="fa-solid fa-xmark"></i>
+</div>
+<div class="hw-kpi-info">
+<span class="hw-kpi-label">Chưa nộp</span>
+<span class="hw-kpi-val" id="kpiMissing">-</span>
+</div>
+</div>
+</div>
+<div class="hw-charts-upload-grid reveal">
+<div class="hw-charts-col">
+<div class="hw-chart-card" id="hwDonutCard">
+<div class="hw-section-title">
+<i class="fa-solid fa-chart-pie" style="color:#10B981;"></i>
+                            Tỷ lệ nộp bài (tháng này)
+                        </div>
+<div class="hw-donut-wrap">
+<div class="hw-donut-canvas-wrap">
+<canvas height="140" id="hwDonutChart" width="140"></canvas>
+<div class="hw-donut-center">
+<span class="hw-donut-pct" id="hwDonutPct">-</span>
+<span class="hw-donut-lbl">Hoàn thành</span>
+</div>
+</div>
+<div class="hw-donut-legend" id="hwDonutLegend"></div>
+</div>
+</div>
+<div class="hw-chart-card" id="hwBarCard">
+<div class="hw-section-title">
+<i class="fa-solid fa-chart-line" style="color:#3B82F6;"></i>
+                            Bài nộp theo tuần (tháng này)
+                        </div>
+<div style="position:relative; height:150px; width:100%;">
+<canvas id="hwBarChart"></canvas>
+</div>
+</div>
+</div>
+<div class="hw-chart-card hw-upload-card" id="hwFormCard">
+<div class="hw-section-title">
+<i class="fa-solid fa-cloud-arrow-up" style="color:#3B82F6;"></i>
+Nộp bài mới
+</div>
+<form id="submitWork">
+<div style="margin-bottom: 14px; text-align: left;">
+<label for="workChoice" style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600;">Bài tập được giao <span style="color:#EF4444;">*</span></label>
+<select id="workChoice" name="assignment_id" required="" style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid #CBD5E1; background: #F8FAFF; color: #1E293B; outline: none; font-size: 14px; font-family: 'Inter', sans-serif;"></select>
+</div>
+<div style="margin-bottom: 14px; text-align: left;">
+<label for="hwContentInput" style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600;">Lời giải / Ghi chú</label>
+<textarea id="hwContentInput" name="content" placeholder="Nhập lời giải, kết quả hoặc ghi chú gửi gia sư..." rows="3" style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid #CBD5E1; background: #F8FAFF; color: #1E293B; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; box-sizing: border-box;"></textarea>
+</div>
+<div id="uploadAreaWrapper" style="margin-bottom: 14px;">
+<div class="upload-area" id="uploadAreaDesktop" style="cursor: pointer; padding: 24px 18px;">
+<i class="fa-solid fa-file-arrow-up upload-icon" id="uploadAreaIcon"></i>
+<div class="upload-text" id="uploadAreaText">Kéo thả hoặc nhấp chọn hình ảnh / tài liệu bài làm</div>
+<div class="upload-hint drag-hint">Hỗ trợ PDF, Word, PNG, JPG, TXT (Có thể chọn nhiều tệp)</div>
+<input id="hwFileInputDesktop" multiple="" name="files" style="display: none;" type="file"/>
+</div>
+<div id="hwSelectedFilesBadge" style="display:none; margin-top:8px; padding:8px 12px; background:#EFF6FF; border:1px solid #BFDBFE; border-radius:10px; font-size:12.5px; color:#1D4ED8; font-weight:600;"></div>
+</div>
+<div style="display: flex; gap: 10px;">
+<button class="btn-submit" id="btnSubmitHomework" style="width: 100%; justify-content: center; height: 46px; display:inline-flex; align-items:center; gap:8px; color:#fff; cursor:pointer;" type="submit">
+<i class="fa-solid fa-paper-plane"></i> <span id="btnSubmitHomeworkLabel">Gửi bài làm</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+<div class="hw-section-card" id="hwAssignedCard" style="display: none;">
+<div class="hw-section-title">
+<i class="fa-solid fa-list-check" style="color:#3B82F6;"></i>
+                    Bài tập được giao
+                </div>
+<div id="hwAssignedListContainer"></div>
+</div>
+<div class="hw-section-card reveal">
+<div class="hw-section-title">
+<i class="fa-solid fa-clock-rotate-left" style="color:#3B82F6;"></i>
+                    Lịch sử nộp bài
+                </div>
+<div class="table-wrapper desktop-table-view">
+<table>
+<thead>
+<tr>
+<th>Thời gian nộp</th>
+<th>Tên bài học</th>
+<th>Link file đã nộp</th>
+<th>Trạng thái</th>
+<th style="text-align: center;">Thao tác</th>
+</tr>
+</thead>
+<tbody id="homeworkListBody">
+</tbody>
+</table>
+</div>
+<div class="mobile-cards-view" id="homeworkMobileList">
+</div>
+</div>
+</div>
+</main>
+<nav class="bottom-nav">
+<a class="bottom-nav-item" href="index.html"><i class="fa-solid fa-house"></i><span>Trang chủ</span></a>
+<a class="bottom-nav-item" href="student-login.html"><i class="fa-solid fa-graduation-cap"></i><span>PH/HS</span></a>
+<a class="bottom-nav-item active" href="homework.html"><i class="fa-solid fa-file-arrow-up"></i><span>Bài tập</span></a>
+<a class="bottom-nav-item" href="tutor-login.html"><i class="fa-solid fa-chalkboard-user"></i><span>Gia sư</span></a>
+</nav>
+<script defer="" src="/vendor/chart.umd.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/lang-all.js"></script><script defer="" src="/js/homework.js"></script></body>
+</html>

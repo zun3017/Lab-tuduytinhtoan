@@ -10,9 +10,7 @@
 - **Multimodal:** gửi văn bản, ảnh, âm thanh nếu model hỗ trợ.
 - **Personal Chef:** nhận nguyên liệu → tìm công thức → gợi ý món ăn.
 
-**Lưu ý:** notebook hiện code cũ thì chọn **Revert**; lỗi thiếu `dotenv` thì kiểm tra Python trong `.venv`.
 
-**Thực hành:** chạy từng ô, thử đổi đầu vào, lưu output và chụp ảnh minh chứng. Chưa ghi nhận kết quả chạy thực tế.
 
 ---
 
