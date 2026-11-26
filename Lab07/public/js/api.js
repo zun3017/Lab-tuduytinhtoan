@@ -79,6 +79,105 @@ const Lab = (() => {
       location.replace('/'+login+'.html?next='+encodeURIComponent(location.pathname.slice(1)+location.search));return null;
     }
   }
-  const theme = name => {document.documentElement.className=/^theme-[\w-]+$/.test(name||'')?name:'theme-soft-blue-white-full';};
+function computeCustomThemeVars(hex) {
+  if (!/^#[0-9A-Fa-f]{6}$/.test(hex)) return null;
+  var r = parseInt(hex.slice(1,3), 16);
+  var g = parseInt(hex.slice(3,5), 16);
+  var b = parseInt(hex.slice(5,7), 16);
+
+  var toHex = function(n) { return Math.max(0, Math.min(255, n)).toString(16).padStart(2, '0'); };
+
+  // Màu sáng (+40% độ sáng)
+  var lr = Math.round(r + (255 - r) * 0.4);
+  var lg = Math.round(g + (255 - g) * 0.4);
+  var lb = Math.round(b + (255 - b) * 0.4);
+  var hexLight = '#' + toHex(lr) + toHex(lg) + toHex(lb);
+
+  // Màu đậm tương phản cao cho tiêu đề và chữ (-35% độ sáng)
+  var dr = Math.round(r * 0.65);
+  var dg = Math.round(g * 0.65);
+  var db = Math.round(b * 0.65);
+  var hexDark = '#' + toHex(dr) + toHex(dg) + toHex(db);
+
+  // Các sắc thái pastel dịu mắt để tạo nền dải gradient
+  var bgr1 = Math.round(r + (255 - r) * 0.72);
+  var bgg1 = Math.round(g + (255 - g) * 0.72);
+  var bgb1 = Math.round(b + (255 - b) * 0.72);
+  var hexBg1 = '#' + toHex(bgr1) + toHex(bgg1) + toHex(bgb1);
+
+  var bgr2 = Math.round(r + (255 - r) * 0.84);
+  var bgg2 = Math.round(g + (255 - g) * 0.84);
+  var bgb2 = Math.round(b + (255 - b) * 0.84);
+  var hexBg2 = '#' + toHex(bgr2) + toHex(bgg2) + toHex(bgb2);
+
+  var bgr3 = Math.round(r + (255 - r) * 0.90);
+  var bgg3 = Math.round(g + (255 - g) * 0.90);
+  var bgb3 = Math.round(b + (255 - b) * 0.90);
+  var hexBgPage = '#' + toHex(bgr3) + toHex(bgg3) + toHex(bgb3);
+
+  var pageGradient = 'radial-gradient(ellipse at 20% 30%, ' + hexBg1 + ' 0%, transparent 50%), ' +
+                     'radial-gradient(ellipse at 80% 15%, ' + hexBg2 + ' 0%, transparent 45%), ' +
+                     'radial-gradient(ellipse at 50% 75%, ' + hexBg1 + ' 0%, transparent 55%), ' +
+                     'linear-gradient(135deg, ' + hexBgPage + ', ' + hexBg2 + ')';
+
+  return {
+    '--color-primary': hex,
+    '--color-primary-light': hexLight,
+    '--color-primary-dark': hexDark,
+    '--color-primary-rgb': r + ', ' + g + ', ' + b,
+    '--color-accent-kpi': hex,
+    '--kpi-number-color': '#0F172A',
+    '--text-heading': hexDark,
+    '--chart-bar': hex,
+    '--chart-bar-rgb': r + ', ' + g + ', ' + b,
+    '--btn-bg': 'linear-gradient(135deg, ' + hex + ', ' + hexDark + ')',
+    '--btn-text': '#FFFFFF',
+    '--nav-active-bg': 'rgba(' + r + ', ' + g + ', ' + b + ', 0.14)',
+    '--nav-active-text': hexDark,
+    '--nav-hover-bg': 'rgba(' + r + ', ' + g + ', ' + b + ', 0.06)',
+    '--nav-btn-text': '#334155',
+    '--bg-page': hexBgPage,
+    '--bg-page-gradient': pageGradient,
+    '--bg-sidebar': hexBg2,
+    '--bg-card': '#FFFFFF',
+    '--bg-card-alt': hexBg2,
+    '--bg-input': '#FFFFFF',
+    '--bg-overlay': 'rgba(0, 0, 0, 0.4)',
+    '--border-color': 'rgba(' + r + ', ' + g + ', ' + b + ', 0.25)',
+    '--border-card': 'rgba(' + r + ', ' + g + ', ' + b + ', 0.16)',
+    '--sidebar-border': 'rgba(' + r + ', ' + g + ', ' + b + ', 0.2)',
+    '--scrollbar-thumb': 'rgba(' + r + ', ' + g + ', ' + b + ', 0.35)',
+    '--text-primary': '#0F172A',
+    '--text-secondary': '#475569',
+    '--text-muted': '#94A3B8',
+    '--header-bg': 'rgba(' + bgr3 + ', ' + bgg3 + ', ' + bgb3 + ', 0.95)',
+    '--header-border': 'rgba(' + r + ', ' + g + ', ' + b + ', 0.15)',
+    '--shadow-card': '0 4px 18px rgba(' + r + ', ' + g + ', ' + b + ', 0.08)',
+    '--shadow-primary': '0 4px 16px rgba(' + r + ', ' + g + ', ' + b + ', 0.28)',
+    '--glass-bg': 'rgba(255, 255, 255, 0.65)',
+    '--glass-border': 'rgba(255, 255, 255, 0.85)',
+    '--glass-shadow': '0 8px 32px rgba(' + r + ', ' + g + ', ' + b + ', 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+    '--glass-blur': '16px',
+    '--glass-inner': 'rgba(255, 255, 255, 0.6)',
+    '--glass-inner-border': 'rgba(255, 255, 255, 0.8)',
+    '--is-dark-theme': '0'
+  };
+}
+
+
+  function theme(name) {
+    const root=document.documentElement;
+    for(const cls of [...root.classList]) if(/^(theme|preset)-/.test(cls)) root.classList.remove(cls);
+    const previous=root.dataset.customTheme;
+    if(previous) for(const key of Object.keys(computeCustomThemeVars(previous))) root.style.removeProperty(key);
+    delete root.dataset.customTheme;
+    if(/^custom:#[a-f0-9]{6}$/i.test(name||'')){
+      const hex=name.slice(7); root.dataset.customTheme=hex;
+      for(const [key,value] of Object.entries(computeCustomThemeVars(hex)))root.style.setProperty(key,value);
+    } else root.classList.add(/^(theme|preset)-[\w-]+$/.test(name||'')?name:'theme-soft-blue-white-full');
+    const dark=getComputedStyle(root).getPropertyValue('--is-dark-theme').trim()==='1';
+    root.dataset.theme=dark?'dark':'light';
+    root.style.colorScheme=root.dataset.theme;
+  }
   return {id,all,text,html,escape,live,money,iso,month,date,empty,btn,item,section,invoice,files,request,notice,guard,on,commands,dialog,buildField,chart,dashboard,roles,theme};
 })();

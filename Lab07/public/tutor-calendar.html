@@ -2,13 +2,20 @@
 
 <html lang="vi">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
-<title>Google Calendar style for Tutors - Recurrence Timetable · ZunTutor Lab07</title>
+<link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/><link href="/vendor/inter.css" rel="stylesheet"/><meta charset="utf-8"/>
+
+
+
+
+
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Lịch dạy · ZunTutor Lab07</title>
+<!-- Browser Favicon (Logo Tab Trình Duyệt - Ảnh 2) -->
 <link href="favicon.ico" rel="shortcut icon"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
 <link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="img/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+<!-- App / PWA Icons (Logo App) -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#2563EB" name="theme-color"/>
 <meta content="yes" name="mobile-web-app-capable"/>
@@ -19,26 +26,38 @@
 <link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="192x192"/>
 <link href="img/zuntutor_app_icon_512.png" rel="apple-touch-icon" sizes="512x512"/>
+
+<!-- FontAwesome Icons -->
+
+
+
+
+<!-- FullCalendar JS v6 -->
+
+<!-- Themes CSS & Bootstrap -->
 <link href="css/themes.css" rel="stylesheet"/>
+
 <link href="css/tutor-calendar.css" rel="stylesheet"/>
 <link href="css/mobile.css" rel="stylesheet"/>
-<link href="/vendor/inter.css" rel="stylesheet"/><link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/><link href="/css/lab-portals.css" rel="stylesheet"/></head>
-<body class="lab-private" data-page="tutor-calendar">
+</head>
+<body data-page="tutor-calendar">
+<!-- HEADER CỐ ĐỊNH (CUSTOM HEADER - TASK 10.2) -->
 <div class="container">
 <div class="calendar-header-custom">
+<!-- NHÓM BÊN TRÁI: Quay lại Dashboard + Nút < > + Nút Hôm nay + Tiêu đề Tháng/Năm -->
 <div class="cal-header-left">
 <a class="btn-back-dashboard" href="tutor-dashboard.html" title="Quay lại Dashboard">
 <i class="fa-solid fa-arrow-left"></i>
 <span class="btn-back-text">Quay lại Dashboard</span>
 </a>
 <div class="cal-nav-group">
-<button class="cal-nav-btn" id="btnCalPrev" title="Tháng trước" type="button">
+<button class="cal-nav-btn" id="btnCalPrev" onclick="if(calendar) calendar.prev()" title="Tháng trước" type="button">
 <i class="fa-solid fa-chevron-left"></i>
 </button>
-<button class="cal-nav-btn" id="btnCalNext" title="Tháng sau" type="button">
+<button class="cal-nav-btn" id="btnCalNext" onclick="if(calendar) calendar.next()" title="Tháng sau" type="button">
 <i class="fa-solid fa-chevron-right"></i>
 </button>
-<button class="cal-today-btn" id="btnCalToday" title="Về hôm nay" type="button">
+<button class="cal-today-btn" id="btnCalToday" onclick="if(calendar) calendar.today()" title="Về hôm nay" type="button">
                         Hôm nay
                     </button>
 </div>
@@ -46,23 +65,28 @@
 <h2 class="calendar-month-title" id="calendarHeaderTitle"><span class="cal-title-main">Tháng 9</span><span class="cal-title-year">2026</span></h2>
 </div>
 </div>
+<!-- NHÓM BÊN PHẢI: Toggle Pills "Tháng / Tuần / Ngày" + Lịch tóm tắt -->
 <div class="cal-header-right">
+<!-- Toggle Pills: Tháng / Tuần / Ngày (có thanh trượt nổi) -->
 <div class="cal-view-pills has-indicator">
 <span class="cal-view-indicator" id="calViewIndicator"></span>
-<button class="cal-view-pill active" id="viewPillMonth" type="button"><i class="fa-solid fa-calendar"></i><span>Tháng</span></button>
-<button class="cal-view-pill" id="viewPillWeek" type="button"><i class="fa-solid fa-calendar-week"></i><span>Tuần</span></button>
-<button class="cal-view-pill" id="viewPillDay" type="button"><i class="fa-solid fa-calendar-day"></i><span>Ngày</span></button>
+<button class="cal-view-pill active" id="viewPillMonth" onclick="switchCalendarView('dayGridMonth')" type="button"><i class="fa-solid fa-calendar"></i><span>Tháng</span></button>
+<button class="cal-view-pill" id="viewPillWeek" onclick="switchCalendarView('timeGridWeek')" type="button"><i class="fa-solid fa-calendar-week"></i><span>Tuần</span></button>
+<button class="cal-view-pill" id="viewPillDay" onclick="switchCalendarView('timeGridDay')" type="button"><i class="fa-solid fa-calendar-day"></i><span>Ngày</span></button>
 </div>
-<button class="cal-sheet-toggle-btn" id="scheduleList" title="Xem bảng phân bổ lịch dạy" type="button">
+<!-- Nút bật/mở bảng lịch tóm tắt -->
+<button class="cal-sheet-toggle-btn" id="scheduleList" onclick="toggleSheetPanel()" title="Xem bảng phân bổ lịch dạy" type="button">
 <i class="fa-solid fa-table-list"></i>
 <span class="cal-sheet-btn-text">Lịch tóm tắt</span>
 </button>
 </div>
 </div>
 </div>
+<!-- VÙNG LỊCH CHIẾM TOÀN BỘ PHẦN CÒN LẠI -->
 <div class="calendar-wrapper">
 <div id="calendar"></div>
 </div>
+<!-- THANH BOTTOM: LEGEND THEO HỌC SINH + STATUS BAR (TASK 10.4) -->
 <div class="calendar-bottom-bar" id="calendarBottomBar">
 <div class="cal-legend-list" id="calStudentLegendList"></div>
 <div class="cal-status-bar" id="calMonthStatusBar">
@@ -70,106 +94,591 @@
 <span id="calStatusText">0 buổi trong tháng · 0 học sinh</span>
 </div>
 </div>
+<!-- BẢNG SHEETS SIMULATOR - PANEL NỔI LÊN TỪ DƯỚI -->
 <div class="sheet-panel" id="sheetPanel">
-  <div class="sheet-panel-header">
-    <div class="sheet-title">
-      <button type="button" class="btn-sheet-toggle-header" id="btnCloseSheetHeader"><i class="fa-solid fa-xmark"></i> Đóng lịch tóm tắt</button>
-      <i class="fa-solid fa-table-list"></i> Dữ liệu lịch dạy từ SQLite
-    </div>
-    <button type="button" class="btn-close-panel" id="btnCloseSheetChevron"><i class="fa-solid fa-chevron-down"></i></button>
-  </div>
-  <div class="sheet-wrapper">
-    <table class="sheet-table">
-      <thead>
-        <tr>
-          <th style="text-align: left; width: 140px;">Tên Học Sinh</th>
-          <th>Thứ Hai</th><th>Thứ Ba</th><th>Thứ Tư</th><th>Thứ Năm</th><th>Thứ Sáu</th><th>Thứ Bảy</th><th>Chủ Nhật</th>
-        </tr>
-      </thead>
-      <tbody id="sheetDataTableBody"></tbody>
-    </table>
-  </div>
+<div class="sheet-panel-header">
+<div class="sheet-title">
+<button class="btn-sheet-toggle-header" onclick="toggleSheetPanel()">
+<i class="fa-solid fa-xmark"></i> Đóng lịch tóm tắt
+                </button>
+<i class="fa-solid fa-table-list"></i> Dữ liệu thực tế của lịch học (cập nhật theo thời gian thực)
+            </div>
+<button aria-label="Đóng lịch tóm tắt" class="btn-close-panel" onclick="toggleSheetPanel()"><i class="fa-solid fa-chevron-down"></i></button>
 </div>
-
-<div id="popoverBackdrop" class="popover-backdrop"></div>
+<div class="sheet-wrapper">
+<table class="sheet-table">
+<thead>
+<tr>
+<th style="text-align: left; width: 140px;">Tên Học Sinh</th>
+<th>Thứ Hai</th>
+<th>Thứ Ba</th>
+<th>Thứ Tư</th>
+<th>Thứ Năm</th>
+<th>Thứ Sáu</th>
+<th>Thứ Bảy</th>
+<th>Chủ Nhật</th>
+</tr>
+</thead>
+<tbody id="sheetDataTableBody"></tbody>
+</table>
+</div>
+</div>
+<!-- Nút FAB tròn nổi góc dưới phải -->
+<button aria-label="Thêm lịch dạy" class="fab-add" onclick="openAddEventModal()"><i class="fa-solid fa-plus"></i></button>
+<!-- HỘP THOẠI XÁC NHẬN KHI CHỈNH SỬA SỰ KIỆN LẶP LẠI -->
+<div class="recurrence-dialog-overlay" id="recurrenceDialogOverlay">
+<div class="recurrence-dialog">
+<h4 id="recurrenceDialogTitle"><i class="fa-solid fa-rotate" style="color:#C05E8E;margin-right:8px;"></i>Chỉnh sửa sự kiện lặp lại</h4>
+<p id="recurrenceDialogDesc">Sự kiện này lặp lại hàng tuần. Bạn muốn thay đổi:</p>
+<div class="recurrence-options">
+<div class="recurrence-option selected" id="recOptThis" onclick="selectRecOption('this')">
+<div class="recurrence-radio-dot"></div>
+<div class="recurrence-option-text">
+<strong id="recOptThisTitle">Chỉ sự kiện này</strong>
+<span id="recOptThisDesc">Chỉ thay đổi ca học tuần này, các tuần khác giữ nguyên lịch cũ.</span>
+</div>
+</div>
+<div class="recurrence-option" id="recOptAll" onclick="selectRecOption('all')">
+<div class="recurrence-radio-dot"></div>
+<div class="recurrence-option-text">
+<strong id="recOptAllTitle">Tất cả các tuần</strong>
+<span id="recOptAllDesc">Cập nhật lịch cố định — áp dụng cho mọi tuần từ đây trở đi.</span>
+</div>
+</div>
+</div>
+<div class="recurrence-dialog-footer">
+<button class="btn-rec-cancel" onclick="cancelRecurrenceChange()">Huỷ</button>
+<button class="btn-rec-ok" onclick="confirmRecurrenceChange()">Xác nhận</button>
+</div>
+</div>
+</div>
+<!-- FLOATING POPOVER CHI TIẾT CA HỌC (NỔI BÊN CẠNH SỰ KIỆN) -->
+<div class="popover-backdrop" id="popoverBackdrop" onclick="closeDetailModalForce()"></div>
 <div id="eventDetailPopover">
-  <div class="bottom-sheet-handle"></div>
-  <div class="detail-header-actions">
-    <div class="detail-actions-left">
-      <button type="button" class="btn-detail-action" id="btnDetailEdit" title="Sửa ca học"><i class="fa-solid fa-pen"></i></button>
-      <button type="button" class="btn-detail-action" id="btnDetailDelete" title="Xóa ca học"><i class="fa-solid fa-trash-can"></i></button>
-    </div>
-    <button type="button" class="btn-close" id="btnDetailClose"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-  <div class="detail-content">
-    <div class="detail-title-wrap">
-      <span class="detail-color-dot" id="detailColorDot"></span>
-      <h3 id="detailTitle">Tên Học Sinh</h3>
-    </div>
-    <div class="detail-info-item">
-      <i class="fa-regular fa-clock"></i>
-      <div>
-        <div id="detailDateTime">Ngày giờ hiển thị</div>
-        <div id="detailRecurrence" class="detail-recurrence-info">Tần suất lặp</div>
-      </div>
-    </div>
-    <div class="detail-info-item" id="detailNotesContainer">
-      <i class="fa-regular fa-note-sticky"></i>
-      <div id="detailNotes">Ghi chú ca học</div>
-    </div>
-  </div>
+<div class="bottom-sheet-handle"></div>
+<div class="detail-header-actions">
+<div class="detail-actions-left">
+<button class="btn-detail-action" id="btnDetailEdit" onclick="editFromDetail()" title="Sửa ca học"><i class="fa-solid fa-pen"></i></button>
+<button class="btn-detail-action" id="btnDetailDelete" onclick="deleteFromDetail()" title="Xóa ca học"><i class="fa-solid fa-trash-can"></i></button>
+</div>
+<button aria-label="Đóng" class="btn-close" onclick="closeDetailModalForce()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<div class="detail-content">
+<div class="detail-title-wrap">
+<span class="detail-color-dot" id="detailColorDot"></span>
+<h3 id="detailTitle">Tên Học Sinh</h3>
+</div>
+<div class="detail-info-item">
+<i class="fa-regular fa-clock"></i>
+<div>
+<div id="detailDateTime">Ngày giờ hiển thị</div>
+<div class="detail-recurrence-info" id="detailRecurrence">Tần suất lặp</div>
+</div>
+</div>
+<div class="detail-info-item" id="detailFeeContainer">
+<i class="fa-solid fa-coins" style="color: #10B981;"></i>
+<div>
+<div id="detailFee" style="font-weight: 700; color: #059669;">500.000 đ / buổi</div>
+</div>
+</div>
+<div class="detail-info-item" id="detailNotesContainer">
+<i class="fa-regular fa-note-sticky"></i>
+<div id="detailNotes">Ghi chú ca học</div>
+</div>
+<!-- Liên kết sang Nhật ký buổi học & Hồ sơ học sinh (dashboard) -->
+<div class="detail-link-actions" id="detailLinkActions" style="display: none;">
+<div class="detail-lesson-status" id="detailLessonStatus"></div>
+<div class="detail-link-row">
+<button class="btn-detail-link primary" id="btnDetailLesson" onclick="ztDetailOpenLesson()" type="button">
+<i class="fa-solid fa-book-open"></i><span>Ghi buổi học</span>
+</button>
+<button class="btn-detail-link" onclick="ztDetailOpenStudent()" type="button">
+<i class="fa-solid fa-user-graduate"></i><span>Hồ sơ học sinh</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Form Thêm/Sửa sự kiện (Google Calendar Style) -->
+<div aria-labelledby="modalTitleText" class="modal-overlay" id="eventModalOverlay" onclick="closeEventModal(event)" role="dialog">
+<div class="calendar-modal" id="calendarModal">
+<div class="modal-header">
+<h3 id="modalTitleText"><i class="fa-solid fa-circle-info"></i> Thiết lập ca dạy</h3>
+<button aria-label="Đóng" class="btn-close" onclick="closeModalForce()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<form id="eventForm" onsubmit="saveEvent(event)">
+<!-- ID/Index Ẩn -->
+<input id="eventStudentIndex" type="hidden"/>
+<input id="eventSubIndex" type="hidden"/>
+<input id="eventOldDay" type="hidden"/>
+<div class="form-group">
+<label for="eventStudent">Học sinh</label>
+<select class="form-control" id="eventStudent" required="">
+<option value="">Chọn học sinh...</option>
+<!-- Danh sách học sinh sẽ được load động -->
+</select>
+</div>
+<div class="form-group" id="customStudentNameGroup" style="display: none;">
+<label for="eventCustomStudentName">Tên học sinh mới (học thử)</label>
+<input class="form-control" id="eventCustomStudentName" maxlength="110" placeholder="Nhập tên học sinh mới..." type="text"/>
+</div>
+<!-- LỰA CHỌN CHẾ ĐỘ LẶP (BỔ SUNG KHÔNG LẶP - CHỈ 1 LẦN) -->
+<div class="form-group">
+<label for="eventRepeatMode">Chế độ lặp lại (Recurrence)</label>
+<select class="form-control" id="eventRepeatMode" onchange="toggleRepeatUI()" required="">
+<option value="none">Không lặp </option>
+<option value="weekly">Lặp hàng tuần (Vào ngày cụ thể)</option>
+<option value="daily">Lặp hàng ngày (Tất cả các ngày thứ 2 - CN)</option>
+<option value="custom">Tùy chỉnh lặp (Chọn nhiều ngày...)</option>
+</select>
+</div>
+<!-- HIỂN THỊ CHỌN THỨ KHI LẶP HÀNG TUẦN -->
+<div class="form-group" id="daySelectGroup" style="display: none;">
+<label for="eventDayOfWeek">Chọn ngày dạy trong tuần</label>
+<select class="form-control" id="eventDayOfWeek">
+<option value="mon">Thứ Hai</option>
+<option value="tue">Thứ Ba</option>
+<option value="wed">Thứ Tư</option>
+<option value="thu">Thứ Năm</option>
+<option value="fri">Thứ Sáu</option>
+<option value="sat">Thứ Bảy</option>
+<option value="sun">Chủ Nhật</option>
+</select>
+</div>
+<!-- HIỂN THỊ CHỌN NGÀY CỤ THỂ KHI CHỌN "KHÔNG LẶP" (DIỄN RA 1 LẦN) -->
+<div class="form-group" id="specificDateGroup">
+<label for="eventSpecificDate">Ngày diễn ra (Chỉ học 1 lần)</label>
+<input class="form-control" id="eventSpecificDate" type="date"/>
+</div>
+<!-- HIỂN THỊ CHECKBOX KHI CHỌN "CUSTOM" -->
+<div class="form-group" id="dayCheckboxGroup" style="display: none;">
+<label>Lặp lại vào các ngày</label>
+<div class="day-checkbox-grid">
+<div class="day-checkbox-item">
+<input id="checkMon" type="checkbox" value="mon"/>
+<label class="day-checkbox-label" for="checkMon">Thứ 2</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkTue" type="checkbox" value="tue"/>
+<label class="day-checkbox-label" for="checkTue">Thứ 3</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkWed" type="checkbox" value="wed"/>
+<label class="day-checkbox-label" for="checkWed">Thứ 4</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkThu" type="checkbox" value="thu"/>
+<label class="day-checkbox-label" for="checkThu">Thứ 5</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkFri" type="checkbox" value="fri"/>
+<label class="day-checkbox-label" for="checkFri">Thứ 6</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkSat" type="checkbox" value="sat"/>
+<label class="day-checkbox-label" for="checkSat">Thứ 7</label>
+</div>
+<div class="day-checkbox-item">
+<input id="checkSun" type="checkbox" value="sun"/>
+<label class="day-checkbox-label" for="checkSun">Chủ Nhật</label>
+</div>
+</div>
+</div>
+<div class="row-grid">
+<div class="form-group">
+<label for="eventStartTime">Giờ học (Bắt đầu)</label>
+<input class="form-control" id="eventStartTime" required="" type="time"/>
+</div>
+<div class="form-group">
+<label for="eventEndTime">Giờ học (Kết thúc)</label>
+<input class="form-control" id="eventEndTime" required="" type="time"/>
+</div>
+</div>
+<div class="form-group">
+<label for="eventFee">Học phí / buổi (VNĐ)</label>
+<input class="form-control currency-input" id="eventFee" inputmode="numeric" oninput="formatCurrencyInput(this)" placeholder="Ví dụ: 750.000" type="text"/>
+</div>
+<!-- Trường Ghi chú tùy chọn -->
+<div class="form-group">
+<label for="eventNotes">Ghi chú môn học/nội dung (Tùy chọn)</label>
+<input class="form-control" id="eventNotes" maxlength="650" placeholder="Ví dụ: Toán ôn thi, Lý nâng cao..." type="text"/>
+</div>
+<!-- Màu sắc -->
+<div class="form-group color-picker-section">
+<label>Màu sắc</label>
+<div class="color-scope-tabs">
+<button class="color-scope-btn active" id="colorScopeStudentBtn" onclick="setColorScope('student')" type="button">🎨 Màu học sinh (toàn bộ)</button>
+<button class="color-scope-btn" id="colorScopeSessionBtn" onclick="setColorScope('session')" type="button">✨ Buổi này</button>
+</div>
+<div class="color-swatches" id="colorSwatches"></div>
+<div class="color-preview-badge" id="colorPreviewBadge">
+<span class="color-preview-dot" id="colorPreviewDot"></span>
+<span id="colorPreviewText">Chọn màu bên trên</span>
+</div>
+<input id="eventColor" type="hidden" value=""/>
+<input id="colorScope" type="hidden" value="student"/>
+</div>
+<div class="modal-footer">
+<button class="btn btn-delete" id="btnDeleteEvent" onclick="deleteEvent()" style="display: none;" type="button">Xóa lịch</button>
+<button class="btn btn-cancel" onclick="closeModalForce()" type="button">Hủy</button>
+<button class="btn btn-save" type="submit">Lưu lại</button>
+</div>
+</form>
+</div>
+</div>
+<!-- SYNC TOAST - Thông báo trạng thái đồng bộ -->
+<div class="sync-toast" id="syncToast" role="status" style="display:none;"></div>
+<!-- HỘP THOẠI XÁC NHẬN (CONFIRM) WEB-BASED TỰ CUSTOM -->
+<div class="modal-overlay" id="customConfirmModal" style="display: none; z-index: 4000;">
+<div class="calendar-modal" style="max-width: 420px; padding: 25px; text-align: center; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+<div style="font-size: 40px; color: var(--color-primary); margin-bottom: 15px;"><i class="fa-solid fa-circle-question"></i></div>
+<h3 style="margin-bottom: 12px; color: var(--text-heading, var(--text-primary)); font-size: 17px; font-weight: bold;">Xác nhận thao tác</h3>
+<p id="confirmMessageText" style="color: var(--text-secondary); font-size: 13.5px; line-height: 1.6; margin-bottom: 25px;"></p>
+<div style="display: flex; gap: 12px; justify-content: center;">
+<button class="modal-btn modal-btn-secondary" id="btnConfirmCancelWeb" style="padding: 10px 22px; border-radius: 20px; font-weight: bold; font-size: 13px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-primary); transition: background 0.2s; cursor: pointer;" type="button">Hủy bỏ</button>
+<button class="modal-btn modal-btn-primary" id="btnConfirmOkWeb" onmouseout="this.style.opacity='1'" onmouseover="this.style.opacity='0.9'" style="padding: 10px 22px; border-radius: 20px; font-weight: bold; font-size: 13px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%); border: none; color: #FFF; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.25); cursor: pointer; transition: opacity 0.2s;" type="button">Đồng ý</button>
+</div>
+</div>
+</div>
+<!-- HỘP THOẠI THÔNG BÁO (ALERT) WEB-BASED TỰ CUSTOM -->
+<div class="modal-overlay" id="customAlertModal" style="display: none; z-index: 4000;">
+<div class="calendar-modal" style="max-width: 400px; padding: 25px; text-align: center; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+<div id="alertIcon" style="font-size: 40px; color: var(--color-primary); margin-bottom: 15px;"><i class="fa-solid fa-circle-info"></i></div>
+<h3 style="margin-bottom: 12px; color: var(--text-heading, var(--text-primary)); font-size: 17px; font-weight: bold;">Thông báo</h3>
+<p id="alertMessageText" style="color: var(--text-secondary); font-size: 13.5px; line-height: 1.6; margin-bottom: 25px;"></p>
+<div style="display: flex; justify-content: center;">
+<button class="modal-btn modal-btn-primary" id="btnAlertOkWeb" onmouseout="this.style.opacity='1'" onmouseover="this.style.opacity='0.9'" style="padding: 10px 24px; border-radius: 20px; font-weight: bold; font-size: 13px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: linear-gradient(135deg, #8E4DFF 0%, #5B21B6 100%); border: none; color: #FFF; box-shadow: 0 4px 15px rgba(142,77,255,0.25); min-width: 100px; cursor: pointer; transition: opacity 0.2s;" type="button">Đã hiểu</button>
+</div>
+</div>
 </div>
 
-<div class="modal-overlay" id="eventModalOverlay">
-  <div class="calendar-modal" id="calendarModal">
-    <div class="modal-header">
-      <h3 id="modalTitleText"><i class="fa-solid fa-circle-info"></i> Thiết lập ca dạy</h3>
-      <button type="button" class="btn-close" id="btnCalModalClose"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <form id="eventForm">
-      <input type="hidden" id="eventScheduleId" value="">
-      <div class="form-group">
-        <label for="eventStudent">Học sinh</label>
-        <select class="form-control" id="eventStudent"></select>
-      </div>
-      <div class="form-group">
-        <label for="eventRepeatMode">Chế độ lặp lại</label>
-        <select class="form-control" id="eventRepeatMode" required>
-          <option value="weekly">Lặp hàng tuần</option>
-          <option value="once">Không lặp (Chỉ học 1 lần)</option>
-        </select>
-      </div>
-      <div class="form-group" id="daySelectGroup">
-        <label for="eventDayOfWeek">Chọn ngày dạy trong tuần</label>
-        <select class="form-control" id="eventDayOfWeek">
-          <option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option>
-          <option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="7">Chủ Nhật</option>
-        </select>
-      </div>
-      <div class="form-group" id="specificDateGroup" style="display:none;">
-        <label for="eventSpecificDate">Ngày diễn ra (Chỉ học 1 lần)</label>
-        <input type="date" class="form-control" id="eventSpecificDate">
-      </div>
-      <div class="row-grid">
-        <div class="form-group"><label for="eventStartTime">Giờ học (Bắt đầu)</label><input type="time" class="form-control" id="eventStartTime" required></div>
-        <div class="form-group"><label for="eventEndTime">Giờ học (Kết thúc)</label><input type="time" class="form-control" id="eventEndTime" required></div>
-      </div>
-      <div class="form-group"><label for="eventSubject">Môn học</label><input type="text" class="form-control" id="eventSubject" placeholder="Ví dụ: Toán, Khoa học..."></div>
-      <div class="form-group"><label for="eventNotes">Ghi chú ca học (Tùy chọn)</label><input type="text" class="form-control" id="eventNotes" placeholder="Ví dụ: Ôn và sửa bài cuối buổi"></div>
-      <div class="form-group color-picker-section">
-        <label>Màu sắc</label>
-        <div class="color-swatches" id="colorSwatches"></div>
-        <input type="hidden" id="eventColor" value="#2563eb">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-delete" id="btnDeleteEvent" style="display:none;">Xóa lịch</button>
-        <button type="button" class="btn btn-cancel" id="btnCancelEvent">Hủy</button>
-        <button type="submit" class="btn btn-save">Lưu lại</button>
-      </div>
-    </form>
-  </div>
-</div>
+<!-- PWA Install Script -->
 
-<button aria-label="Thêm lịch dạy" class="fab-add" data-original-action="openAddEventModal"><i class="fa-solid fa-plus"></i></button>
-<script defer="" src="/vendor/fullcalendar.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/lang-all.js"></script><script defer="" src="/js/calendar.js"></script></body>
+<!-- ================= THEME SWITCHER MODAL (TASK 12.5) ================= -->
+<div class="theme-switcher-panel" id="themeSwitcherPanel" style="display:none;">
+<div class="theme-switcher-overlay" onclick="closeThemeSwitcher()"></div>
+<div class="theme-switcher-content">
+<div class="theme-switcher-header">
+<h3>🎨 Chọn giao diện</h3>
+<button class="theme-switcher-close" onclick="closeThemeSwitcher()" type="button">✕</button>
+</div>
+<div class="theme-switcher-body">
+<!-- NHÓM A: Presets màu đơn -->
+<div class="theme-group-label">Màu sắc đơn</div>
+<div class="theme-presets-row">
+<div class="theme-preset-item" data-theme="preset-blue" onclick="applyTheme('preset-blue')">
+<span class="theme-dot" style="background:#2563EB"></span>
+<span>Xanh gốc</span>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-preset-item" data-theme="preset-hong-hoa" onclick="applyTheme('preset-hong-hoa')">
+<span class="theme-dot" style="background:#E11D48"></span>
+<span>Hồng hoa</span>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-preset-item" data-theme="preset-hong-nhe" onclick="applyTheme('preset-hong-nhe')">
+<span class="theme-dot" style="background:#F472B6"></span>
+<span>Hồng nhẹ</span>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-preset-item" data-theme="preset-matcha" onclick="applyTheme('preset-matcha')">
+<span class="theme-dot" style="background:#059669"></span>
+<span>Matcha Tea</span>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-preset-item" data-theme="preset-linen" onclick="applyTheme('preset-linen')">
+<span class="theme-dot" style="background:#854D0E"></span>
+<span>Linen Cocoa</span>
+<span class="theme-check">✓</span>
+</div>
+</div>
+<!-- NHÓM B: Giao diện đầy đủ -->
+<div class="theme-group-label" style="display:flex; justify-content:space-between; align-items:center;">
+<span>Giao diện đầy đủ</span>
+<span style="font-size:11px; opacity:0.75; font-weight:normal;">30 kiểu phong cách</span>
+</div>
+<div class="theme-full-grid">
+<!-- Default: Tím Đêm -->
+<div class="theme-full-item" data-theme="theme-dark-purple" onclick="applyTheme('theme-dark-purple')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#0B0826,#8E4DFF)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Tím Đêm</div>
+<div class="theme-variant">Giao diện gốc (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 1. Azure Mist -->
+<div class="theme-full-item" data-theme="theme-azure-mist-full" onclick="applyTheme('theme-azure-mist-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#EEF4FB,#7AB4E8)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Azure Mist</div>
+<div class="theme-variant">Nền &amp; bóng</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-azure-mist-minimal" onclick="applyTheme('theme-azure-mist-minimal')">
+<span class="theme-orb" style="background:#7AB4E8"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Azure Mist</div>
+<div class="theme-variant">Tối giản</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 2. Woodland Cottage -->
+<div class="theme-full-item" data-theme="theme-woodland-cottage-full" onclick="applyTheme('theme-woodland-cottage-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#5C4033,#8B6E58)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Woodland Cottage</div>
+<div class="theme-variant">Nền &amp; bóng</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-woodland-cottage-minimal" onclick="applyTheme('theme-woodland-cottage-minimal')">
+<span class="theme-orb" style="background:#8B6E58"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Woodland Cottage</div>
+<div class="theme-variant">Tối giản</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 3. Sage Blush -->
+<div class="theme-full-item" data-theme="theme-sage-blush-full" onclick="applyTheme('theme-sage-blush-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#6B8E78,#C49A88)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Sage Blush</div>
+<div class="theme-variant">Nền &amp; bóng</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-sage-blush-minimal" onclick="applyTheme('theme-sage-blush-minimal')">
+<span class="theme-orb" style="background:#6B8E78"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Sage Blush</div>
+<div class="theme-variant">Tối giản</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 4. Golden Caramel -->
+<div class="theme-full-item" data-theme="theme-golden-caramel-full" onclick="applyTheme('theme-golden-caramel-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#D48820,#9E6010)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Golden Caramel</div>
+<div class="theme-variant">Nền &amp; bóng</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-golden-caramel-minimal" onclick="applyTheme('theme-golden-caramel-minimal')">
+<span class="theme-orb" style="background:#D48820"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Golden Caramel</div>
+<div class="theme-variant">Tối giản</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 5. Pastel Alpine Meadow -->
+<div class="theme-full-item" data-theme="theme-pastel-alpine-full" onclick="applyTheme('theme-pastel-alpine-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#4A7A50,#98D0A0)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Pastel Alpine</div>
+<div class="theme-variant">Nền &amp; bóng</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-pastel-alpine-minimal" onclick="applyTheme('theme-pastel-alpine-minimal')">
+<span class="theme-orb" style="background:#4A7A50"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Pastel Alpine</div>
+<div class="theme-variant">Tối giản</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 6. Dreamy Cosmic Sky -->
+<div class="theme-full-item" data-theme="theme-dreamy-cosmic-full" onclick="applyTheme('theme-dreamy-cosmic-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#0A0A1A,#A040FF)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Dreamy Cosmic</div>
+<div class="theme-variant">Nền &amp; bóng (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-dreamy-cosmic-minimal" onclick="applyTheme('theme-dreamy-cosmic-minimal')">
+<span class="theme-orb" style="background:#A040FF"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Dreamy Cosmic</div>
+<div class="theme-variant">Tối giản (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 7. Sunset Meadow Breeze -->
+<div class="theme-full-item" data-theme="theme-sunset-meadow-full" onclick="applyTheme('theme-sunset-meadow-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#D45020,#5C7A40)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Sunset Meadow</div>
+<div class="theme-variant">Nền &amp; bóng</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-sunset-meadow-minimal" onclick="applyTheme('theme-sunset-meadow-minimal')">
+<span class="theme-orb" style="background:#D45020"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Sunset Meadow</div>
+<div class="theme-variant">Tối giản</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 8. Neon Seoul -->
+<div class="theme-full-item" data-theme="theme-neon-seoul-full" onclick="applyTheme('theme-neon-seoul-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#0D0820,#00D4AA)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Neon Seoul</div>
+<div class="theme-variant">Nền &amp; bóng (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-neon-seoul-minimal" onclick="applyTheme('theme-neon-seoul-minimal')">
+<span class="theme-orb" style="background:#00D4AA"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Neon Seoul</div>
+<div class="theme-variant">Tối giản (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 9. Mystic Blue Room -->
+<div class="theme-full-item" data-theme="theme-mystic-blue-full" onclick="applyTheme('theme-mystic-blue-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#0A1020,#4080D0)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Mystic Blue</div>
+<div class="theme-variant">Nền &amp; bóng (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-mystic-blue-minimal" onclick="applyTheme('theme-mystic-blue-minimal')">
+<span class="theme-orb" style="background:#4080D0"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Mystic Blue</div>
+<div class="theme-variant">Tối giản (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 10. Blue Lime Canopy -->
+<div class="theme-full-item" data-theme="theme-blue-lime-full" onclick="applyTheme('theme-blue-lime-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#1A5090,#80C820)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Blue Lime</div>
+<div class="theme-variant">Nền &amp; bóng</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-blue-lime-minimal" onclick="applyTheme('theme-blue-lime-minimal')">
+<span class="theme-orb" style="background:#1A5090"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Blue Lime</div>
+<div class="theme-variant">Tối giản</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 11. Cloud Meadow -->
+<div class="theme-full-item" data-theme="theme-cloud-meadow-full" onclick="applyTheme('theme-cloud-meadow-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#5888B0,#6BA870)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Cloud Meadow</div>
+<div class="theme-variant">Nền &amp; bóng</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-cloud-meadow-minimal" onclick="applyTheme('theme-cloud-meadow-minimal')">
+<span class="theme-orb" style="background:#5888B0"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Cloud Meadow</div>
+<div class="theme-variant">Tối giản</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 12. Soft Blue + White -->
+<div class="theme-full-item" data-theme="theme-soft-blue-white-full" onclick="applyTheme('theme-soft-blue-white-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#DCEEFC,#2070C0)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Soft Blue</div>
+<div class="theme-variant">Nền &amp; bóng</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-soft-blue-white-minimal" onclick="applyTheme('theme-soft-blue-white-minimal')">
+<span class="theme-orb" style="background:#2070C0"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Soft Blue</div>
+<div class="theme-variant">Tối giản</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 13. Blossom Noir -->
+<div class="theme-full-item" data-theme="theme-blossom-noir-full" onclick="applyTheme('theme-blossom-noir-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#100810,#D44080)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Blossom Noir</div>
+<div class="theme-variant">Nền &amp; bóng (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-blossom-noir-minimal" onclick="applyTheme('theme-blossom-noir-minimal')">
+<span class="theme-orb" style="background:#D44080"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Blossom Noir</div>
+<div class="theme-variant">Tối giản (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 14. Violet Planet -->
+<div class="theme-full-item" data-theme="theme-violet-planet-full" onclick="applyTheme('theme-violet-planet-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#0C0618,#9040D0)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Violet Planet</div>
+<div class="theme-variant">Nền &amp; bóng (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-violet-planet-minimal" onclick="applyTheme('theme-violet-planet-minimal')">
+<span class="theme-orb" style="background:#9040D0"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Violet Planet</div>
+<div class="theme-variant">Tối giản (Tối)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<!-- 15. Claude -->
+<div class="theme-full-item" data-theme="theme-claude-full" onclick="applyTheme('theme-claude-full')">
+<span class="theme-orb" style="background:linear-gradient(135deg,#FAF7F2,#CC785C)"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Claude</div>
+<div class="theme-variant">Nền &amp; bóng (Ấm)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+<div class="theme-full-item" data-theme="theme-claude-minimal" onclick="applyTheme('theme-claude-minimal')">
+<span class="theme-orb" style="background:#CC785C"></span>
+<div class="theme-item-meta">
+<div class="theme-name">Claude</div>
+<div class="theme-variant">Tối giản (Ấm)</div>
+</div>
+<span class="theme-check">✓</span>
+</div>
+</div>
+<!-- NHÓM C: Màu tùy chọn đơn -->
+<div class="theme-group-label">Màu tùy chọn đơn</div>
+<div class="theme-custom-row">
+<input id="customColorPicker" title="Chọn màu tùy chỉnh" type="color" value="#2563EB"/>
+<span style="font-size:12.5px; font-weight:600; color:var(--text-secondary);">Mã HEX:</span>
+<input class="theme-custom-hex" id="customColorHex" maxlength="7" type="text" value="#2563EB"/>
+<button class="theme-btn-apply-custom" onclick="applyCustomTheme()" type="button">Áp dụng màu</button>
+</div>
+</div>
+<div class="theme-switcher-footer">
+<span>Đang dùng: <b class="theme-current-badge" id="themeCurrentLabel">Tím Đêm</b></span>
+<span style="opacity:0.65; font-size:11px;">Hệ thống 36 Theme</span>
+</div>
+</div>
+</div>
+<!-- Phase 19: Scroll Animation Engine -->
+
+<script defer="" src="/vendor/fullcalendar.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/calendar.js"></script><script defer="" src="/js/scroll-animations.js"></script></body>
 </html>

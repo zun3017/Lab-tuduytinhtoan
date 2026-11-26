@@ -37,7 +37,7 @@ SAFE_INLINE_MIMES = {
     "image/gif",
     "image/webp",
 }
-ALLOWED_SETTINGS = {"marquee", "contact", "commission_rates"}
+ALLOWED_SETTINGS = {"marquee", "contact", "contact_phone", "contact_messenger", "contact_zalo", "commission_rates"}
 
 
 @bp.errorhandler(HTTPException)
@@ -113,6 +113,21 @@ def login():
 def logout():
     session.clear()
     return jsonify(ok=True)
+
+
+@bp.post("/api/student/access")
+def student_access():
+    identifier = clean_text(payload().get("code"), True, 80)
+    account = row(
+        """SELECT a.id, a.status, a.auth_version FROM accounts a
+           JOIN students s ON s.id=a.id
+           WHERE a.role='student' AND a.deleted_at IS NULL AND (a.login=? OR a.phone=?)""",
+        (identifier, identifier),
+    )
+    if not account or account["status"] != "active":
+        abort(401, "Không tìm thấy hồ sơ học sinh đang hoạt động.")
+    _set_session(account["id"], account["auth_version"])
+    return jsonify(user=actor())
 
 
 @bp.post("/api/homework/access")
@@ -209,7 +224,7 @@ def update_own_account():
         fields["phone"] = phone
     if "theme" in data:
         theme = clean_text(data["theme"], False, 80)
-        if theme and not re.fullmatch(r"(?:theme|preset)-[\w-]+", theme):
+        if theme and not re.fullmatch(r"(?:(?:theme|preset)-[\w-]+|custom:#[a-fA-F0-9]{6})", theme):
             abort(400, "Tên giao diện không hợp lệ.")
         fields["theme"] = theme
     if "password" in data and clean_text(data["password"], False, 128):
@@ -733,6 +748,16 @@ def delete_assignment(assignment_id):
     db = get_db()
     with db:
         set_fields("assignments", assignment_id, {"deleted_at": datetime.now().isoformat(timespec="seconds")})
+    return jsonify(ok=True)
+
+
+@bp.post("/api/assignments/<int:assignment_id>/restore")
+def restore_assignment(assignment_id):
+    user = actor()
+    require(user, "tutor", "admin")
+    with get_db():
+        record("assignments", user, assignment_id)
+        set_fields("assignments", assignment_id, {"deleted_at": None})
     return jsonify(ok=True)
 
 

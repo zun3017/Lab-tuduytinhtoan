@@ -1,15 +1,16 @@
-# Bảng đối chiếu chức năng ZunTutor gốc ↔ ZunTutor Lab07
+# Đối chiếu yêu cầu Lab07
 
-| Trang / Phân hệ | Chức năng trong mã nguồn gốc | Triển khai tại Lab07 (SQLite + Flask) | Trạng thái kiểm chứng |
-|---|---|---|---|
-| `index.html` | Trang giới thiệu, FAQ, metric rings, PWA install, điều hướng desktop/mobile | `public/index.html`, `public/js/homepage.js`, `public/sw.js`, `public/manifest.json` | Đã kiểm tra desktop (1440px) & mobile (390px) |
-| Bộ chọn 🌐 Ngôn ngữ | Tính năng mới: đổi ngôn ngữ toàn trang chủ (`vi`, `en`, `ja`, `ko`) | `POST /api/translate/homepage`, `server/translation.py`, `server/translation.sql` | Đã kiểm thử đơn vị (mock Google, cache, missing key, batching); **chưa xác minh Google thật** do thiếu key trong `.env` |
-| `student-login.html` | Đăng nhập phụ huynh / học sinh | `POST /api/login`, `public/js/login.js` | Đã kiểm tra qua test & trình duyệt (`HS0701`) |
-| `student-dashboard.html` | KPI điểm TB, biểu đồ đường điểm số, donut BTVN & chuyên cần, lọc tháng, lịch sử buổi học, gửi phản hồi, xem học phí/hóa đơn | `GET /api/dashboard`, `POST /api/feedback`, `public/js/student.js` | Đã kiểm tra qua trình duyệt (`student-dashboard.png`) |
-| `homework.html` | Truy cập bằng tài khoản hoặc mã bài tập riêng (`BT-SAO-07`), xem/tải đề, nộp bài + nhiều tệp, sửa/thu hồi bài chưa chấm, biểu đồ tiến độ | `POST /api/homework/access`, `POST/PATCH/DELETE /api/submissions`, `GET /api/files/<id>`, `public/js/homework.js` | Đã kiểm tra phân quyền mã bài tập (chặn `/api/invoices` 403), nộp tệp BLOB & trình duyệt |
-| `tutor-login.html` | Đăng nhập gia sư/quản trị, ghi nhớ mã ĐN, đăng ký tài khoản gia sư mới, khôi phục PIN | `POST /api/login`, `POST /api/register`, `POST /api/recover`, `public/js/login.js` | Đã kiểm tra đăng nhập, đăng ký & khôi phục |
-| `tutor-dashboard.html` | Tổng quan KPI, lịch sắp tới, biểu đồ doanh thu, thời khóa biểu, giao & chấm bài, nhật ký buổi học, quản lý học sinh & thùng rác, quản lý lớp, thu học phí, đổi chủ đề/tài khoản/avatar | `GET /api/dashboard`, CRUD `/api/students`, `/api/classes`, `/api/lessons`, `PUT /api/lessons/payment`, `/api/assignments`, `/api/submissions/<id>`, `/api/account`, `public/js/tutor.js` | Đã kiểm tra toàn bộ tab, giao bài lưu DB qua restart, rollback giao dịch học phí |
-| `tutor-calendar.html` | Lịch dạy FullCalendar (Tháng/Tuần/Ngày), kéo thả/đổi giờ, lặp hàng tuần hoặc 1 buổi, bảng tóm tắt, nhúng iframe trong dashboard | `POST/PATCH/DELETE /api/schedules`, `public/js/calendar.js` | Đã kiểm tra tải lịch và thanh chuyển chế độ trên trình duyệt |
-| `demo-calendar.html` | Lịch thực hành tương tác cho khách | `GET/PUT /api/demo/calendar` (lưu SQLite theo session visitor + kiểm tra conflict `revision`), `public/js/demo-calendar.js` | Đã kiểm tra cô lập phiên & tải trên trình duyệt |
-| `preview-invoice.html` | Phiếu học tập & học phí theo kỳ, đếm chuyên cần/BTVN, tổng tiền/đã đóng/còn lại, xuất PNG bằng `html2canvas` cục bộ, in PDF | `GET /api/invoices/<student_id>`, `public/js/invoice.js` | Đã kiểm tra số tiền khớp SQLite trên trình duyệt |
-| `admin-dashboard.html` | KPI hệ thống, cảnh báo hết hạn, biểu đồ doanh thu phí web, quản lý/khóa/gia hạn/hủy gia hạn/xóa/khôi phục gia sư, quản lý trung tâm, cài đặt banner & liên hệ | CRUD `/api/tutors`, `/api/tutors/<id>/payments`, `/api/payments/<id>`, `/api/centers`, `PUT /api/settings`, `public/js/admin.js` | Đã kiểm tra toàn bộ tab & thao tác quản trị |
+- Giải thích website và tích hợp Google Cloud Translation: report.md, report.pdf.
+- Mã nguồn chạy được: thư mục gốc, server/, public/, requirements.txt, .env.example và README.md.
+- Video trình diễn hiện trạng: demo.webm.
+- Khai báo AI: mục 6 của báo cáo.
+- Lịch sử Git thực tế: git-history.md; hiện có commit 915fa5e liên quan Lab07.
+- Kịch bản quay bổ sung với Google API thật: demo-script.md.
+
+## Việc còn cần trước khi nộp chính thức
+
+- Bổ sung họ tên, mã sinh viên, lớp vào báo cáo.
+- Cấu hình khóa Google Cloud Translation hợp lệ và quay đoạn API thành công. Video hiện tại có thông báo thiếu khóa.
+- Rà soát, commit các thay đổi hiện tại và cung cấp repository/lịch sử Git thật.
+
+Gói ZIP có bản báo cáo, video và mã nguồn. Không chứa .env, khóa API, dữ liệu làm việc, môi trường ảo hoặc tệp thử.

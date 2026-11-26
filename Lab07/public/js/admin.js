@@ -14,7 +14,77 @@
   const tutorMap = () => new Map(data.tutors.map(t => [t.id, t]));
   const initialOf = name => String(name || '?').trim().split(/\s+/).pop().slice(0, 2).toUpperCase();
 
-  function openAdminModal(titleHtml, fields, submit, submitLabel = 'Lưu', extraHtml = '') {
+  let adminRevenueChartInstance;
+  function renderAdminRevenueChart(payments) {
+      if (typeof Chart === 'undefined') return;
+      var canvas = document.getElementById('adminRevenueChartCanvas');
+      if (!canvas) return;
+    
+      if (adminRevenueChartInstance) {
+          try { adminRevenueChartInstance.destroy(); } catch(e) {}
+      }
+    
+      // Gom doanh thu theo tháng (từ payments)
+      var monthlyRev = {};
+      var today = new Date();
+      // Tạo sẵn 6 tháng gần nhất
+      for (var i = 5; i >= 0; i--) {
+          var d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+          var k = "Thg " + (d.getMonth() + 1) + "/" + d.getFullYear();
+          monthlyRev[k] = 0;
+      }
+    
+      payments.forEach(p => {
+          var dt = new Date(p.date + 'T00:00:00');
+          if (dt) {
+              var k = "Thg " + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+              if (monthlyRev[k] !== undefined) {
+                  monthlyRev[k] += Number(p.amount) || 0;
+              }
+          }
+      });
+    
+      var labels = Object.keys(monthlyRev);
+      var dataVals = labels.map(k => monthlyRev[k]);
+    
+      var ctx = canvas.getContext('2d');
+      adminRevenueChartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: 'Doanh thu phí duy trì web (VNĐ)',
+                  data: dataVals,
+                  backgroundColor: 'rgba(37, 99, 235, 0.85)',
+                  borderColor: '#2563EB',
+                  borderWidth: 1.5,
+                  borderRadius: 8
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                  y: {
+                      beginAtZero: true,
+                      ticks: {
+                          callback: function(v) { return v.toLocaleString('vi-VN') + ' đ'; }
+                      }
+                  }
+              },
+              plugins: {
+                  tooltip: {
+                      callbacks: {
+                          label: function(c) { return " Doanh thu: " + c.raw.toLocaleString('vi-VN') + " đ"; }
+                      }
+                  }
+              }
+          }
+      });
+  }
+
+
+  function openAdminModal(titleHtml, fields, submit, submitLabel = 'Lưu', extraHtml = '', templateId = 'adminAccountModal') {
     document.querySelectorAll('.lab-admin-modal').forEach(el => el.remove());
     const overlay = document.createElement('div');
     overlay.className = 'modal-overlay lab-admin-modal';
@@ -34,27 +104,34 @@
       return `<div style="margin-bottom:14px;text-align:left;"><label style="display:block;font-size:13px;font-weight:600;color:#334155;margin-bottom:6px;">${e(f.label)}</label>${control}</div>`;
     }).join('');
 
-    overlay.innerHTML = `
-      <div class="adm-card" style="width:min(520px,94vw);max-height:88vh;overflow-y:auto;margin:0;position:relative;">
-        <div class="adm-card-header" style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #E2E8F0;">
-          <h2 class="adm-card-title">${titleHtml}</h2>
-          <button type="button" class="adm-action-btn" id="admModalCloseBtn" style="padding:4px 10px;">&times;</button>
-        </div>
-        ${extraHtml}
-        <form>
-          ${fieldsHtml}
-          <p class="lab-error" role="alert" hidden style="margin-bottom:12px;"></p>
-          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px;">
-            <button type="button" class="btn-secondary-ghost" id="admModalCancelBtn">Đóng</button>
-            ${submit ? `<button type="submit" class="btn-primary-gradient">${e(submitLabel)}</button>` : ''}
-          </div>
-        </form>
-      </div>
-    `;
+    // Use the source dialog's dimensions, typography, border and action bar.
+    const template = id(templateId);
+    const shell = template.querySelector('.modal-content').cloneNode(false);
+    const header = template.querySelector('.modal-header').cloneNode(true);
+    const heading = header.querySelector('h2,h3');
+    heading.innerHTML = titleHtml;
+    const body = template.querySelector('.modal-body').cloneNode(false);
+    body.innerHTML = extraHtml + fieldsHtml + '<p class="lab-error" role="alert" hidden></p>';
+    const footer = template.querySelector('.modal-footer').cloneNode(false);
+    const cancel = template.querySelector('.modal-footer .btn-secondary-ghost').cloneNode(false);
+    cancel.type='button';
+    cancel.textContent='Đóng';
+    footer.append(cancel);
+    if(submit){
+      const save=template.querySelector('.modal-footer .btn-primary-gradient').cloneNode(false);
+      save.type='submit';
+      save.textContent=submitLabel;
+      footer.append(save);
+    }
+    const form=document.createElement('form');
+    form.append(body,footer);
+    shell.append(header,form);
+    overlay.append(shell);
+    for(const el of overlay.querySelectorAll('[id]'))el.removeAttribute('id');
     const close = () => overlay.remove();
     overlay.addEventListener('click', ev => { if (ev.target === overlay) close(); });
-    overlay.querySelector('#admModalCloseBtn').onclick = close;
-    overlay.querySelector('#admModalCancelBtn').onclick = close;
+    header.querySelector('.modal-close').onclick = close;
+    cancel.onclick = close;
     overlay.querySelector('form').onsubmit = async ev => {
       ev.preventDefault();
       if (!submit) return close();
@@ -117,18 +194,7 @@
       `).join('');
     }
 
-    const monthlyTotals = new Map();
-    for (const p of payments) {
-      const m = p.date.slice(0, 7);
-      monthlyTotals.set(m, (monthlyTotals.get(m) || 0) + Number(p.amount || 0));
-    }
-    const labels = [...monthlyTotals.keys()].sort();
-    Lab.chart('adminRevenueChartCanvas', 'bar', labels.length ? labels : [curMonth], [{
-      label: 'Doanh thu phí web (VNĐ)',
-      data: labels.length ? labels.map(l => monthlyTotals.get(l)) : [0],
-      backgroundColor: '#2563EB',
-      borderRadius: 8,
-    }]);
+    renderAdminRevenueChart(payments);
 
     const tMap = tutorMap();
     const pTable = id('adminPaymentsTable');
@@ -276,30 +342,26 @@
   }
 
   function renderSettings() {
-    const box = id('adminTabSettings');
-    if (!box) return;
-    box.innerHTML = `<div class="adm-card">
-      <div class="adm-card-header"><h2 class="adm-card-title"><i class="fa-solid fa-sliders" style="color:#2563EB;"></i> Cài đặt thông báo hệ thống</h2></div>
-      <form id="adminSettingsForm">
-        <div style="margin-bottom:14px;">
-          <label style="display:block;font-size:13px;font-weight:600;color:#334155;margin-bottom:6px;">Thông báo chạy chữ cổng học sinh</label>
-          <textarea name="marquee" class="adm-search-input" style="padding-left:14px;min-height:76px;">${e(data.settings?.marquee || '')}</textarea>
-        </div>
-        <div style="margin-bottom:16px;">
-          <label style="display:block;font-size:13px;font-weight:600;color:#334155;margin-bottom:6px;">Thông tin liên hệ giả lập</label>
-          <input type="text" name="contact" class="adm-search-input" style="padding-left:14px;" value="${e(data.settings?.contact || '')}">
-        </div>
-        <button class="btn-primary-gradient" type="submit"><i class="fa-solid fa-floppy-disk"></i> Lưu cài đặt</button>
-      </form>
-    </div>`;
-    id('adminSettingsForm')?.addEventListener('submit', async ev => {
-      ev.preventDefault();
-      const values = Object.fromEntries(new FormData(ev.currentTarget));
-      const res = await request('settings', 'PUT', values);
-      data.settings = res.settings;
-      notice('Đã lưu cài đặt hệ thống.');
-    });
+    const settings = data.settings || {};
+    id('adminMarqueeInput').value = settings.marquee || '';
+    id('adminContactPhone').value = settings.contact_phone || settings.contact || '';
+    id('adminContactZalo').value = settings.contact_zalo || '';
+    id('adminContactMessenger').value = settings.contact_messenger || '';
   }
+
+  async function saveSettings(values) {
+    data.settings = (await request('settings', 'PUT', values)).settings;
+    renderSettings();
+    notice('Đã lưu cài đặt.');
+  }
+  Lab.commands({
+    saveAdminMarquee: () => saveSettings({marquee:id('adminMarqueeInput').value}),
+    clearAdminMarquee: () => saveSettings({marquee:''}),
+    saveAdminContactSettings: () => saveSettings({
+      contact:id('adminContactPhone').value, contact_phone:id('adminContactPhone').value,
+      contact_zalo:id('adminContactZalo').value, contact_messenger:id('adminContactMessenger').value
+    })
+  });
 
   function renderAll() {
     renderOverview();
@@ -348,7 +410,7 @@
       await request(existing ? `tutors/${existing.id}` : 'tutors', existing ? 'PATCH' : 'POST', body);
       await refresh();
       notice(existing ? 'Đã cập nhật gia sư.' : 'Đã thêm gia sư mới.');
-    });
+    }, 'Lưu', '', 'adminEditTutorModal');
   }
 
   function openCenterModal(existing = null) {
@@ -360,7 +422,7 @@
       await request(existing ? `centers/${existing.id}` : 'centers', existing ? 'PATCH' : 'POST', values);
       await refresh();
       notice(existing ? 'Đã cập nhật trung tâm.' : 'Đã thêm trung tâm mới.');
-    });
+    }, 'Lưu', '', 'adminAddCenterModal');
   }
 
   Lab.on('btnRefreshAdmin', 'click', async () => { await refresh(); notice('Đã làm mới dữ liệu.'); });
@@ -400,7 +462,7 @@
         await request(`tutors/${tutor.id}/payments`, 'POST', values);
         await refresh();
         notice('Đã gia hạn tài khoản gia sư.');
-      }, 'Xác nhận thu phí');
+      }, 'Xác nhận thu phí', '', 'adminRenewModal');
     },
     toggleTutorLock: async key => {
       const tutor = data.tutors.find(t => t.id === Number(key));

@@ -7,21 +7,46 @@
   id('tutorDashboardBox').style.display = 'block';
 
   const WEEKDAYS = ['', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN'];
-  const THEMES = [
-    ['theme-soft-blue-white-full', 'Soft Blue · Nền & bóng', '#3B82F6'],
-    ['theme-soft-blue-white-minimal', 'Soft Blue · Tối giản', '#60A5FA'],
-    ['theme-azure-mist-full', 'Azure Mist · Nền & bóng', '#0EA5E9'],
-    ['theme-azure-mist-minimal', 'Azure Mist · Tối giản', '#38BDF8'],
-    ['theme-woodland-cottage-full', 'Woodland Cottage · Nền & bóng', '#10B981'],
-    ['theme-sage-blush-full', 'Sage Blush · Nền & bóng', '#EC4899'],
-    ['theme-golden-caramel-full', 'Golden Caramel · Nền & bóng', '#F59E0B'],
-    ['theme-pastel-alpine-full', 'Pastel Alpine · Nền & bóng', '#6366F1'],
-    ['theme-claude-full', 'Claude · Ấm', '#D97706'],
-    ['theme-dark-purple', 'Tím Đêm (Tối)', '#8E4DFF'],
-    ['theme-dreamy-cosmic-full', 'Dreamy Cosmic (Tối)', '#7C3AED'],
-    ['theme-neon-seoul-full', 'Neon Seoul (Tối)', '#EC4899'],
-    ['theme-mystic-blue-full', 'Mystic Blue (Tối)', '#2563EB'],
-  ];
+var THEME_NAMES = {
+  'theme-dark-purple': 'Tím Đêm (Gốc)',
+  'preset-blue': 'Xanh gốc',
+  'preset-hong-hoa': 'Hồng hoa',
+  'preset-hong-nhe': 'Hồng nhẹ',
+  'preset-matcha': 'Matcha Tea',
+  'preset-linen': 'Linen Cocoa',
+  'theme-azure-mist-full': 'Azure Mist · Nền & bóng',
+  'theme-azure-mist-minimal': 'Azure Mist · Tối giản',
+  'theme-woodland-cottage-full': 'Woodland Cottage · Nền & bóng',
+  'theme-woodland-cottage-minimal': 'Woodland Cottage · Tối giản',
+  'theme-sage-blush-full': 'Sage Blush · Nền & bóng',
+  'theme-sage-blush-minimal': 'Sage Blush · Tối giản',
+  'theme-golden-caramel-full': 'Golden Caramel · Nền & bóng',
+  'theme-golden-caramel-minimal': 'Golden Caramel · Tối giản',
+  'theme-pastel-alpine-full': 'Pastel Alpine · Nền & bóng',
+  'theme-pastel-alpine-minimal': 'Pastel Alpine · Tối giản',
+  'theme-dreamy-cosmic-full': 'Dreamy Cosmic · Nền & bóng (Tối)',
+  'theme-dreamy-cosmic-minimal': 'Dreamy Cosmic · Tối giản (Tối)',
+  'theme-sunset-meadow-full': 'Sunset Meadow · Nền & bóng',
+  'theme-sunset-meadow-minimal': 'Sunset Meadow · Tối giản',
+  'theme-neon-seoul-full': 'Neon Seoul · Nền & bóng (Tối)',
+  'theme-neon-seoul-minimal': 'Neon Seoul · Tối giản (Tối)',
+  'theme-mystic-blue-full': 'Mystic Blue · Nền & bóng (Tối)',
+  'theme-mystic-blue-minimal': 'Mystic Blue · Tối giản (Tối)',
+  'theme-blue-lime-full': 'Blue Lime · Nền & bóng',
+  'theme-blue-lime-minimal': 'Blue Lime · Tối giản',
+  'theme-cloud-meadow-full': 'Cloud Meadow · Nền & bóng',
+  'theme-cloud-meadow-minimal': 'Cloud Meadow · Tối giản',
+  'theme-soft-blue-white-full': 'Soft Blue · Nền & bóng',
+  'theme-soft-blue-white-minimal': 'Soft Blue · Tối giản',
+  'theme-soft-blue-full': 'Soft Blue · Nền & bóng',
+  'theme-soft-blue-minimal': 'Soft Blue · Tối giản',
+  'theme-blossom-noir-full': 'Blossom Noir · Nền & bóng (Tối)',
+  'theme-blossom-noir-minimal': 'Blossom Noir · Tối giản (Tối)',
+  'theme-violet-planet-full': 'Violet Planet · Nền & bóng (Tối)',
+  'theme-violet-planet-minimal': 'Violet Planet · Tối giản (Tối)',
+  'theme-claude-full': 'Claude · Nền & bóng (Ấm)',
+  'theme-claude-minimal': 'Claude · Tối giản (Ấm)'
+};
 
   const PALETTE = [
     { bg: 'rgba(59,130,246,0.14)', border: '#3B82F6', text: '#1D4ED8' },
@@ -45,6 +70,11 @@
   let calendarLoaded = false;
   let hwSubTab = 'assign';
   let diaryStudentId = '';
+  let feedbackFilter = 'all';
+  let showAssignForm = true;
+  let submissionLimit = 8;
+  let selectedAssignment = null;
+  let selectedSubmission = null;
   let diaryMonth = '';
   let reportStudentId = '';
 
@@ -176,6 +206,244 @@
       .sort((a, b) => a.start_time.localeCompare(b.start_time));
   }
 
+  function drawRevenueTrend(labels, dataValues) {
+    const canvasEl = id('revenueBarChartCanvas');
+    if (!canvasEl || !window.Chart) return;
+    var maxVal = Math.max.apply(null, dataValues);
+    if (maxVal <= 0) maxVal = 2000000;
+
+    var ctx = canvasEl.getContext('2d');
+    Chart.getChart(canvasEl)?.destroy();
+
+    // Top data labels plugin (Biểu đồ đường - hiển thị số tiền phía trên mỗi điểm)
+    var topLabelsPlugin = {
+        id: 'topDataLabels',
+        afterDatasetsDraw: function(chart) {
+            var c = chart.ctx;
+            var meta = chart.getDatasetMeta(0);
+            if (!meta || !meta.data) return;
+
+            c.save();
+            c.font = '600 10.5px Inter, -apple-system, sans-serif';
+            c.textAlign = 'center';
+            c.textBaseline = 'bottom';
+            c.fillStyle = '#94A3B8';
+
+            meta.data.forEach(function(item, idx) {
+                var v = dataValues[idx] || 0;
+                var text = "";
+                if (v === 0) {
+                    text = "0đ";
+                } else if (v >= 1000000) {
+                    text = (v / 1000000).toFixed(1).replace('.', ',') + 'tr';
+                } else {
+                    text = (v / 1000).toFixed(0) + 'k';
+                }
+                c.fillText(text, item.x, item.y - 8);
+            });
+            c.restore();
+        }
+    };
+
+    var themeComp = getComputedStyle(document.documentElement);
+    var chartThemeBar = (themeComp.getPropertyValue('--chart-bar') || '#4A72E8').trim();
+    var chartThemeRgb = (themeComp.getPropertyValue('--chart-bar-rgb') || '74, 114, 232').trim();
+
+    var lineGrad = ctx.createLinearGradient(0, 0, 0, 220);
+    lineGrad.addColorStop(0, 'rgba(' + chartThemeRgb + ', 0.38)');
+    lineGrad.addColorStop(1, 'rgba(' + chartThemeRgb + ', 0.01)');
+
+    var datasets = [{
+        label: 'Doanh thu',
+        data: dataValues,
+        borderColor: chartThemeBar,
+        borderWidth: 3,
+        backgroundColor: lineGrad,
+        fill: true,
+        tension: 0.35,
+        pointBackgroundColor: chartThemeBar,
+        pointBorderColor: '#FFFFFF',
+        pointBorderWidth: 2,
+        pointRadius: 4.5,
+        pointHoverRadius: 7
+    }];
+
+    new Chart(ctx, {
+        type: 'line',
+        plugins: [topLabelsPlugin],
+        data: {
+            labels: labels,
+            datasets: datasets
+        },
+        options: {
+            animation: {
+                duration: 1200,
+                easing: 'easeOutQuart'
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: (getComputedStyle(document.documentElement).getPropertyValue('--bg-card-alt') || '#1E2235').trim(),
+                    titleColor: '#FFFFFF',
+                    titleFont: { family: 'Inter', size: 12, weight: 'bold' },
+                    bodyColor: '#10B981',
+                    bodyFont: { family: 'Inter', size: 12, weight: 'bold' },
+                    borderColor: 'rgba(74, 114, 232, 0.4)',
+                    borderWidth: 1,
+                    padding: 10,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return 'Doanh thu: ' + Number(context.parsed.y).toLocaleString('vi-VN') + ' đ';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#94A3B8',
+                        font: { family: 'Inter', size: 11, weight: '500' }
+                    }
+                },
+                y: {
+                    display: false,
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    suggestedMax: maxVal * 1.3
+                }
+            }
+        }
+    });
+  }
+
+  function drawStudentRevenue(studentStats) {
+    const canvasEl = id("studentRevenueDonutCanvas");
+    const totalMonthRevenue = studentStats.reduce((sum, row) => sum + row.revenue, 0);
+    // Sort descending by revenue
+    studentStats.sort(function(a, b) {
+        return b.revenue - a.revenue;
+    });
+
+    // Update center total
+    var totalValEl = document.getElementById('studentDonutTotalVal');
+    if (totalValEl) {
+        if (totalMonthRevenue >= 1000000) {
+            totalValEl.innerText = (totalMonthRevenue / 1000000).toFixed(1) + "tr";
+        } else {
+            totalValEl.innerText = totalMonthRevenue.toLocaleString('vi-VN') + "đ";
+        }
+        totalValEl.title = totalMonthRevenue.toLocaleString('vi-VN') + "đ";
+    }
+
+    // Render list
+    var listEl = document.getElementById('studentRevenueList');
+    if (listEl) {
+        var listHtml = "";
+        if (studentStats.length === 0) {
+            listHtml = '<div style="text-align: center; padding: 25px 10px; color: var(--text-muted); font-size: 13px;">Chưa có học sinh nào</div>';
+        } else {
+            studentStats.forEach(function(s) {
+                var amtClass = s.revenue > 0 ? "student-revenue-amount" : "student-revenue-amount zero";
+                listHtml += '<div class="student-revenue-item">' +
+                    '<div class="student-revenue-left">' +
+                        '<span class="student-color-dot" style="background: ' + e(s.color) + '; box-shadow: 0 0 6px ' + e(s.color) + '66;"></span>' +
+                        '<div class="student-revenue-info">' +
+                            '<span class="student-revenue-name">' + e(s.name) + '</span>' +
+                            '<span class="student-revenue-sessions">' + s.sessions + ' buổi học</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<span class="' + amtClass + '">' + s.revenue.toLocaleString('vi-VN') + 'đ</span>' +
+                '</div>';
+            });
+        }
+        listEl.innerHTML = listHtml;
+    }
+
+    // Donut chart slices: only students with revenue > 0
+    var donutLabels = [];
+    var donutData = [];
+    var donutColors = [];
+
+    studentStats.forEach(function(s) {
+        if (s.revenue > 0) {
+            donutLabels.push(s.name);
+            donutData.push(s.revenue);
+            donutColors.push(s.color);
+        }
+    });
+
+    if (donutData.length === 0) {
+        donutLabels = ["Chưa có buổi học"];
+        donutData = [1];
+        var emptyRingColor = (getComputedStyle(document.documentElement).getPropertyValue('--border-color') || '#E2E8F0').trim();
+        donutColors = [emptyRingColor];
+    }
+
+    var ctx = canvasEl.getContext('2d');
+    Chart.getChart(canvasEl)?.destroy();
+
+    var themeComp = getComputedStyle(document.documentElement);
+    var donutCardBg = (themeComp.getPropertyValue('--bg-card') || '#0B0826').trim();
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: donutLabels,
+            datasets: [{
+                data: donutData,
+                backgroundColor: donutColors,
+                borderWidth: 2,
+                borderColor: donutCardBg,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            animation: {
+                duration: 1500,
+                easing: 'easeOutQuart'
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '72%',
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: donutData.length > 0 && donutLabels[0] !== "Chưa có buổi học",
+                    backgroundColor: (getComputedStyle(document.documentElement).getPropertyValue('--bg-card-alt') || '#1E2235').trim(),
+                    titleColor: (getComputedStyle(document.documentElement).getPropertyValue('--text-primary') || '#FFFFFF').trim(),
+                    titleFont: { family: 'Inter', size: 12, weight: 'bold' },
+                    bodyColor: (getComputedStyle(document.documentElement).getPropertyValue('--color-primary') || '#8E4DFF').trim(),
+                    bodyFont: { family: 'Inter', size: 12 },
+                    borderColor: (getComputedStyle(document.documentElement).getPropertyValue('--border-color') || 'rgba(142, 77, 255, 0.4)').trim(),
+                    borderWidth: 1,
+                    padding: 10,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            var val = context.parsed;
+                            var pct = totalMonthRevenue > 0 ? Math.round((val / totalMonthRevenue) * 100) : 0;
+                            return ' ' + Number(val).toLocaleString('vi-VN') + 'đ (' + pct + '%)';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
   function renderOverview() {
     const students = activeStudents();
     const lessons = activeLessons();
@@ -234,23 +502,18 @@
       yearSelect.value = years.includes(Number(prevYear)) ? prevYear : String(viewYear);
     }
     const chosenYear = Number(yearSelect?.value || viewYear);
-    const endMonth = chosenYear === todayDate.getFullYear() ? todayDate.getMonth() + 1 : 12;
+    const endMonth = 12;
     const startMonth = Math.max(1, endMonth - monthsCount + 1);
-    const barLabels = [];
-    const barValues = [];
+    const monthLabels = [];
+    const monthlyRevenue = [];
     for (let m = startMonth; m <= endMonth; m++) {
       const key = ym(chosenYear, m);
-      barLabels.push(`T${m}`);
-      barValues.push(lessons.filter(l => l.date.startsWith(key)).reduce((sum, l) => sum + Number(l.amount || 0), 0));
+      monthLabels.push(`T${m}`);
+      monthlyRevenue.push(lessons.filter(l => l.date.startsWith(key)).reduce((sum, l) => sum + Number(l.amount || 0), 0));
     }
-    text('revenueChartTitle', `Doanh thu ${barLabels.length} tháng (${chosenYear})`);
-    text('revenuePeriodTotal', money(barValues.reduce((a, b) => a + b, 0)));
-    Lab.chart('revenueBarChartCanvas', 'bar', barLabels, [{
-      label: 'Học phí (VNĐ)',
-      data: barValues,
-      backgroundColor: '#3b82f6',
-      borderRadius: 8,
-    }]);
+    text('revenueChartTitle', `Doanh thu ${monthLabels.length} tháng (${chosenYear})`);
+    text('revenuePeriodTotal', money(monthlyRevenue.reduce((a, b) => a + b, 0)));
+    drawRevenueTrend(monthLabels, monthlyRevenue);
 
     const donutFilter = id('studentRevenueMonthFilter');
     const availablePeriods = [...new Set([period, month(), ...lessons.map(l => l.date.slice(0, 7))])].sort((a, b) => b.localeCompare(a));
@@ -264,26 +527,12 @@
     }
     const chosenPeriod = donutFilter?.value || period;
     const periodLessons = lessons.filter(l => l.date.startsWith(chosenPeriod));
-    const totals = students.map(s => ({
-      student: s,
-      total: periodLessons.filter(l => l.student_id === s.id).reduce((acc, l) => acc + Number(l.amount || 0), 0),
-    })).filter(row => row.total > 0);
-    const grand = totals.reduce((sum, r) => sum + r.total, 0);
-    text('studentDonutTotalVal', money(grand));
-    const colors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
-    Lab.chart(
-      'studentRevenueDonutCanvas',
-      'doughnut',
-      totals.length ? totals.map(r => r.student.name) : ['Chưa có dữ liệu'],
-      [{ data: totals.length ? totals.map(r => r.total) : [1], backgroundColor: totals.length ? totals.map((_, i) => colors[i % colors.length]) : ['#e2e8f0'], borderWidth: 0 }],
-      { cutout: '70%' }
-    );
-    html('studentRevenueList', totals.map((r, i) => `
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:10px;background:var(--bg-input,#f8fafc);margin-bottom:6px;font-size:13px;">
-        <span style="display:flex;align-items:center;gap:8px;font-weight:600;"><span style="width:10px;height:10px;border-radius:50%;background:${colors[i % colors.length]};"></span>${e(r.student.name)}</span>
-        <strong style="color:var(--color-primary);">${money(r.total)}</strong>
-      </div>
-    `).join('') || '<p style="color:var(--text-muted);font-size:13px;">Chưa có học phí trong tháng đã chọn.</p>');
+    const palette = ['#8B5CF6','#10B981','#F59E0B','#3B82F6','#EC4899','#06B6D4','#84CC16','#F97316'];
+    drawStudentRevenue(students.map((student,index)=>{
+      const sessions = periodLessons.filter(lesson=>lesson.student_id===student.id);
+      return {name:student.name, sessions:sessions.length, color:palette[index % palette.length],
+              revenue:sessions.reduce((sum,lesson)=>sum+Number(lesson.amount || 0),0)};
+    }));
 
     // Weekly summary table
     const tbody = document.querySelector('#tutorScheduleTable tbody');
@@ -329,89 +578,115 @@
     const students = activeStudents();
     if (!reportStudentId && students.length) reportStudentId = String(students[0].id);
     const chosenStu = students.find(s => String(s.id) === reportStudentId) || students[0];
-    const stuLessons = chosenStu ? activeLessons().filter(l => l.student_id === chosenStu.id).sort((a, b) => b.date.localeCompare(a.date)) : [];
-    const stuAssigns = chosenStu ? activeAssignments().filter(a => a.student_id === chosenStu.id) : [];
-    const stuSubs = chosenStu ? activeSubmissions().filter(s => s.student_id === chosenStu.id) : [];
+    const from = id('reportStartDate').value;
+    const to = id('reportEndDate').value;
+    const inPeriod = day => (!from || day >= from) && (!to || day <= to);
+    const stuLessons = chosenStu ? activeLessons().filter(l => l.student_id === chosenStu.id && inPeriod(l.date)).sort((a, b) => b.date.localeCompare(a.date)) : [];
+    const container=id('reportPreviewContainer');
+    const exportBtn=id('btnExportReportPng'), exportPdfBtn=id('btnExportReportPdf');
+    Lab.html('reportStudentSelect', students.map(st=>`<option value="${st.id}">${e(st.name)}</option>`).join(''));
+    id('reportStudentSelect').value=chosenStu?.id || '';
+    syncCustomDropdownFromSelect('reportStudentSelect');
+    const flatSessions=stuLessons.map(l=>({
+      studentName:chosenStu.name, studentSubject:l.subject,
+      log:{ngay:date(l.date),mon:l.subject,topic:l.content,nhanXet:l.evaluation,
+           btvn:l.homework_status,chuyenCan:l.status}
+    }));
+        if (flatSessions.length === 0) {
+            container.innerHTML = '<div style="background: var(--bg-card-alt); border: 1px dashed var(--border-color); border-radius: 20px; padding: 40px; text-align: center; max-width: 600px; width: 100%;">' +
+                '<i class="fa-solid fa-file-circle-xmark" style="font-size: 38px; color: var(--color-primary); margin-bottom: 12px; display: block;"></i>' +
+                '<h4 style="color: var(--text-primary); font-size: 16px; margin: 0 0 6px 0;">Không tìm thấy buổi học nào</h4>' +
+                '<p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Vui lòng điều chỉnh lại khoảng thời gian "Từ ngày" - "Đến ngày" hoặc chọn học sinh khác.</p>' +
+            '</div>';
+            if (exportBtn) exportBtn.style.display = 'none';
+            if (exportPdfBtn) exportPdfBtn.style.display = 'none';
+            return;
+        }
 
-    const totalFee = stuLessons.reduce((n, l) => n + Number(l.amount || 0), 0);
-    const attended = stuLessons.filter(l => !/nghỉ|vắng/i.test(l.status)).length;
-    const avgDG = stuLessons.filter(l => l.start_score != null);
-    const avgVal = avgDG.length ? (avgDG.reduce((a, b) => a + Number(b.start_score), 0) / avgDG.length).toFixed(1) : '—';
+        if (exportBtn) exportBtn.style.display = 'inline-flex';
+        if (exportPdfBtn) exportPdfBtn.style.display = 'inline-flex';
 
-    box.innerHTML = `
-      <div class="report-filter-toolbar">
-        <div class="report-toolbar-header">
-          <h3><i class="fa-solid fa-file-image" style="color:var(--color-primary);"></i> <span>Xuất báo cáo học tập &amp; Lịch sử buổi học</span></h3>
-          <p>Chọn học sinh để xem trước báo cáo tổng hợp và xuất ảnh PNG gửi phụ huynh</p>
-        </div>
-        <div class="report-filter-controls">
-          <div class="report-control-group">
-            <label class="report-control-label" for="reportStudentSelect"><i class="fa-solid fa-user-graduate"></i> Học sinh:</label>
-            <select id="reportStudentSelect" class="report-input-box" style="min-width:200px;">
-              ${students.map(s => `<option value="${s.id}" ${String(s.id) === reportStudentId ? 'selected' : ''}>${e(s.name)}</option>`).join('')}
-            </select>
-          </div>
-          <div class="report-actions" style="display:flex;gap:10px;flex-wrap:wrap;">
-            ${chosenStu ? `<button type="button" id="btnExportReportPng" class="btn-report-export"><i class="fa-solid fa-camera"></i> <span>Xuất ảnh PNG</span></button>
-            <a class="btn-tuition-invoice" href="/preview-invoice.html?id=${Number(chosenStu.id)}" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;"><i class="fa-solid fa-file-invoice-dollar"></i> Phiếu học phí</a>` : ''}
-          </div>
-        </div>
-      </div>
+        // Calculate metrics
+        var totalSessions = flatSessions.length;
+        var presentCount = 0;
+        var hwDoneCount = 0;
 
-      <div class="report-preview-wrapper" id="reportPreviewContainer">
-        ${chosenStu ? `
-          <div id="reportPrintableCard" style="background:var(--bg-card,#fff);border:1px solid var(--border-card);border-radius:18px;padding:22px;max-width:860px;margin:0 auto;">
-            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-card);padding-bottom:14px;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
-              <div>
-                <h3 style="margin:0;color:var(--text-primary);">${e(chosenStu.name)}</h3>
-                <div style="font-size:13px;color:var(--text-secondary);">Phụ huynh: ${e(chosenStu.parent_name || '—')} · Mã ĐN: ${e(chosenStu.login)}</div>
-              </div>
-              <span class="tuition-status-badge status-paid">Tổng hợp học tập</span>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px;">
-              <div class="card-metric-box"><div class="card-metric-val text-green">${attended}/${stuLessons.length}</div><div class="card-metric-lbl">Buổi có mặt</div></div>
-              <div class="card-metric-box"><div class="card-metric-val" style="color:var(--color-primary);">${avgVal}</div><div class="card-metric-lbl">TB điểm đầu giờ</div></div>
-              <div class="card-metric-box"><div class="card-metric-val">${stuSubs.length}/${stuAssigns.length}</div><div class="card-metric-lbl">Bài tập đã nộp</div></div>
-              <div class="card-metric-box"><div class="card-metric-val text-amber">${money(totalFee)}</div><div class="card-metric-lbl">Tổng học phí</div></div>
-            </div>
-            <div class="table-wrapper">
-              <table style="width:100%;border-collapse:collapse;font-size:13px;">
-                <thead><tr>
-                  <th style="text-align:left;padding:10px;background:var(--nav-active-bg);">Ngày</th>
-                  <th style="text-align:left;padding:10px;background:var(--nav-active-bg);">Nội dung</th>
-                  <th style="text-align:left;padding:10px;background:var(--nav-active-bg);">Nhận xét</th>
-                  <th style="text-align:center;padding:10px;background:var(--nav-active-bg);">Điểm</th>
-                  <th style="text-align:center;padding:10px;background:var(--nav-active-bg);">Trạng thái</th>
-                </tr></thead>
-                <tbody>
-                  ${stuLessons.map(l => `<tr>
-                    <td style="padding:10px;border-bottom:1px solid var(--border-card);white-space:nowrap;">${e(date(l.date))}</td>
-                    <td style="padding:10px;border-bottom:1px solid var(--border-card);">${e(l.content || '—')}</td>
-                    <td style="padding:10px;border-bottom:1px solid var(--border-card);">${e(l.evaluation || '—')}</td>
-                    <td style="padding:10px;border-bottom:1px solid var(--border-card);text-align:center;font-weight:700;">${e(l.start_score ?? '—')}</td>
-                    <td style="padding:10px;border-bottom:1px solid var(--border-card);text-align:center;">${e(l.status)}</td>
-                  </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;padding:16px;">Chưa có buổi học nào.</td></tr>'}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ` : '<div style="text-align:center;color:var(--text-muted);padding:30px;">Chưa có học sinh để lập báo cáo.</div>'}
-      </div>
-    `;
+        flatSessions.forEach(function(it) {
+            var l = it.log;
+            var cc = (l.chuyenCan || "").toLowerCase();
+            if (cc.indexOf("vắng") === -1 && cc.indexOf("nghỉ") === -1) presentCount++;
+            var bt = (l.btvn || "").toLowerCase();
+            if (bt.indexOf("hoàn thành") !== -1 || bt.indexOf("đạt") !== -1 || bt.indexOf("tốt") !== -1) hwDoneCount++;
+        });
 
-    id('reportStudentSelect')?.addEventListener('change', ev => {
-      reportStudentId = ev.target.value;
-      renderReportsSection();
-    });
-    id('btnExportReportPng')?.addEventListener('click', async () => {
-      const card = id('reportPrintableCard');
-      if (!card || !window.html2canvas) return;
-      const canvas = await window.html2canvas(card, { scale: 2, logging: false });
-      const link = document.createElement('a');
-      link.download = `Bao-cao-${chosenStu.login}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    });
+        var attRate = Math.round((presentCount / totalSessions) * 100) + "%";
+        var hwRate = Math.round((hwDoneCount / totalSessions) * 100) + "%";
+
+    const tutorName=data.user.name, targetStudentDisplay=chosenStu.name;
+    const startDisplay=from ? date(from) : 'Đầu kỳ', endDisplay=to ? date(to) : 'Hiện tại';
+        var html = '<div id="reportCaptureCard" class="report-capture-card">' +
+            '<!-- Header / Branding -->' +
+            '<div class="report-card-banner">' +
+                '<div>' +
+                    '<div class="report-brand-title"><i class="fa-solid fa-graduation-cap" style="margin-right: 8px; color: var(--color-primary);"></i> BÁO CÁO TIẾN ĐỘ HỌC TẬP</div>' +
+                    '<div class="report-brand-sub">Gia sư phụ trách: <b>' + e(tutorName) + '</b> • Hệ thống quản lý học sinh 1-1</div>' +
+                '</div>' +
+                '<div class="report-meta-pills">' +
+                    '<span class="report-meta-pill"><i class="fa-solid fa-user-graduate"></i> ' + e(targetStudentDisplay) + '</span>' +
+                    '<span class="report-meta-pill"><i class="fa-regular fa-calendar-days"></i> ' + e(startDisplay) + ' → ' + e(endDisplay) + '</span>' +
+                    '<span class="report-meta-pill" style="background: rgba(16,185,129,0.15); border-color: #10B981; color: #6EE7B7;"><i class="fa-solid fa-check"></i> ' + totalSessions + ' buổi học</span>' +
+                '</div>' +
+            '</div>' +
+
+            '<!-- Stats Summary Grid -->' +
+            '<div class="report-stats-grid">' +
+                '<div class="report-stat-box">' +
+                    '<div class="report-stat-num text-purple">' + totalSessions + '</div>' +
+                    '<div class="report-stat-lbl">Tổng số buổi ghi nhận</div>' +
+                '</div>' +
+                '<div class="report-stat-box">' +
+                    '<div class="report-stat-num text-green">' + attRate + '</div>' +
+                    '<div class="report-stat-lbl">Tỷ lệ chuyên cần (' + presentCount + '/' + totalSessions + ')</div>' +
+                '</div>' +
+                '<div class="report-stat-box">' +
+                    '<div class="report-stat-num text-amber">' + hwRate + '</div>' +
+                    '<div class="report-stat-lbl">Hoàn thành bài tập về nhà</div>' +
+                '</div>' +
+            '</div>' +
+
+            '<!-- Detailed Session Cards -->' +
+            '<div class="report-sessions-list">';
+
+        flatSessions.forEach(function(it) {
+            var log = it.log;
+            var stStyle = studentStyle(it.studentName);
+            var dateWithDay = log.ngay;
+            var btvnBadge = '<span class="status-badge">' + e(log.btvn || '—') + '</span>';
+            var comment = (log.nhanXet || "").trim() || "Chưa có nhận xét";
+
+            html += '<div class="report-session-item">' +
+                '<div class="report-session-top">' +
+                    '<div style="display: flex; align-items: center; gap: 8px;">' +
+                        '<span class="report-session-date"><i class="fa-regular fa-calendar-check" style="color: var(--color-primary);"></i> ' + e(dateWithDay) + '</span>' +
+                        '<span style="background:' + e(stStyle.bg) + '; border:1px solid ' + e(stStyle.border) + '; color:' + e(stStyle.text) + '; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700;">' + e(it.studentName) + '</span>' +
+                        '<span style="font-size: 11.5px; color: var(--text-secondary);">' + e(log.mon || it.studentSubject) + '</span>' +
+                    '</div>' +
+                    '<div>' + btvnBadge + '</div>' +
+                '</div>' +
+                '<div class="report-session-topic"><b>Nội dung:</b> ' + e(log.topic || log.noiDung || "Học theo giáo trình") + '</div>' +
+                '<div class="report-session-comment"><b>Nhận xét gia sư:</b> ' + e(comment) + '</div>' +
+            '</div>';
+        });
+
+        html += '</div>' +
+            '<!-- Footer -->' +
+            '<div class="report-card-footer">' +
+                '<div><i class="fa-solid fa-heart" style="color: var(--color-primary);"></i> Chúc các em luôn học tập tốt và bứt phá điểm số!</div>' +
+                '<div>Thời gian xuất: ' + new Date().toLocaleString('vi-VN') + '</div>' +
+            '</div>' +
+        '</div>';
+
+        container.innerHTML = html;
   }
 
   function renderDiarySection() {
@@ -434,132 +709,43 @@
     const subs = activeSubmissions().filter(s => !diaryStudentId || String(s.student_id) === diaryStudentId).slice().sort((a, b) => b.id - a.id);
     const assignMap = new Map(activeAssignments().map(a => [a.id, a]));
 
-    box.innerHTML = `
-      <div class="diary-toolbar">
-        <div class="diary-toolbar-title">
-          <h3 style="color:var(--text-primary);font-size:18px;margin:0;display:flex;align-items:center;gap:8px;">
-            <i class="fa-solid fa-book-open" style="color:var(--color-primary);"></i>
-            <span>Nhật ký buổi học, Bài tập &amp; Nhận xét</span>
-          </h3>
-          <p style="color:var(--text-secondary);font-size:13px;margin:4px 0 0 0;">Theo dõi tiến độ bài học, giao bài tập, chấm bài và gửi thông báo cho phụ huynh</p>
-        </div>
-        <div class="diary-filters">
-          <div class="diary-filter-item">
-            <label for="diaryStudentFilter"><i class="fa-solid fa-user-graduate"></i> Học sinh:</label>
-            <select id="diaryStudentFilter">
-              <option value="">Tất cả học sinh</option>
-              ${students.map(s => `<option value="${s.id}" ${String(s.id) === diaryStudentId ? 'selected' : ''}>${e(s.name)}</option>`).join('')}
-            </select>
-          </div>
-          <div class="diary-filter-item">
-            <label for="diaryMonthFilter"><i class="fa-solid fa-calendar-days"></i> Tháng:</label>
-            <select id="diaryMonthFilter">
-              <option value="">Tất cả các tháng</option>
-              ${months.map(m => `<option value="${e(m)}" ${m === diaryMonth ? 'selected' : ''}>Tháng ${Number(m.slice(5))}/${m.slice(0, 4)}</option>`).join('')}
-            </select>
-          </div>
-          <div class="diary-count-pill">${filteredLessons.length} buổi học</div>
-        </div>
-      </div>
-
-      ${selectedStu ? `
-      <div id="tutorQuickAnnouncementWidget" style="background:var(--nav-active-bg);border:1px dashed var(--border-color);border-radius:12px;padding:15px;margin:18px 0;display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="color:var(--text-secondary);font-size:13.5px;font-weight:700;"><i class="fa-solid fa-bullhorn" style="color:var(--color-primary);"></i> Thông báo nhanh cho phụ huynh (${e(selectedStu.name)})</span>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <input type="text" id="quickAnnouncementInput" value="${e(selectedStu.announcement || '')}" placeholder="Ví dụ: Mang theo sách bài tập nâng cao..." style="flex:1;min-width:240px;padding:10px 14px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-input);color:var(--text-primary);font-size:13.5px;">
-          <button type="button" class="modal-btn modal-btn-primary" style="width:auto;padding:10px 18px;" data-command="saveQuickAnn" data-key="${selectedStu.id}"><i class="fa-solid fa-paper-plane"></i> Lưu thông báo</button>
-        </div>
-      </div>` : ''}
-
-      <div id="tutorFeedbackContainer" style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:14px;padding:16px 20px;margin-bottom:20px;">
-        <h4 style="margin:0 0 12px;font-size:14.5px;color:var(--text-primary);display:flex;align-items:center;gap:8px;"><i class="fa-regular fa-comment-dots" style="color:var(--color-primary);"></i> Ý kiến phản hồi của Phụ huynh (${feedbacks.length})</h4>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          ${feedbacks.map(f => {
-            const stu = sMap.get(f.student_id);
-            return `<div style="background:var(--bg-input);border:1px solid var(--border-card);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
-              <span><strong>${e(stu ? stu.name : 'Học sinh')}:</strong> ${e(f.content)}</span>
-              <span style="font-size:12px;color:var(--text-secondary);">${e(date(f.created_at))}</span>
-            </div>`;
-          }).join('') || '<div style="color:var(--text-muted);font-size:13px;">Chưa có phản hồi từ phụ huynh.</div>'}
-        </div>
-      </div>
-
-      <div id="tutorHomeworkSection" style="margin-bottom:24px;">
-        <div class="hw-tutor-container" style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:16px;padding:20px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid var(--border-card);padding-bottom:12px;margin-bottom:16px;">
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <button type="button" class="tutor-hw-tab ${hwSubTab === 'assign' ? 'active' : ''}" data-command="switchHwTab" data-key="assign"><i class="fa-solid fa-pen-ruler"></i> Bài tập đã giao (${assigns.length})</button>
-              <button type="button" class="tutor-hw-tab ${hwSubTab === 'submit' ? 'active' : ''}" data-command="switchHwTab" data-key="submit"><i class="fa-solid fa-graduation-cap"></i> Học sinh nộp bài (${subs.length})</button>
-            </div>
-            <button type="button" class="modal-btn modal-btn-primary" style="width:auto;padding:8px 16px;" data-command="addAssign"><i class="fa-solid fa-plus"></i> Giao bài tập mới</button>
-          </div>
-
-          ${hwSubTab === 'assign' ? `
-            <div class="table-wrapper">
-              <table style="width:100%;border-collapse:collapse;">
-                <thead><tr>
-                  <th style="text-align:left;padding:10px 12px;background:var(--nav-active-bg);">Học sinh</th>
-                  <th style="text-align:left;padding:10px 12px;background:var(--nav-active-bg);">Tiêu đề</th>
-                  <th style="text-align:center;padding:10px 12px;background:var(--nav-active-bg);">Hạn nộp</th>
-                  <th style="text-align:left;padding:10px 12px;background:var(--nav-active-bg);">Tệp đề bài</th>
-                  <th style="text-align:center;padding:10px 12px;background:var(--nav-active-bg);">Thao tác</th>
-                </tr></thead>
-                <tbody>
-                  ${assigns.map(a => {
-                    const stu = sMap.get(a.student_id);
-                    return `<tr>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);font-weight:600;">${e(stu ? stu.name : '')}</td>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);"><strong>${e(a.title)}</strong>${a.description ? `<div style="font-size:12px;color:var(--text-secondary);">${e(a.description)}</div>` : ''}</td>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);text-align:center;">${e(date(a.due_date))}</td>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);">${files(a.files) || '—'}</td>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);text-align:center;">
-                        <button type="button" class="btn-card-detail" style="padding:5px 10px;" data-command="editAssign" data-key="${a.id}">Sửa</button>
-                        <button type="button" class="btn-card-detail" style="padding:5px 10px;color:#EF4444;" data-command="deleteAssign" data-key="${a.id}">Xóa</button>
-                      </td>
-                    </tr>`;
-                  }).join('') || '<tr><td colspan="5" style="text-align:center;padding:18px;color:var(--text-muted);">Chưa có bài tập nào.</td></tr>'}
-                </tbody>
-              </table>
-            </div>
-          ` : `
-            <div class="table-wrapper">
-              <table style="width:100%;border-collapse:collapse;">
-                <thead><tr>
-                  <th style="text-align:left;padding:10px 12px;background:var(--nav-active-bg);">Ngày nộp</th>
-                  <th style="text-align:left;padding:10px 12px;background:var(--nav-active-bg);">Học sinh &amp; Bài tập</th>
-                  <th style="text-align:left;padding:10px 12px;background:var(--nav-active-bg);">Bài làm &amp; Tệp</th>
-                  <th style="text-align:center;padding:10px 12px;background:var(--nav-active-bg);">Điểm &amp; Nhận xét</th>
-                  <th style="text-align:center;padding:10px 12px;background:var(--nav-active-bg);">Thao tác</th>
-                </tr></thead>
-                <tbody>
-                  ${subs.map(sub => {
-                    const stu = sMap.get(sub.student_id);
-                    const asn = assignMap.get(sub.assignment_id);
-                    return `<tr>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);white-space:nowrap;">${e(date(sub.submitted_at))}</td>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);"><strong>${e(stu ? stu.name : '')}</strong><div style="font-size:12px;color:var(--text-secondary);">${e(asn ? asn.title : 'Bài tập')}</div></td>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);"><div>${e(sub.content || '')}</div>${files(sub.files)}</td>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);text-align:center;">${sub.score != null ? `<span class="tuition-status-badge status-paid">${sub.score}/10</span><div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">${e(sub.comment || '')}</div>` : '<span class="tuition-status-badge status-unpaid">Chờ chấm</span>'}</td>
-                      <td style="padding:10px 12px;border-bottom:1px solid var(--border-card);text-align:center;">
-                        <button type="button" class="btn-tuition-invoice" data-command="gradeSub" data-key="${sub.id}">${sub.score != null ? 'Sửa điểm' : 'Chấm bài'}</button>
-                      </td>
-                    </tr>`;
-                  }).join('') || '<tr><td colspan="5" style="text-align:center;padding:18px;color:var(--text-muted);">Chưa có bài nộp nào.</td></tr>'}
-                </tbody>
-              </table>
-            </div>
-          `}
-        </div>
-      </div>
-
-      <div class="schedule-section">
-        <h3 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
-          <span style="display:flex;align-items:center;gap:10px;"><i class="fa-solid fa-clock-rotate-left" style="color:var(--color-primary);"></i> Lịch sử buổi học &amp; Điểm danh</span>
-          <button type="button" class="btn-refresh-history" data-command="addLesson" style="background:var(--btn-bg);border:none;color:var(--btn-text);font-weight:bold;border-radius:20px;padding:8px 18px;display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow-primary);cursor:pointer;"><i class="fa-solid fa-calendar-plus"></i> Thêm buổi học</button>
-        </h3>
-        <div class="table-wrapper">
+    const options = students.map(st => `<option value="${st.id}">${e(st.name)}</option>`).join('');
+    const selectedForAssignment = id('assignStudent').value;
+    html('assignStudent', options);
+    id('assignStudent').value = diaryStudentId || selectedForAssignment || students[0]?.id || '';
+    html('diaryStudentFilter', '<option value="">Tất cả học sinh</option>' + options);
+    id('diaryStudentFilter').value = diaryStudentId;
+    text('diaryStudentSelectedText', diaryStudentId ? selectedStu?.name : 'Tất cả học sinh');
+    const monthName = m => `Tháng ${Number(m.slice(5))}/${m.slice(0,4)}`;
+    html('diaryMonthFilter', '<option value="">Tất cả các tháng</option>' + months.map(m => `<option value="${e(m)}">${monthName(m)}</option>`).join(''));
+    id('diaryMonthFilter').value = diaryMonth;
+    text('diaryMonthSelectedText', diaryMonth ? monthName(diaryMonth) : 'Tất cả các tháng');
+    text('diaryTotalSessionsBadge', filteredLessons.length + ' buổi học');
+    id('tutorQuickAnnouncementWidget').hidden = !selectedStu;
+    id('quickAnnouncementInput').value = selectedStu?.announcement || '';
+    text('announcementStudentBadge', selectedStu?.name ? '· ' + selectedStu.name : '');
+    const visibleFeedback = feedbackFilter === 'all' ? live(data.feedback).slice().reverse() : feedbacks.filter(f => f.student_id === selectedStu?.id);
+    html('tutorFeedbackList', visibleFeedback.map(f => Lab.item(sMap.get(f.student_id)?.name || 'Học sinh', `<p>${e(f.content)}</p><small>${e(date(f.created_at))}</small>`)).join('') || Lab.empty('Chưa có phản hồi từ phụ huynh.'));
+    ['All','Current'].forEach((key,index) => id('btnFbFilter'+key).setAttribute('aria-pressed', String((feedbackFilter === 'all') === (index === 0))));
+    const row = columns => `<tr>${columns.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+    const foot = label => `<tr><td colspan="5" style="text-align:center;padding:16px">${label}</td></tr>`;
+    const action = (cmd, label, key, css='btn-edit') => `<button type="button" class="action-btn-hw ${css}" data-command="${cmd}" data-key="${key}">${label}</button>`;
+    const assignActions = a => action('editAssign','Sửa',a.id)+action('deleteAssign','Xóa',a.id,'btn-delete');
+    html('assignedHwTableBody', assigns.map(a => row([date(a.release_date),date(a.due_date),`<strong>${e(a.title)}</strong><div>${e(sMap.get(a.student_id)?.name)}</div><small>${e(a.description)}</small>`,files(a.files)||'—',assignActions(a)])).join('') || foot('Chưa có bài tập.'));
+    html('assignedHwMobile', assigns.map(a => Lab.item(a.title, `<p>${e(sMap.get(a.student_id)?.name)} · Hạn ${date(a.due_date)}</p><p>${e(a.description)}</p>${files(a.files)}`,assignActions(a))).join('') || Lab.empty());
+    const shown = subs.slice(0,submissionLimit);
+    const grade = x => action('gradeSub',x.score == null ? 'Chấm bài' : x.score+'/10 · Sửa',x.id);
+    const content = x => `<div>${e(x.content)}</div>${files(x.files)}`;
+    html('studentSubmissionsTableBody',shown.map(x=>row([date(x.submitted_at),`<strong>${e(assignMap.get(x.assignment_id)?.title)}</strong><p>${e(sMap.get(x.student_id)?.name)}</p>`,e(x.content),grade(x)+`<small>${e(x.comment)}</small>`,files(x.files)||'—'])).join('')||foot('Chưa có bài nộp.'));
+    html('submittedHwMobile', shown.map(x=>Lab.item(assignMap.get(x.assignment_id)?.title,`<p>${e(sMap.get(x.student_id)?.name)} · ${date(x.submitted_at)}</p>${content(x)}<p>${e(x.comment)}</p>`,grade(x))).join('')||Lab.empty());
+    id('submissionViewMoreBtnContainer').style.display = shown.length < subs.length ? 'block' : 'none';
+    id('tabContentSubmit').style.display = hwSubTab === 'submit' ? 'block' : 'none';
+    id('tabContentAssign').style.display = hwSubTab === 'assign' ? 'block' : 'none';
+    id('tabAssignBtn').classList.toggle('active',hwSubTab === 'assign');
+    id('tabSubmitBtn').classList.toggle('active',hwSubTab === 'submit');
+    id('assignHwFormContainer').style.display = showAssignForm ? 'block' : 'none';
+    id('assignedHwListContainer').style.display = showAssignForm ? 'none' : 'block';
+    html('tutorStudentHistory', `        <div class="table-wrapper">
           <table style="width:100%;border-collapse:collapse;">
             <thead><tr>
               <th style="text-align:left;padding:10px 12px;background:var(--nav-active-bg);">Ngày</th>
@@ -587,11 +773,7 @@
             </tbody>
           </table>
         </div>
-      </div>
-    `;
-
-    id('diaryStudentFilter')?.addEventListener('change', ev => { diaryStudentId = ev.target.value; renderDiarySection(); });
-    id('diaryMonthFilter')?.addEventListener('change', ev => { diaryMonth = ev.target.value; renderDiarySection(); });
+`);
   }
 
   function renderStudentsSection() {
@@ -613,45 +795,175 @@
       const schedSummary = schedules.filter(sc => sc.student_id === s.id)
         .map(sc => `${sc.weekday ? WEEKDAYS[sc.weekday] : date(sc.date)}: ${sc.start_time}–${sc.end_time}`).join(' · ') || 'Chưa xếp lịch cố định';
 
-      return `<div class="student-profile-card">
-        <div class="student-card-header">
-          <div class="student-initial-avatar" style="background:${st.bg};border:2px solid ${st.border};color:${st.text};">${e(initialOf(s.name))}</div>
-          <div class="student-card-info">
-            <div class="student-card-name" title="${e(s.name)}">${e(s.name)}</div>
-            <div class="student-card-sub"><i class="fa-solid fa-graduation-cap" style="color:var(--color-primary);"></i> ${e(cls ? cls.name : 'Kèm 1-1')} · ĐN: ${e(s.login)} · BT: ${e(s.homework_code)}</div>
-          </div>
-        </div>
-        <div class="student-card-schedule" title="${e(schedSummary)}">
-          <i class="fa-regular fa-clock"></i>
-          <span>${e(schedSummary)}</span>
-        </div>
-        <div class="student-card-metrics">
-          <div class="card-metric-box">
-            <div class="card-metric-val text-green">${monthSessions}</div>
-            <div class="card-metric-lbl">Buổi tháng ${viewMonth}</div>
-          </div>
-          <div class="card-metric-box">
-            <div class="card-metric-val" style="color:var(--text-primary);">${hwRate}</div>
-            <div class="card-metric-lbl">Nộp BTVN</div>
-          </div>
-          <div class="card-metric-box">
-            <div class="card-metric-val text-amber">${money(s.tuition)}</div>
-            <div class="card-metric-lbl">Học phí/buổi</div>
-          </div>
-        </div>
-        <div class="student-card-actions">
-          <button type="button" class="btn-card-detail" data-command="editStudent" data-key="${s.id}"><i class="fa-solid fa-user-pen"></i> Chỉnh sửa</button>
-          <button type="button" class="btn-card-diary" data-command="goDiary" data-key="${s.id}"><i class="fa-solid fa-book-open"></i> Nhật ký</button>
-          <button type="button" class="btn-card-detail" style="color:#EF4444;" data-command="deleteStudent" data-key="${s.id}" title="Xóa học sinh"><i class="fa-solid fa-trash-can"></i></button>
-        </div>
-      </div>`;
+      return '<div class="student-profile-card" data-command="editStudent" data-key="'+s.id+'">' +
+            '<div class="student-card-header">' +
+                '<div class="student-initial-avatar" style="background: ' + e(st.bg) + '; border: 2px solid ' + e(st.border) + '; color: ' + e(st.text) + ';">' + e(initialOf(s.name)) + '</div>' +
+                '<div class="student-card-info">' +
+                    '<div class="student-card-name" title="' + e(s.name) + '">' + e(s.name) + '</div>' +
+                    '<div class="student-card-sub"><i class="fa-solid fa-graduation-cap" style="color: var(--color-primary);"></i> ' + e(allStuLessons[0]?.subject || "Gia sư") + (cls ? ' • '+e(cls.name) : '') + '</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="student-card-schedule" title="' + e(schedSummary) + '">' +
+                '<i class="fa-regular fa-clock"></i>' +
+                '<span>' + e(schedSummary) + '</span>' +
+            '</div>' +
+            '<div class="student-card-metrics">' +
+                '<div class="card-metric-box">' +
+                    '<div class="card-metric-val text-green">' + monthSessions + '</div>' +
+                    '<div class="card-metric-lbl">' + (viewMonth === todayDate.getMonth()+1 && viewYear === todayDate.getFullYear() ? "Buổi tháng này" : "Buổi tháng "+viewMonth) + '</div>' +
+                '</div>' +
+                '<div class="card-metric-box">' +
+                    '<div class="card-metric-val" style="color: var(--text-primary);">' + e(hwRate) + '</div>' +
+                    '<div class="card-metric-lbl">Nộp BTVN</div>' +
+                '</div>' +
+                '<div class="card-metric-box">' +
+                    '<div class="card-metric-val text-amber">' + money(s.tuition) + '</div>' +
+                    '<div class="card-metric-lbl">Học phí/buổi</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="student-card-actions">' +
+                '<button type="button" class="btn-card-detail" data-command="editStudent" data-key="'+s.id+'" title="Chỉnh sửa hoặc xóa học sinh"><i class="fa-solid fa-user-pen"></i> Chỉnh sửa</button>' +
+                '<button type="button" class="btn-card-diary" data-command="goDiary" data-key="'+s.id+'" title="Xem nhật ký học sinh này"><i class="fa-solid fa-book-open"></i> Nhật ký</button>' +
+                '<button type="button" class="btn-card-detail" data-command="deleteStudent" data-key="'+s.id+'" aria-label="Xóa học sinh"><i class="fa-solid fa-trash-can"></i></button>' +
+            '</div></div>';
     }).join('') || `<div style="grid-column:1/-1;" class="empty-state"><div class="empty-state-title">Chưa có học sinh nào</div><button type="button" class="empty-state-btn" data-command="openAddStudentModal"><i class="fa-solid fa-plus"></i> Thêm học sinh</button></div>`;
   }
 
+function toggleCustomDropdown(selectId, e) {
+    if (e) {
+        e.stopPropagation();
+    }
+    var select = document.getElementById(selectId);
+    if (!select) return;
+    var wrap = select.closest('.custom-dropdown-wrap');
+    if (!wrap) return;
+    var menu = wrap.querySelector('.custom-dropdown-menu');
+    if (!menu) return;
+
+    var isOpen = wrap.classList.contains('open');
+    closeAllCustomDropdowns();
+    if (!isOpen) {
+        syncCustomDropdownFromSelect(selectId);
+        wrap.classList.add('open');
+        menu.classList.add('open');
+        var parentToolbar = wrap.closest('.diary-toolbar, .tuition-toolbar, .report-filter-toolbar');
+        if (parentToolbar) {
+            parentToolbar.classList.add('has-open-dropdown');
+        }
+    }
+}
+window.toggleCustomDropdown = toggleCustomDropdown;
+
+function closeAllCustomDropdowns() {
+    document.querySelectorAll('.custom-dropdown-wrap.open').forEach(function(w) {
+        w.classList.remove('open');
+    });
+    document.querySelectorAll('.custom-dropdown-menu.open').forEach(function(m) {
+        m.classList.remove('open');
+    });
+    document.querySelectorAll('.has-open-dropdown').forEach(function(t) {
+        t.classList.remove('has-open-dropdown');
+    });
+}
+window.closeAllCustomDropdowns = closeAllCustomDropdowns;
+
+function syncCustomDropdownFromSelect(selectId) {
+    var select = document.getElementById(selectId);
+    if (!select) return;
+    var wrap = select.closest('.custom-dropdown-wrap');
+    if (!wrap) return;
+    var selectedTextEl = wrap.querySelector('.custom-dropdown-selected');
+    var menu = wrap.querySelector('.custom-dropdown-menu');
+    if (!selectedTextEl || !menu) return;
+
+    var curVal = select.value;
+    var curText = "";
+    menu.innerHTML = "";
+
+    if (select.options.length === 0) {
+        selectedTextEl.innerText = (selectId === 'reportStudentSelect' || selectId === 'diaryStudentFilter') ? "Chưa có học sinh" : "Tất cả các tháng";
+        return;
+    }
+
+    Array.from(select.options).forEach(function(opt) {
+        var isSelected = (opt.value === curVal);
+        if (isSelected || (!curText && select.selectedIndex === 0)) {
+            curText = opt.innerText;
+        }
+
+        var item = document.createElement('div');
+        item.className = 'custom-dropdown-item' + (isSelected ? ' active' : '');
+        item.dataset.value = opt.value;
+
+        var iconHtml = '';
+        if (selectId === 'diaryStudentFilter' || selectId === 'reportStudentSelect') {
+            iconHtml = '<i class="fa-solid fa-graduation-cap" style="margin-right: 8px; opacity: 0.7; font-size: 12px;"></i>';
+        } else if (opt.value === 'all') {
+            iconHtml = '<i class="fa-solid fa-layer-group" style="margin-right: 8px; opacity: 0.7; font-size: 12px;"></i>';
+        } else {
+            iconHtml = '<i class="fa-regular fa-calendar-check" style="margin-right: 8px; opacity: 0.7; font-size: 12px;"></i>';
+        }
+
+        item.innerHTML = '<span style="display: inline-flex; align-items: center;">' + iconHtml + e(opt.innerText) + '</span>' +
+                         '<i class="fa-solid fa-check item-check"></i>';
+
+        item.onclick = function(ev) {
+            ev.stopPropagation();
+            select.value = opt.value;
+            select.dispatchEvent(new Event('change'));
+            syncCustomDropdownFromSelect(selectId);
+            closeAllCustomDropdowns();
+        };
+
+        menu.appendChild(item);
+    });
+
+    if (select.selectedIndex >= 0 && select.options[select.selectedIndex]) {
+        curText = select.options[select.selectedIndex].innerText;
+    }
+    selectedTextEl.innerText = curText || "Chọn...";
+}
+window.syncCustomDropdownFromSelect = syncCustomDropdownFromSelect;
+
+if (typeof window._customDropdownClickBound === 'undefined') {
+    window._customDropdownClickBound = true;
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.custom-dropdown-wrap')) {
+            closeAllCustomDropdowns();
+        }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeAllCustomDropdowns();
+        }
+    });
+}
+
+
+  for(const wrap of all('.custom-dropdown-wrap')){
+    const select=wrap.querySelector('select');
+    if(!select)continue;
+    wrap.addEventListener('click',evt=>toggleCustomDropdown(select.id,evt));
+    wrap.addEventListener('keydown',evt=>{
+      if(evt.target===wrap && ['Enter',' '].includes(evt.key)){
+        evt.preventDefault();toggleCustomDropdown(select.id,evt);
+        const items=wrap.querySelectorAll('.custom-dropdown-item');
+        items.forEach(item=>{item.tabIndex=0;item.onkeydown=e=>{if(e.key==='Enter')item.click();};});
+        items[0]?.focus();
+      }
+    });
+  }
+
   function renderTuitionSection() {
-    const input = id('tuitionMonth');
-    if (input && !input.value) input.value = month();
-    const chosenMonth = input?.value || month();
+    const input = id('tuitionMonthFilter');
+    const chosenMonth = input.value === 'all' ? '' : (input.value || month());
+    const periods = [...new Set([month(),...activeLessons().map(l=>l.date.slice(0,7))])].sort().reverse();
+    input.innerHTML='<option value="all">Tất cả các tháng</option>'+periods.map(p=>{
+      const [year,m]=p.split('-');
+      return '<option value="'+e(p)+'">Tháng '+Number(m)+'/'+year+'</option>';
+    }).join('');
+    input.value=chosenMonth || 'all';
+    syncCustomDropdownFromSelect('tuitionMonthFilter');
     const students = activeStudents();
     const classes = classMap();
     const lessons = activeLessons().filter(l => l.date.startsWith(chosenMonth));
@@ -769,42 +1081,36 @@
   }
 
   function openThemeDialog() {
-    document.querySelectorAll('.lab-tutor-modal').forEach(el => el.remove());
-    const cur = data.user.theme || 'theme-soft-blue-white-full';
-    const overlay = document.createElement('div');
-    overlay.className = 'modal-overlay lab-tutor-modal';
-    overlay.style.display = 'flex';
-    overlay.innerHTML = `
-      <div class="modal-content" style="max-width:620px;">
-        <div class="modal-header">
-          <h3><i class="fa-solid fa-palette"></i> Đổi chủ đề giao diện</h3>
-          <button type="button" class="modal-close">&times;</button>
-        </div>
-        <div class="theme-full-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;max-height:58vh;overflow-y:auto;">
-          ${THEMES.map(([cls, label, dot]) => `
-            <button type="button" class="theme-full-item ${cls === cur ? 'active' : ''}" data-theme-pick="${e(cls)}" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1.5px solid ${cls === cur ? 'var(--color-primary)' : 'var(--border-card)'};background:var(--bg-input);cursor:pointer;text-align:left;color:var(--text-primary);">
-              <span style="width:18px;height:18px;border-radius:50%;background:${dot};flex-shrink:0;"></span>
-              <span style="font-size:12.5px;font-weight:600;">${e(label)}</span>
-            </button>
-          `).join('')}
-        </div>
-      </div>
-    `;
-    const close = () => overlay.remove();
-    overlay.addEventListener('click', ev => { if (ev.target === overlay) close(); });
-    overlay.querySelector('.modal-close').onclick = close;
-    overlay.querySelectorAll('[data-theme-pick]').forEach(btn => {
-      btn.onclick = async () => {
-        const res = await request('account', 'PATCH', { theme: btn.dataset.themePick });
-        data.user = res.user;
-        applyTheme();
-        const frame = id('tutorCalendarIframe');
-        if (frame?.contentDocument) frame.contentDocument.documentElement.className = document.documentElement.className;
-        close();
-        notice('Đã áp dụng chủ đề giao diện.');
-      };
+    const panel=id('themeSwitcherPanel');
+    const current=data.user.theme || 'theme-soft-blue-white-full';
+    const close=()=>{panel.style.display='none';};
+    async function select(name) {
+      const res=await request('account','PATCH',{theme:name});
+      data.user=res.user;
+      applyTheme();
+      renderOverview();
+      const frame=id('tutorCalendarIframe');
+      frame?.contentWindow?.postMessage({type:'setTheme',themeId:name},location.origin);
+      close();
+    }
+    panel.style.display='flex';
+    panel.querySelector('.theme-switcher-close').onclick=close;
+    panel.querySelector('.theme-switcher-overlay').onclick=close;
+    for(const item of panel.querySelectorAll('[data-theme]')){
+      item.classList.toggle('active', item.dataset.theme===current);
+      item.tabIndex=0;
+      item.setAttribute('role','button');
+      item.onclick=Lab.guard(()=>select(item.dataset.theme));
+      item.onkeydown=event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();item.click();}};
+    }
+    const hex=id('customColorHex'),picker=id('customColorPicker');
+    if(current.startsWith('custom:'))hex.value=picker.value=current.slice(7);
+    picker.oninput=()=>{hex.value=picker.value.toUpperCase();};
+    panel.querySelector('.theme-btn-apply-custom').onclick=Lab.guard(()=>{
+      if(!/^#[a-f0-9]{6}$/i.test(hex.value.trim()))throw new Error('Nhập mã màu dạng #RRGGBB.');
+      return select('custom:'+hex.value.trim());
     });
-    document.body.append(overlay);
+    text('themeCurrentLabel',THEME_NAMES[current] || current);
   }
 
   function openAccountDialog() {
@@ -884,30 +1190,84 @@
     });
   }
 
-  function openAssignModal(existing = null, defaultStudentId = '') {
-    const students = activeStudents();
-    if (!students.length) return notice('Cần thêm ít nhất một học sinh trước khi giao bài.', true);
-    const fields = [
-      ...(existing ? [] : [{
-        name: 'student_id',
-        label: 'Học sinh',
-        value: String(defaultStudentId || diaryStudentId || students[0].id),
-        options: students.map(s => [String(s.id), s.name]),
-        required: true,
-      }]),
-      { name: 'title', label: 'Tên bài tập', value: existing?.title || '', required: true },
-      { name: 'description', label: 'Hướng dẫn / yêu cầu', type: 'textarea', value: existing?.description || '' },
-      { name: 'release_date', label: 'Ngày phát hành', type: 'date', value: existing?.release_date || iso(), required: true },
-      { name: 'due_date', label: 'Hạn nộp bài', type: 'date', value: existing?.due_date || '' },
-      { name: 'files', label: 'Tệp bài tập (Hình ảnh, Word, PDF...)', type: 'file', multiple: true },
-    ];
-    openModal(existing ? '<i class="fa-solid fa-pen-ruler"></i> Sửa bài tập' : '<i class="fa-solid fa-folder-plus"></i> Đăng tải bài tập mới', fields, async (_values, formData) => {
-      await request(existing ? `assignments/${existing.id}` : 'assignments', existing ? 'PATCH' : 'POST', formData);
-      await refresh();
-      notice(existing ? 'Đã cập nhật bài tập.' : 'Đã giao bài tập cho học sinh.');
-    }, existing ? 'Lưu bài tập' : 'Giao bài');
+  let modalTrigger;
+  function showOriginalDialog(key) {
+    const overlay = id(key);
+    modalTrigger = document.activeElement;
+    overlay.style.display = 'flex';
+    const focus = overlay.querySelector('input:not([readonly]),textarea,button');
+    focus?.focus();
   }
 
+  function closeOriginalDialog(overlay) {
+    if (!overlay) return;
+    overlay.style.display = 'none';
+    modalTrigger?.focus();
+  }
+
+  const fileFields = editing => editing ? ['tutorEditHwFileInput'] : ['tutorHwFileInputDesktop','tutorHwImageInputMobile','tutorHwDocInputMobile'];
+  const selectedFiles = editing => fileFields(editing).flatMap(key => [...id(key).files]);
+
+  function showSelectedFiles(editing) {
+    const list = selectedFiles(editing);
+    id(editing ? 'tutorEditSelectedFileBox' : 'tutorSelectedFileBox').style.display = list.length ? 'flex' : 'none';
+    text(editing ? 'tutorEditSelectedFileName' : 'tutorSelectedFileName', list.map(f => f.name).join(', '));
+  }
+
+  function clearFiles(editing) {
+    fileFields(editing).forEach(key => { id(key).value = ''; });
+    showSelectedFiles(editing);
+  }
+
+  async function saveAssignment(editing) {
+    const prefix = editing ? 'editAssignHw' : 'assignHw';
+    const title = id(prefix+'Title').value.trim();
+    if (!title) {id(prefix+'Title').focus(); throw new Error('Hãy nhập tên bài tập.');}
+    const fd = new FormData();
+    fd.append('title',title);
+    fd.append('description',id(prefix+'Link').value.trim());
+    fd.append('release_date',id(prefix+'ReleaseDate').value || iso());
+    const release = new Date(fd.get('release_date')+'T12:00:00');
+    release.setDate(release.getDate()+4);
+    fd.append('due_date',id(prefix+'DueDate').value || iso(release));
+    if (fd.get('due_date') < fd.get('release_date')) throw new Error('Hạn nộp phải bằng hoặc sau ngày phát hành.');
+    if (!editing) {
+      if (!id('assignStudent').value) throw new Error('Hãy chọn học sinh nhận bài.');
+      fd.append('student_id',id('assignStudent').value);
+    }
+    selectedFiles(editing).forEach(f=>fd.append('files',f));
+    await request(editing ? 'assignments/'+selectedAssignment : 'assignments', editing ? 'PATCH' : 'POST',fd);
+    if (editing) closeOriginalDialog(id('editAssignedHwModal'));
+    else {
+      id(prefix+'Title').value='';id(prefix+'Link').value='';id(prefix+'DueDate').value='';
+      showAssignForm=false;
+    }
+    clearFiles(editing);
+    await refresh();
+    notice(editing ? 'Đã cập nhật bài tập.' : 'Đã giao bài tập cho học sinh.');
+  }
+
+  function editAssignment(key) {
+    const assignment = data.assignments.find(a=>a.id===Number(key));
+    if (!assignment) return;
+    selectedAssignment=assignment.id;
+    id('editAssignHwTitle').value=assignment.title;
+    id('editAssignHwLink').value=assignment.description || '';
+    id('editAssignHwReleaseDate').value=assignment.release_date || '';
+    id('editAssignHwDueDate').value=assignment.due_date || '';
+    clearFiles(true);
+    showOriginalDialog('editAssignedHwModal');
+  }
+
+  function openGradeDialog(key) {
+    const sub=data.submissions.find(x=>x.id===Number(key));
+    if (!sub) return;
+    selectedSubmission=sub.id;
+    id('gradeStudentNameInput').value=studentMap().get(sub.student_id)?.name || '';
+    id('gradeScoreInput').value=sub.score ?? '';
+    id('gradeCommentInput').value=sub.comment || '';
+    showOriginalDialog('tutorGradeModal');
+  }
   function openLessonModal(existing = null, defaultStudentId = '') {
     const students = activeStudents();
     if (!students.length) return notice('Cần thêm học sinh trước khi ghi nhật ký.', true);
@@ -940,6 +1300,55 @@
     });
   }
 
+  const clickOnce = (key, handler) => Lab.on(key,'click',async () => {
+    const button=id(key);button.disabled=true;try{await handler();}finally{button.disabled=false;}
+  });
+  for (const field of [...fileFields(false),...fileFields(true)]) {
+    Lab.on(field,'change',()=>showSelectedFiles(field==='tutorEditHwFileInput'));
+  }
+  all('[data-pick-file]').forEach(el=>{
+    el.addEventListener('click',ev=>{if(ev.target.tagName!=='INPUT')id(el.dataset.pickFile).click();});
+    if(el.getAttribute('role')==='button')el.addEventListener('keydown',ev=>{
+      if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();id(el.dataset.pickFile).click();}
+    });
+  });
+  all('[data-close-modal]').forEach(el=>el.addEventListener('click',()=>closeOriginalDialog(el.closest('.modal-overlay'))));
+  document.addEventListener('keydown',ev=>{
+    const dialog=all('.modal-overlay').find(el=>getComputedStyle(el).display!=='none');
+    if(ev.key==='Escape' && dialog) {if(dialog.classList.contains('lab-tutor-modal'))dialog.remove();else closeOriginalDialog(dialog);}
+  });
+  for(const [key,sub] of [['tabAssignBtn','assign'],['tabSubmitBtn','submit']])Lab.on(key,'click',()=>{hwSubTab=sub;renderDiarySection();});
+  for(const [key,show] of [['btnShowUploadForm',true],['btnToggleViewAssignedHw',false]])Lab.on(key,'click',()=>{showAssignForm=show;renderDiarySection();});
+  Lab.on('diaryStudentFilter','change',ev=>{diaryStudentId=ev.target.value;renderDiarySection();});
+  Lab.on('diaryMonthFilter','change',ev=>{diaryMonth=ev.target.value;renderDiarySection();});
+  for(const [key,value] of [['btnFbFilterAll','all'],['btnFbFilterCurrent','current']])Lab.on(key,'click',()=>{feedbackFilter=value;renderDiarySection();});
+  for(const key of ['btnSaveQuickAnnouncement','btnClearQuickAnnouncement'])clickOnce(key,async ()=>{
+    const stu=activeStudents().find(s=>String(s.id)===diaryStudentId)||activeStudents()[0];
+    if(!stu)return;
+    await request('students/'+stu.id,'PATCH',{announcement:key==='btnClearQuickAnnouncement'?'':id('quickAnnouncementInput').value});
+    await refresh();notice('Đã cập nhật thông báo.');
+  });
+  clickOnce('btnSubmitAssignedHw',()=>saveAssignment(false));
+  clickOnce('btnSubmitEditAssignedHw',()=>saveAssignment(true));
+  clickOnce('btnSaveSubmissionGrade',async()=>{
+    const value=id('gradeScoreInput').value.trim().replace(',','.');
+    const score=Number(value);
+    if(!value || !Number.isFinite(score)||score<0||score>10)throw new Error('Điểm số phải nằm trong khoảng từ 0 đến 10.');
+    await request('submissions/'+selectedSubmission,'PATCH',{score,comment:id('gradeCommentInput').value});
+    closeOriginalDialog(id('tutorGradeModal'));await refresh();notice('Đã lưu điểm và nhận xét.');
+  });
+  Lab.on('reportStudentSelect','change',ev=>{reportStudentId=ev.target.value;renderReportsSection();});
+  for(const key of ['reportStartDate','reportEndDate'])Lab.on(key,'change',()=>{
+    id('reportEndDate').min=id('reportStartDate').value;id('reportStartDate').max=id('reportEndDate').value;
+    renderReportsSection();
+  });
+  clickOnce('btnExportReportPng',async()=>{
+    const card=id('reportCaptureCard');if(!card)throw new Error('Hãy chọn học sinh.');
+    const image=await window.html2canvas(card,{scale:2,logging:false});
+    const a=document.createElement('a');a.download='Bao-cao-hoc-tap.png';a.href=image.toDataURL('image/png');a.click();
+  });
+  Lab.on('btnExportReportPdf','click',()=>{if(id('reportCaptureCard'))window.print();});
+  id('assignHwReleaseDate').value=iso();
   renderAll();
   const initialTab = new URLSearchParams(location.search).get('tab');
   if (initialTab && SECTION_MAP[initialTab]) switchTab(initialTab);
@@ -959,7 +1368,7 @@
   Lab.on('revenuePeriodFilter', 'change', () => renderOverview());
   Lab.on('revenueYearFilter', 'change', () => renderOverview());
   Lab.on('studentRevenueMonthFilter', 'change', () => renderOverview());
-  Lab.on('tuitionMonth', 'change', () => renderTuitionSection());
+  Lab.on('tuitionMonthFilter', 'change', () => renderTuitionSection());
   Lab.on('sidebarBtnTheme', 'click', openThemeDialog);
   Lab.on('mobileBtnTheme', 'click', openThemeDialog);
   Lab.on('sidebarBtnAccount', 'click', openAccountDialog);
@@ -993,13 +1402,20 @@
       }, 'Xóa', `<p style="margin:0 0 12px;color:var(--text-secondary);">Bạn muốn chuyển <strong>${e(stu?.name || 'học sinh')}</strong> vào thùng rác? Có thể khôi phục lại sau.</p>`);
     },
     openTrashModal: () => {
-      const trashed = data.students.filter(s => s.deleted_at);
-      const body = trashed.map(s => `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg-input);border:1px solid var(--border-card);border-radius:10px;margin-bottom:8px;"><span><strong>${e(s.name)}</strong> (${e(s.login)})</span><button type="button" class="btn-tuition-invoice" data-command="restoreStudent" data-key="${s.id}">Khôi phục</button></div>`).join('')
-        || '<p style="color:var(--text-muted);">Thùng rác trống.</p>';
-      openModal('<i class="fa-solid fa-trash-can"></i> Thùng rác học sinh', [], null, '', body);
+      html('trashStudentList',data.students.filter(s=>s.deleted_at).map(s=>Lab.item(s.name,'',Lab.btn('restoreStudent','Khôi phục',s.id))).join('')||Lab.empty('Thùng rác trống.'));
+      showOriginalDialog('trashModal');
+    },
+    archiveAssign: () => {
+      html('tutorHwTrashTableBody',data.assignments.filter(a=>a.deleted_at).map(a=>`<tr><td>${e(a.title)}</td><td>${date(a.deleted_at)}</td><td>${Lab.btn('restoreAssignment','Khôi phục',a.id)}</td></tr>`).join('')||'<tr><td colspan="3">Thùng rác trống.</td></tr>');
+      showOriginalDialog('tutorHwTrashModal');
+    },
+    restoreAssignment: async key => {
+      await request('assignments/'+key+'/restore','POST',{});
+      closeOriginalDialog(id('tutorHwTrashModal'));await refresh();notice('Đã khôi phục bài tập.');
     },
     restoreStudent: async key => {
       await request(`students/${key}/restore`, 'POST', {});
+      closeOriginalDialog(id('trashModal'));
       document.querySelector('.lab-tutor-modal')?.remove();
       await refresh();
       notice('Đã khôi phục học sinh.');
@@ -1010,32 +1426,17 @@
       await refresh();
       notice('Đã xóa lớp học.');
     },
-    switchHwTab: key => { hwSubTab = key; renderDiarySection(); },
-    saveQuickAnn: async key => {
-      const val = id('quickAnnouncementInput')?.value || '';
-      await request(`students/${key}`, 'PATCH', { announcement: val });
-      await refresh();
-      notice('Đã lưu thông báo gửi phụ huynh.');
-    },
-    addAssign: () => openAssignModal(null),
-    editAssign: key => openAssignModal(data.assignments.find(a => a.id === Number(key))),
+    listAssigned: () => {showAssignForm=false;renderDiarySection();},
+    moreSubs: () => {submissionLimit+=8;renderDiarySection();},
+    clearFiles: (_key,el) => clearFiles(Boolean(el.closest('#editAssignedHwModal'))),
+    refreshDiary: refresh,
+    editAssign: editAssignment,
     deleteAssign: key => openModal('<i class="fa-solid fa-trash"></i> Xóa bài tập', [], async () => {
       await request(`assignments/${key}`, 'DELETE');
       await refresh();
       notice('Đã xóa bài tập.');
     }, 'Xóa', '<p style="margin:0 0 12px;color:var(--text-secondary);">Xác nhận xóa bài tập này?</p>'),
-    gradeSub: key => {
-      const sub = data.submissions.find(s => s.id === Number(key));
-      if (!sub) return;
-      openModal('<i class="fa-solid fa-check-double"></i> Chấm điểm &amp; Nhận xét', [
-        { name: 'score', label: 'Điểm số (0-10)', type: 'number', min: 0, max: 10, step: '0.1', value: sub.score ?? '', required: true },
-        { name: 'comment', label: 'Lời phê chữa bài cho học sinh', type: 'textarea', value: sub.comment || '' },
-      ], async values => {
-        await request(`submissions/${sub.id}`, 'PATCH', values);
-        await refresh();
-        notice('Đã lưu điểm và nhận xét.');
-      }, 'Lưu điểm');
-    },
+    gradeSub: openGradeDialog,
     addLesson: () => openLessonModal(null),
     editLesson: key => openLessonModal(data.lessons.find(l => l.id === Number(key))),
     deleteLesson: key => openModal('<i class="fa-solid fa-trash"></i> Xóa buổi học', [], async () => {
@@ -1046,7 +1447,7 @@
     toggleTuition: async key => {
       const [sidStr, flag] = String(key).split('|');
       const sid = Number(sidStr);
-      const chosenMonth = id('tuitionMonth')?.value || month();
+      const chosenMonth = (id('tuitionMonthFilter').value === 'all' ? '' : id('tuitionMonthFilter').value);
       const ids = activeLessons().filter(l => l.student_id === sid && l.date.startsWith(chosenMonth)).map(l => l.id);
       if (!ids.length) return;
       await request('lessons/payment', 'PUT', { ids, paid: flag === '1' });

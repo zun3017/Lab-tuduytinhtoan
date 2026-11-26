@@ -1,0 +1,11 @@
+/.env
+/PROMPT_ZUNTUTOR_LAB07.md
+/.venv/
+/instance/
+/tmp/
+__pycache__/
+*.py[cod]
+*.sqlite*
+*.db
+*.db-wal
+*.db-shm

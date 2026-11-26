@@ -1,0 +1,97 @@
+/* The language control shares the original public navigation button. */
+.language { position: relative; flex-shrink: 0; }
+#languageCode { color: #1d4ed8; font-size: .78em; letter-spacing: .04em; }
+#languageList {
+    position: absolute; top: calc(100% + 7px); right: 0; z-index: 10;
+    min-width: 155px; padding: 5px;
+    background: white; border: 1px solid #dbeafe; border-radius: 14px;
+    box-shadow: 0 8px 24px rgb(30 58 138 / 15%);
+}
+#languageList button {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; min-height: 42px; font: 600 14px/1.4 Inter, system-ui, sans-serif;
+    padding: 8px 12px; background: white; color: #334155;
+    border: 0; border-radius: 9px; text-align: start; cursor: pointer;
+}
+#languageList button:hover, #languageList button[aria-pressed="true"] {
+    background: #eff6ff; color: #1d4ed8;
+}
+#languageList button[aria-pressed="true"]::after { content: '✓'; }
+.language button:focus-visible, .faq-question:focus-visible, dialog button:focus-visible {
+    outline: 2px solid #1d4ed8; outline-offset: 2px;
+}
+#translationStatus:not(:empty), #homeUpdate:not([hidden]) {
+    position: fixed; z-index: 1100; bottom: 20px; right: max(16px, calc((100vw - 1200px) / 2));
+    max-width: min(400px, calc(100vw - 32px)); padding: 12px 16px;
+    box-sizing: border-box; color: #1e3a8a; background: #eff6ff;
+    border: 1px solid #bfdbfe; border-radius: 12px;
+    box-shadow: 0 5px 18px rgb(30 58 138 / 12%); font: 500 14px/1.5 Inter, system-ui, sans-serif;
+}
+#homeUpdate:not([hidden]) { top: auto; bottom: 76px; }
+#homeUpdate button { background: transparent; color: #1d4ed8; border: none; cursor: pointer; }
+#installGuide, #contactGuide {
+    margin: auto; width: 420px; padding: 26px 24px 22px; max-width: calc(100vw - 32px); box-sizing: border-box;
+    border: 1px solid #e2e8f0; border-radius: 24px; color: #1e293b;
+    background: white; box-shadow: 0 25px 50px -12px rgb(15 23 42 / 25%);
+    font: 500 14px/1.55 Inter, system-ui, sans-serif; text-align: center;
+}
+#installGuide::backdrop, #contactGuide::backdrop { background: rgb(15 23 42 / 65%); backdrop-filter: blur(6px); }
+#contactGuide dl { padding: 14px; background: #f8fafc; border-radius: 12px; text-align: start; }
+#contactGuide dt { margin-top: 8px; font-size: 12px; color: #475569; }
+#contactGuide dd { margin: 0; color: #1e293b; font-weight: 600; }
+#installGuide .guide-close {
+    position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+    border-radius: 50%; border: 0; background: #f1f5f9; color: #475569; cursor: pointer;
+}
+#installGuide .guide-icon { display: inline-flex; padding: 10px; background: #eff6ff; border-radius: 20px; }
+#installGuide .guide-icon img { border-radius: 14px; box-shadow: 0 4px 12px rgb(37 99 235 / 18%); }
+#installGuide h3 { margin-block: 14px 6px; font-size: 18px; font-weight: 800; }
+#installGuide p { margin: 0 0 18px; font-size: 13px; color: #475569; }
+#installGuide ol {
+    list-style: none; counter-reset: guide; padding: 14px 16px; margin: 0 0 20px; border-radius: 16px;
+    background: #f8fafc; border: 1px solid #e2e8f0; text-align: start; font-size: 13px;
+}
+#installGuide li { position: relative; counter-increment: guide; padding-left: 36px; min-height: 24px; }
+#installGuide li + li { margin-top: 12px; }
+#installGuide li::before {
+    content: counter(guide); position: absolute; top: 0; left: 0; width: 24px; line-height: 24px;
+    background: #2563eb; color: white; border-radius: 50%; text-align: center; font-weight: 700;
+}
+#installGuide li:last-child::before { background: #07825d; }
+#installGuide li i { color: #2563eb; }
+#installGuide .nav-install-btn { width: 100%; border-radius: 14px !important; }
+button.faq-question {
+    width: 100%; border: none; background: transparent; font-family: inherit; text-align: start;
+}
+.btn-cta, .pillar-btn, .btn-cta-big-demo, .bottom-nav-item span {
+    white-space: normal !important; overflow-wrap: anywhere;
+}
+.hero-section, .header-text, .pillar-card, .vision-card, .footer-col, .platform-features {
+    min-width: 0; overflow-wrap: break-word;
+}
+.header .nav-container { gap: 20px !important; }
+.header .nav-right { flex-wrap: wrap; justify-content: flex-end; }
+.header .nav-btn { max-height: none !important; height: auto !important; white-space: normal !important; }
+.header .nav-left { flex-shrink: 0; }
+#languageToggle { gap: 5px !important; padding-inline: 12px !important; }
+.header #btnHeaderInstallApp { margin-left: 0 !important; }
+@media (max-width: 768px) {
+    .language { margin-left: auto; }
+    .header .nav-container { gap: 8px !important; }
+    #languageToggle { min-height: 34px !important; padding: 6px 10px !important; font-size: 12.5px !important; }
+    .bottom-nav-item span { overflow: visible !important; text-overflow: clip !important; line-height: 1.15; }
+    #languageList { right: -8px; }
+    #translationStatus:not(:empty) { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 435px) {
+    #languageToggle { min-width: 56px; }
+}
+@media (max-width: 350px) {
+    .header .nav-left { gap: 5px !important; }
+    #languageLabel { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-stagger > * {
+        opacity: 1 !important; transform: none !important; transition: none !important;
+    }
+}

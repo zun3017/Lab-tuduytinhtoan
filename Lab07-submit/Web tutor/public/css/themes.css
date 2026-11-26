@@ -1,0 +1,1431 @@
+/**
+ * ============================================================================
+ * THEMES.CSS — HỆ THỐNG 36 THEME ĐA GIAO DIỆN (PHASE 12)
+ * ============================================================================
+ * Nhóm A: 5 Presets màu đơn
+ * Nhóm B: 15 Themes x 2 Biến thể (Nền & bóng / Tối giản) = 30 Themes
+ * Nhóm C: Tùy chỉnh màu (Custom Color) qua CSS variables
+ * Default: Tím Đêm (:root, .theme-dark-purple)
+ */
+
+/* ============================================================================
+ * 0. DEFAULT: TÍM ĐÊM (THEME GỐC)
+ * ============================================================================ */
+:root, .theme-dark-purple {
+  --bg-page: #080522;
+  --bg-page-gradient: radial-gradient(circle at 50% 30%, #150F3B, #08051A);
+  --bg-sidebar: rgba(11, 8, 38, 0.95);
+  --bg-card: rgba(11, 8, 38, 0.7);
+  --bg-card-alt: rgba(20, 14, 56, 0.8);
+  --bg-input: rgba(255, 255, 255, 0.05);
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(142, 77, 255, 0.2);
+  --border-card: rgba(142, 77, 255, 0.15);
+  --text-primary: #FFFFFF;
+  --text-secondary: #A6ADCE;
+  --text-muted: rgba(255, 255, 255, 0.4);
+  --color-primary: #8E4DFF;
+  --color-primary-light: #C4B5FD;
+  --color-primary-rgb: 142, 77, 255;
+  --color-primary-dark: #6B2ECC;
+  --color-accent-kpi: #C4B5FD;
+  --kpi-number-color: #FFFFFF;
+  --chart-bar: #8E4DFF;
+  --chart-bar-rgb: 142, 77, 255;
+  --btn-bg: linear-gradient(135deg, #8E4DFF, #6B2ECC);
+  --btn-text: #FFFFFF;
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-primary: 0 4px 20px rgba(142, 77, 255, 0.3);
+  --nav-active-bg: rgba(142, 77, 255, 0.15);
+  --nav-active-text: #C4B5FD;
+  --nav-hover-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-border: rgba(142, 77, 255, 0.2);
+  --scrollbar-thumb: rgba(142, 77, 255, 0.4);
+  --text-heading: #C4B5FD;
+  --header-bg: rgba(3, 8, 29, 0.7);
+  --header-border: rgba(255, 255, 255, 0.05);
+  --nav-btn-text: #E2E8F0;
+  --glass-bg: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.10);
+  --glass-blur: 20px;
+  --glass-inner: rgba(255, 255, 255, 0.08);
+  --glass-inner-border: rgba(255, 255, 255, 0.15);
+  --is-dark-theme: 1;
+}
+
+/* ============================================================================
+ * NHÓM A — 5 PRESETS MÀU ĐƠN
+ * ============================================================================ */
+
+/* A1. Xanh gốc */
+.preset-blue {
+  --bg-page: #EBF2FE;
+  --bg-page-gradient: radial-gradient(ellipse at 20% 30%, #C4DCFD 0%, transparent 50%), radial-gradient(ellipse at 80% 15%, #B3D3FC 0%, transparent 45%), radial-gradient(ellipse at 50% 75%, #CCE3FD 0%, transparent 55%), linear-gradient(135deg, #EEF5FE, #DBEAFA);
+  --bg-sidebar: #E0EDFC;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #F1F6FE;
+  --bg-input: #F8FAFD;
+  --bg-overlay: rgba(15, 23, 42, 0.4);
+  --border-color: #BED8F8;
+  --border-card: #D3E5FA;
+  --text-primary: #0F172A;
+  --text-secondary: #334E68;
+  --text-muted: #627D98;
+  --color-primary: #2563EB;
+  --color-primary-light: #60A5FA;
+  --color-primary-rgb: 37, 99, 235;
+  --color-primary-dark: #1D4ED8;
+  --color-accent-kpi: #2563EB;
+  --kpi-number-color: #0F172A;
+  --chart-bar: #2563EB;
+  --chart-bar-rgb: 37, 99, 235;
+  --btn-bg: linear-gradient(135deg, #2563EB, #1D4ED8);
+  --btn-text: #FFFFFF;
+  --shadow-card: 0 4px 14px rgba(37, 99, 235, 0.08);
+  --shadow-primary: 0 4px 15px rgba(37, 99, 235, 0.25);
+  --nav-active-bg: rgba(37, 99, 235, 0.14);
+  --nav-active-text: #1D4ED8;
+  --nav-hover-bg: rgba(37, 99, 235, 0.06);
+  --sidebar-border: #BED8F8;
+  --scrollbar-thumb: rgba(37, 99, 235, 0.4);
+  --text-heading: #1D4ED8;
+  --header-bg: rgba(224, 237, 252, 0.97);
+  --header-border: #D3E5FA;
+  --nav-btn-text: #334E68;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(37, 99, 235, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+
+/* A2. Hồng hoa */
+.preset-hong-hoa {
+  --bg-page: #FDE8ED;
+  --bg-page-gradient: radial-gradient(ellipse at 20% 30%, #FBC8D4 0%, transparent 50%), radial-gradient(ellipse at 80% 15%, #FCA5B9 0%, transparent 45%), radial-gradient(ellipse at 50% 75%, #FCD2DD 0%, transparent 55%), linear-gradient(135deg, #FDECF0, #FAD5DE);
+  --bg-sidebar: #FCD8E1;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #FDF0F3;
+  --bg-input: #FFF6F8;
+  --bg-overlay: rgba(0, 0, 0, 0.4);
+  --border-color: #F8B4C4;
+  --border-card: #FCD0DA;
+  --text-primary: #38121E;
+  --text-secondary: #882B46;
+  --text-muted: #B85874;
+  --color-primary: #E11D48;
+  --color-primary-light: #FB7185;
+  --color-primary-rgb: 225, 29, 72;
+  --color-primary-dark: #BE123C;
+  --color-accent-kpi: #E11D48;
+  --kpi-number-color: #38121E;
+  --chart-bar: #E11D48;
+  --chart-bar-rgb: 225, 29, 72;
+  --btn-bg: linear-gradient(135deg, #E11D48, #BE123C);
+  --btn-text: #FFFFFF;
+  --shadow-card: 0 4px 14px rgba(225, 29, 72, 0.08);
+  --shadow-primary: 0 4px 15px rgba(225, 29, 72, 0.25);
+  --nav-active-bg: rgba(225, 29, 72, 0.14);
+  --nav-active-text: #BE123C;
+  --nav-hover-bg: rgba(225, 29, 72, 0.06);
+  --sidebar-border: #F8B4C4;
+  --scrollbar-thumb: rgba(225, 29, 72, 0.4);
+  --text-heading: #BE123C;
+  --header-bg: rgba(252, 216, 225, 0.97);
+  --header-border: #FCD0DA;
+  --nav-btn-text: #882B46;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(225, 29, 72, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+
+/* A3. Hồng nhẹ */
+.preset-hong-nhe {
+  --bg-page: #FDF0F6;
+  --bg-page-gradient: radial-gradient(ellipse at 20% 30%, #FBCFE8 0%, transparent 50%), radial-gradient(ellipse at 80% 15%, #F9A8D4 0%, transparent 45%), radial-gradient(ellipse at 50% 75%, #FCE4F2 0%, transparent 55%), linear-gradient(135deg, #FDF4F8, #FADEEF);
+  --bg-sidebar: #FBE2F1;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #FCF1F7;
+  --bg-input: #FFF7FB;
+  --bg-overlay: rgba(0, 0, 0, 0.4);
+  --border-color: #F7BFDF;
+  --border-card: #FCD8EC;
+  --text-primary: #341223;
+  --text-secondary: #832C5B;
+  --text-muted: #B8588E;
+  --color-primary: #EC4899;
+  --color-primary-light: #F472B6;
+  --color-primary-rgb: 236, 72, 153;
+  --color-primary-dark: #DB2777;
+  --color-accent-kpi: #EC4899;
+  --kpi-number-color: #341223;
+  --chart-bar: #EC4899;
+  --chart-bar-rgb: 236, 72, 153;
+  --btn-bg: linear-gradient(135deg, #EC4899, #DB2777);
+  --btn-text: #FFFFFF;
+  --shadow-card: 0 4px 14px rgba(236, 72, 153, 0.08);
+  --shadow-primary: 0 4px 15px rgba(236, 72, 153, 0.25);
+  --nav-active-bg: rgba(236, 72, 153, 0.14);
+  --nav-active-text: #DB2777;
+  --nav-hover-bg: rgba(236, 72, 153, 0.06);
+  --sidebar-border: #F7BFDF;
+  --scrollbar-thumb: rgba(236, 72, 153, 0.4);
+  --text-heading: #DB2777;
+  --header-bg: rgba(251, 226, 241, 0.97);
+  --header-border: #FCD8EC;
+  --nav-btn-text: #832C5B;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(236, 72, 153, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+
+/* A4. Matcha Tea */
+.preset-matcha {
+  --bg-page: #E6F7F0;
+  --bg-page-gradient: radial-gradient(ellipse at 20% 30%, #A7F3D0 0%, transparent 50%), radial-gradient(ellipse at 80% 15%, #6EE7B7 0%, transparent 45%), radial-gradient(ellipse at 50% 75%, #C6F6E2 0%, transparent 55%), linear-gradient(135deg, #EDFAF4, #D5F3E4);
+  --bg-sidebar: #D5F4E5;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #EDFBF5;
+  --bg-input: #F5FDF9;
+  --bg-overlay: rgba(0, 0, 0, 0.4);
+  --border-color: #A3E9C7;
+  --border-card: #C2F3DB;
+  --text-primary: #0F2D20;
+  --text-secondary: #1F6948;
+  --text-muted: #4A9C76;
+  --color-primary: #059669;
+  --color-primary-light: #34D399;
+  --color-primary-rgb: 5, 150, 105;
+  --color-primary-dark: #047857;
+  --color-accent-kpi: #059669;
+  --kpi-number-color: #0F2D20;
+  --chart-bar: #059669;
+  --chart-bar-rgb: 5, 150, 105;
+  --btn-bg: linear-gradient(135deg, #059669, #047857);
+  --btn-text: #FFFFFF;
+  --shadow-card: 0 4px 14px rgba(5, 150, 105, 0.08);
+  --shadow-primary: 0 4px 15px rgba(5, 150, 105, 0.25);
+  --nav-active-bg: rgba(5, 150, 105, 0.14);
+  --nav-active-text: #047857;
+  --nav-hover-bg: rgba(5, 150, 105, 0.06);
+  --sidebar-border: #A3E9C7;
+  --scrollbar-thumb: rgba(5, 150, 105, 0.4);
+  --text-heading: #047857;
+  --header-bg: rgba(213, 244, 229, 0.97);
+  --header-border: #C2F3DB;
+  --nav-btn-text: #1F6948;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(5, 150, 105, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+
+/* A5. Linen Cocoa */
+.preset-linen {
+  --bg-page: #F8EFE4;
+  --bg-page-gradient: radial-gradient(ellipse at 20% 30%, #FDE68A 0%, transparent 50%), radial-gradient(ellipse at 80% 15%, #FCD34D 0%, transparent 45%), radial-gradient(ellipse at 50% 75%, #FEF3C7 0%, transparent 55%), linear-gradient(135deg, #FAF3EB, #F2E4D2);
+  --bg-sidebar: #F2E3D0;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #F9F2E9;
+  --bg-input: #FCF8F3;
+  --bg-overlay: rgba(0, 0, 0, 0.4);
+  --border-color: #E2CCA8;
+  --border-card: #EFE0C7;
+  --text-primary: #321A05;
+  --text-secondary: #743E09;
+  --text-muted: #A36B2B;
+  --color-primary: #854D0E;
+  --color-primary-light: #B45309;
+  --color-primary-rgb: 133, 77, 14;
+  --color-primary-dark: #713F12;
+  --color-accent-kpi: #854D0E;
+  --kpi-number-color: #321A05;
+  --chart-bar: #854D0E;
+  --chart-bar-rgb: 133, 77, 14;
+  --btn-bg: linear-gradient(135deg, #854D0E, #713F12);
+  --btn-text: #FFFFFF;
+  --shadow-card: 0 4px 14px rgba(133, 77, 14, 0.08);
+  --shadow-primary: 0 4px 15px rgba(133, 77, 14, 0.25);
+  --nav-active-bg: rgba(133, 77, 14, 0.14);
+  --nav-active-text: #713F12;
+  --nav-hover-bg: rgba(133, 77, 14, 0.06);
+  --sidebar-border: #E2CCA8;
+  --scrollbar-thumb: rgba(133, 77, 14, 0.4);
+  --text-heading: #713F12;
+  --header-bg: rgba(242, 227, 208, 0.97);
+  --header-border: #EFE0C7;
+  --nav-btn-text: #743E09;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(133, 77, 14, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+
+/* ============================================================================
+ * NHÓM B — 15 FULL THEMES × 2 BIẾN THỂ (NỀN & BÓNG / TỐI GIẢN)
+ * ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+ * 1. Azure Mist (Sáng - Xanh lam mây mờ)
+ * ---------------------------------------------------------------------------- */
+.theme-azure-mist-full, .theme-azure-mist-minimal {
+  --bg-page: #E1EFFB;
+  --bg-sidebar: #D1E7F8;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #E8F4FC;
+  --bg-input: #F3F9FE;
+  --bg-overlay: rgba(15, 38, 64, 0.4);
+  --border-color: #B2D5F2;
+  --border-card: #CAE4F8;
+  --text-primary: #0C2138;
+  --text-secondary: #24588C;
+  --text-muted: #588BBF;
+  --color-primary: #2578C8;
+  --color-primary-light: #7AB4E8;
+  --color-primary-rgb: 37, 120, 200;
+  --color-primary-dark: #195896;
+  --color-accent-kpi: #2578C8;
+  --kpi-number-color: #0C2138;
+  --chart-bar: #3B8AD8;
+  --chart-bar-rgb: 59, 138, 216;
+  --btn-bg: linear-gradient(135deg, #2578C8, #195896);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(37, 120, 200, 0.14);
+  --nav-active-text: #195896;
+  --nav-hover-bg: rgba(37, 120, 200, 0.06);
+  --sidebar-border: #B2D5F2;
+  --scrollbar-thumb: rgba(37, 120, 200, 0.4);
+  --text-heading: #195896;
+  --header-bg: rgba(209, 231, 248, 0.97);
+  --header-border: #CAE4F8;
+  --nav-btn-text: #24588C;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(37, 120, 200, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-azure-mist-full {
+  --bg-page-gradient: linear-gradient(135deg, #E6F3FD 0%, #BFE0F9 45%, #D4EAFB 100%);
+  --shadow-card: 0 8px 32px rgba(37, 120, 200, 0.15);
+  --shadow-primary: 0 4px 18px rgba(37, 120, 200, 0.3);
+}
+.theme-azure-mist-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #E1EFFB 0%, #CEE5F8 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(37, 120, 200, 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+ * 2. Woodland Cottage (Sáng - Ấm áp phong cách gỗ mộc)
+ * ---------------------------------------------------------------------------- */
+.theme-woodland-cottage-full, .theme-woodland-cottage-minimal {
+  --bg-page: #F3EAE1;
+  --bg-sidebar: #E9DCCE;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #F6EDE5;
+  --bg-input: #FAF5F0;
+  --bg-overlay: rgba(44, 29, 19, 0.4);
+  --border-color: #D3BFAD;
+  --border-card: #DFCFC1;
+  --text-primary: #2C1D13;
+  --text-secondary: #6B5242;
+  --text-muted: #9E826F;
+  --color-primary: #8B6E58;
+  --color-primary-light: #B89E88;
+  --color-primary-rgb: 139, 110, 88;
+  --color-primary-dark: #5C4033;
+  --color-accent-kpi: #8B6E58;
+  --kpi-number-color: #2C1D13;
+  --chart-bar: #8B6E58;
+  --chart-bar-rgb: 139, 110, 88;
+  --btn-bg: linear-gradient(135deg, #8B6E58, #5C4033);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(139, 110, 88, 0.14);
+  --nav-active-text: #5C4033;
+  --nav-hover-bg: rgba(139, 110, 88, 0.06);
+  --sidebar-border: #D3BFAD;
+  --scrollbar-thumb: rgba(139, 110, 88, 0.4);
+  --text-heading: #5C4033;
+  --header-bg: rgba(233, 220, 206, 0.97);
+  --header-border: #DFCFC1;
+  --nav-btn-text: #6B5242;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(92, 64, 51, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-woodland-cottage-full {
+  --bg-page-gradient: linear-gradient(135deg, #F6EFE8 0%, #E6D4C3 45%, #DAC4B1 100%);
+  --shadow-card: 0 8px 30px rgba(92, 64, 51, 0.15);
+  --shadow-primary: 0 4px 18px rgba(139, 110, 88, 0.28);
+}
+.theme-woodland-cottage-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #F3EAE1 0%, #E8DACD 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(139, 110, 88, 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+ * 3. Sage Blush (Sáng - Xanh xô thơm & Hồng phấn)
+ * ---------------------------------------------------------------------------- */
+.theme-sage-blush-full, .theme-sage-blush-minimal {
+  --bg-page: #E9F1EB;
+  --bg-sidebar: #DCEAE0;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #EEF5F0;
+  --bg-input: #F5F9F6;
+  --bg-overlay: rgba(28, 45, 35, 0.4);
+  --border-color: #BFD7C7;
+  --border-card: #CEE1D5;
+  --text-primary: #1C2D23;
+  --text-secondary: #486554;
+  --text-muted: #7E9C89;
+  --color-primary: #5C836B;
+  --color-primary-light: #89AF96;
+  --color-primary-rgb: 92, 131, 107;
+  --color-primary-dark: #41614E;
+  --color-accent-kpi: #C49A88;
+  --kpi-number-color: #1C2D23;
+  --chart-bar: #5C836B;
+  --chart-bar-rgb: 92, 131, 107;
+  --btn-bg: linear-gradient(135deg, #5C836B, #41614E);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(92, 131, 107, 0.14);
+  --nav-active-text: #41614E;
+  --nav-hover-bg: rgba(92, 131, 107, 0.06);
+  --sidebar-border: #BFD7C7;
+  --scrollbar-thumb: rgba(92, 131, 107, 0.4);
+  --text-heading: #3B5A47;
+  --header-bg: rgba(220, 234, 224, 0.97);
+  --header-border: #CEE1D5;
+  --nav-btn-text: #486554;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(92, 131, 107, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-sage-blush-full {
+  --bg-page-gradient: linear-gradient(135deg, #EEF5F0 0%, #D8E7DC 45%, #EEDCD4 100%);
+  --shadow-card: 0 8px 30px rgba(92, 131, 107, 0.15);
+  --shadow-primary: 0 4px 18px rgba(92, 131, 107, 0.28);
+}
+.theme-sage-blush-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #E9F1EB 0%, #D7E6DC 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(92, 131, 107, 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+ * 4. Golden Caramel (Sáng - Vàng mật ong caramel)
+ * ---------------------------------------------------------------------------- */
+.theme-golden-caramel-full, .theme-golden-caramel-minimal {
+  --bg-page: #FBF0DD;
+  --bg-sidebar: #F4E2C2;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #FBF3E4;
+  --bg-input: #FCF7EE;
+  --bg-overlay: rgba(58, 32, 0, 0.4);
+  --border-color: #E6CA9E;
+  --border-card: #EFDAB4;
+  --text-primary: #381E02;
+  --text-secondary: #7C4A10;
+  --text-muted: #B87C2E;
+  --color-primary: #C97D1A;
+  --color-primary-light: #EAA846;
+  --color-primary-rgb: 201, 125, 26;
+  --color-primary-dark: #9E5F0E;
+  --color-accent-kpi: #C97D1A;
+  --kpi-number-color: #381E02;
+  --chart-bar: #C97D1A;
+  --chart-bar-rgb: 201, 125, 26;
+  --btn-bg: linear-gradient(135deg, #C97D1A, #9E5F0E);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(201, 125, 26, 0.14);
+  --nav-active-text: #9E5F0E;
+  --nav-hover-bg: rgba(201, 125, 26, 0.06);
+  --sidebar-border: #E6CA9E;
+  --scrollbar-thumb: rgba(201, 125, 26, 0.4);
+  --text-heading: #7C4305;
+  --header-bg: rgba(244, 226, 194, 0.97);
+  --header-border: #EFDAB4;
+  --nav-btn-text: #7C4A10;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(201, 125, 26, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-golden-caramel-full {
+  --bg-page-gradient: linear-gradient(135deg, #FDF4E5 0%, #F5DCB0 45%, #EECD94 100%);
+  --shadow-card: 0 8px 30px rgba(201, 125, 26, 0.15);
+  --shadow-primary: 0 4px 18px rgba(201, 125, 26, 0.28);
+}
+.theme-golden-caramel-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #FBF0DD 0%, #F4E0C0 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(201, 125, 26, 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+ * 5. Pastel Alpine Meadow (Sáng - Xanh đồng cỏ Alpine)
+ * ---------------------------------------------------------------------------- */
+.theme-pastel-alpine-full, .theme-pastel-alpine-minimal {
+  --bg-page: #E3F1E7;
+  --bg-sidebar: #D1EAD7;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #ECF7EF;
+  --bg-input: #F4FAF5;
+  --bg-overlay: rgba(24, 58, 36, 0.4);
+  --border-color: #B4DCBE;
+  --border-card: #C7E8CF;
+  --text-primary: #12301B;
+  --text-secondary: #2C6339;
+  --text-muted: #5E996D;
+  --color-primary: #3E7345;
+  --color-primary-light: #72AB7A;
+  --color-primary-rgb: 62, 115, 69;
+  --color-primary-dark: #2A5430;
+  --color-accent-kpi: #3E7345;
+  --kpi-number-color: #12301B;
+  --chart-bar: #3E7345;
+  --chart-bar-rgb: 62, 115, 69;
+  --btn-bg: linear-gradient(135deg, #3E7345, #2A5430);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(62, 115, 69, 0.14);
+  --nav-active-text: #2A5430;
+  --nav-hover-bg: rgba(62, 115, 69, 0.06);
+  --sidebar-border: #B4DCBE;
+  --scrollbar-thumb: rgba(62, 115, 69, 0.4);
+  --text-heading: #2A5430;
+  --header-bg: rgba(209, 234, 215, 0.97);
+  --header-border: #C7E8CF;
+  --nav-btn-text: #2C6339;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(62, 115, 69, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-pastel-alpine-full {
+  --bg-page-gradient: linear-gradient(135deg, #EAF5ED 0%, #C3E6CC 45%, #ACDDB7 100%);
+  --shadow-card: 0 8px 30px rgba(62, 115, 69, 0.15);
+  --shadow-primary: 0 4px 18px rgba(62, 115, 69, 0.28);
+}
+.theme-pastel-alpine-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #E3F1E7 0%, #CEE8D4 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(62, 115, 69, 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+ * 6. Dreamy Cosmic Sky (TỐI)
+ * ---------------------------------------------------------------------------- */
+.theme-dreamy-cosmic-full, .theme-dreamy-cosmic-minimal {
+  --bg-page: #0F0828;
+  --bg-sidebar: rgba(28, 18, 68, 0.95);
+  --bg-card: rgba(28, 18, 68, 0.7);
+  --bg-card-alt: rgba(38, 24, 88, 0.8);
+  --bg-input: rgba(255, 255, 255, 0.06);
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(160, 64, 255, 0.28);
+  --border-card: rgba(160, 64, 255, 0.20);
+  --text-primary: #FFFFFF;
+  --text-secondary: #D4B8FF;
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --color-primary: #A040FF;
+  --color-primary-light: #C480FF;
+  --color-primary-rgb: 160, 64, 255;
+  --color-primary-dark: #7820D0;
+  --color-accent-kpi: #C480FF;
+  --kpi-number-color: #FFFFFF;
+  --chart-bar: #A040FF;
+  --chart-bar-rgb: 160, 64, 255;
+  --btn-bg: linear-gradient(135deg, #A040FF, #7820D0);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(160, 64, 255, 0.20);
+  --nav-active-text: #D4B8FF;
+  --nav-hover-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-border: rgba(160, 64, 255, 0.28);
+  --scrollbar-thumb: rgba(160, 64, 255, 0.4);
+  --text-heading: #D4B8FF;
+  --header-bg: rgba(15, 8, 40, 0.85);
+  --header-border: rgba(255, 255, 255, 0.08);
+  --nav-btn-text: #E2E8F0;
+  --glass-bg: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.10);
+  --glass-blur: 20px;
+  --glass-inner: rgba(255, 255, 255, 0.08);
+  --glass-inner-border: rgba(255, 255, 255, 0.15);
+  --is-dark-theme: 1;
+}
+.theme-dreamy-cosmic-full {
+  --bg-page-gradient: radial-gradient(ellipse at 40% 30%, #2A155C 0%, #0F0828 65%, #080318 100%);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-primary: 0 4px 20px rgba(160, 64, 255, 0.35);
+}
+.theme-dreamy-cosmic-minimal {
+  --bg-page-gradient: radial-gradient(circle at 50% 30%, #201044 0%, #0F0828 100%);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-primary: 0 2px 10px rgba(160, 64, 255, 0.25);
+}
+
+/* ----------------------------------------------------------------------------
+ * 7. Sunset Meadow Breeze (Sáng - Hoàng hôn đất nung & Cỏ may)
+ * ---------------------------------------------------------------------------- */
+.theme-sunset-meadow-full, .theme-sunset-meadow-minimal {
+  --bg-page: #FDE8E0;
+  --bg-sidebar: #F8D9CE;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #FDEEE7;
+  --bg-input: #FCF5F2;
+  --bg-overlay: rgba(58, 16, 8, 0.4);
+  --border-color: #ECC0B0;
+  --border-card: #F5D3C7;
+  --text-primary: #381208;
+  --text-secondary: #853724;
+  --text-muted: #BD6F5B;
+  --color-primary: #CE4A1C;
+  --color-primary-light: #E87A54;
+  --color-primary-rgb: 206, 74, 28;
+  --color-primary-dark: #98320F;
+  --color-accent-kpi: #5C7A40;
+  --kpi-number-color: #381208;
+  --chart-bar: #CE4A1C;
+  --chart-bar-rgb: 206, 74, 28;
+  --btn-bg: linear-gradient(135deg, #CE4A1C, #98320F);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(206, 74, 28, 0.14);
+  --nav-active-text: #98320F;
+  --nav-hover-bg: rgba(206, 74, 28, 0.06);
+  --sidebar-border: #ECC0B0;
+  --scrollbar-thumb: rgba(206, 74, 28, 0.4);
+  --text-heading: #98320F;
+  --header-bg: rgba(248, 217, 206, 0.97);
+  --header-border: #F5D3C7;
+  --nav-btn-text: #853724;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(206, 74, 28, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-sunset-meadow-full {
+  --bg-page-gradient: linear-gradient(135deg, #FDEFE8 0%, #FACFBF 45%, #DFE8C6 100%);
+  --shadow-card: 0 8px 30px rgba(206, 74, 28, 0.15);
+  --shadow-primary: 0 4px 18px rgba(206, 74, 28, 0.28);
+}
+.theme-sunset-meadow-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #FDE8E0 0%, #F8D5C8 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(206, 74, 28, 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+ * 8. Neon Seoul (TỐI)
+ * ---------------------------------------------------------------------------- */
+.theme-neon-seoul-full, .theme-neon-seoul-minimal {
+  --bg-page: #080F0F;
+  --bg-sidebar: rgba(8, 28, 28, 0.95);
+  --bg-card: rgba(8, 28, 28, 0.7);
+  --bg-card-alt: rgba(12, 38, 38, 0.8);
+  --bg-input: rgba(255, 255, 255, 0.05);
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(0, 212, 170, 0.25);
+  --border-card: rgba(0, 212, 170, 0.18);
+  --text-primary: #FFFFFF;
+  --text-secondary: #80E8D8;
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --color-primary: #00D4AA;
+  --color-primary-light: #60E8D0;
+  --color-primary-rgb: 0, 212, 170;
+  --color-primary-dark: #00A888;
+  --color-accent-kpi: #60E8D0;
+  --kpi-number-color: #FFFFFF;
+  --chart-bar: #00D4AA;
+  --chart-bar-rgb: 0, 212, 170;
+  --btn-bg: linear-gradient(135deg, #00D4AA, #00A888);
+  --btn-text: #080F0F;
+  --nav-active-bg: rgba(0, 212, 170, 0.18);
+  --nav-active-text: #00D4AA;
+  --nav-hover-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-border: rgba(0, 212, 170, 0.25);
+  --scrollbar-thumb: rgba(0, 212, 170, 0.4);
+  --text-heading: #60E8D0;
+  --header-bg: rgba(8, 20, 20, 0.85);
+  --header-border: rgba(255, 255, 255, 0.08);
+  --nav-btn-text: #E2E8F0;
+  --glass-bg: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.10);
+  --glass-blur: 20px;
+  --glass-inner: rgba(255, 255, 255, 0.08);
+  --glass-inner-border: rgba(255, 255, 255, 0.15);
+  --is-dark-theme: 1;
+}
+.theme-neon-seoul-full {
+  --bg-page-gradient: radial-gradient(ellipse at 50% 20%, #0A322C 0%, #071515 60%, #020808 100%);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-primary: 0 4px 20px rgba(0, 212, 170, 0.35);
+}
+.theme-neon-seoul-minimal {
+  --bg-page-gradient: radial-gradient(circle at 50% 30%, #0B2622 0%, #061212 100%);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-primary: 0 2px 10px rgba(0, 212, 170, 0.25);
+}
+
+/* ----------------------------------------------------------------------------
+ * 9. Mystic Blue Room (TỐI)
+ * ---------------------------------------------------------------------------- */
+.theme-mystic-blue-full, .theme-mystic-blue-minimal {
+  --bg-page: #060E20;
+  --bg-sidebar: rgba(10, 24, 48, 0.95);
+  --bg-card: rgba(10, 24, 48, 0.7);
+  --bg-card-alt: rgba(15, 34, 64, 0.8);
+  --bg-input: rgba(255, 255, 255, 0.05);
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(64, 128, 208, 0.28);
+  --border-card: rgba(64, 128, 208, 0.20);
+  --text-primary: #FFFFFF;
+  --text-secondary: #9EC2F2;
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --color-primary: #4080D0;
+  --color-primary-light: #70A8F0;
+  --color-primary-rgb: 64, 128, 208;
+  --color-primary-dark: #285CA0;
+  --color-accent-kpi: #70A8F0;
+  --kpi-number-color: #FFFFFF;
+  --chart-bar: #4080D0;
+  --chart-bar-rgb: 64, 128, 208;
+  --btn-bg: linear-gradient(135deg, #4080D0, #285CA0);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(64, 128, 208, 0.20);
+  --nav-active-text: #9EC2F2;
+  --nav-hover-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-border: rgba(64, 128, 208, 0.28);
+  --scrollbar-thumb: rgba(64, 128, 208, 0.4);
+  --text-heading: #70A8F0;
+  --header-bg: rgba(6, 14, 32, 0.85);
+  --header-border: rgba(255, 255, 255, 0.08);
+  --nav-btn-text: #E2E8F0;
+  --glass-bg: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.10);
+  --glass-blur: 20px;
+  --glass-inner: rgba(255, 255, 255, 0.08);
+  --glass-inner-border: rgba(255, 255, 255, 0.15);
+  --is-dark-theme: 1;
+}
+.theme-mystic-blue-full {
+  --bg-page-gradient: radial-gradient(ellipse at 35% 30%, #102B54 0%, #060E20 65%, #020610 100%);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-primary: 0 4px 20px rgba(64, 128, 208, 0.35);
+}
+.theme-mystic-blue-minimal {
+  --bg-page-gradient: radial-gradient(circle at 50% 30%, #0E2242 0%, #060E20 100%);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-primary: 0 2px 10px rgba(64, 128, 208, 0.25);
+}
+
+/* ----------------------------------------------------------------------------
+ * 10. Blue Lime Canopy (Sáng - Xanh lam đậm & Xanh vôi sức sống)
+ * ---------------------------------------------------------------------------- */
+.theme-blue-lime-full, .theme-blue-lime-minimal {
+  --bg-page: #E3F1F8;
+  --bg-sidebar: #D1E8F6;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #ECF6FC;
+  --bg-input: #F3FAF0;
+  --bg-overlay: rgba(18, 45, 75, 0.4);
+  --border-color: #B2D5EC;
+  --border-card: #C8E3F6;
+  --text-primary: #0D243F;
+  --text-secondary: #1F5488;
+  --text-muted: #5388BC;
+  --color-primary: #1C5CA5;
+  --color-primary-light: #528FD5;
+  --color-primary-rgb: 28, 92, 165;
+  --color-primary-dark: #123F73;
+  --color-accent-kpi: #78C018;
+  --kpi-number-color: #0D243F;
+  --chart-bar: #1C5CA5;
+  --chart-bar-rgb: 28, 92, 165;
+  --btn-bg: linear-gradient(135deg, #1C5CA5, #123F73);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(28, 92, 165, 0.14);
+  --nav-active-text: #123F73;
+  --nav-hover-bg: rgba(28, 92, 165, 0.06);
+  --sidebar-border: #B2D5EC;
+  --scrollbar-thumb: rgba(28, 92, 165, 0.4);
+  --text-heading: #123F73;
+  --header-bg: rgba(209, 232, 246, 0.97);
+  --header-border: #C8E3F6;
+  --nav-btn-text: #1F5488;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(28, 92, 165, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-blue-lime-full {
+  --bg-page-gradient: linear-gradient(135deg, #E6F3FB 0%, #C6E2F7 45%, #D7F2B8 100%);
+  --shadow-card: 0 8px 30px rgba(28, 92, 165, 0.15);
+  --shadow-primary: 0 4px 18px rgba(28, 92, 165, 0.28);
+}
+.theme-blue-lime-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #E3F1F8 0%, #CFE6F5 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(28, 92, 165, 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+ * 11. Cloud Meadow (Sáng - Mây xanh đồng xanh)
+ * ---------------------------------------------------------------------------- */
+.theme-cloud-meadow-full, .theme-cloud-meadow-minimal {
+  --bg-page: #E4EFF8;
+  --bg-sidebar: #D3E5F3;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #ECF4FB;
+  --bg-input: #F3F8FC;
+  --bg-overlay: rgba(15, 32, 48, 0.4);
+  --border-color: #B5D4E8;
+  --border-card: #CCE2F1;
+  --text-primary: #0F2336;
+  --text-secondary: #2C577A;
+  --text-muted: #5E89AB;
+  --color-primary: #4B7DAB;
+  --color-primary-light: #7AAAD0;
+  --color-primary-rgb: 75, 125, 171;
+  --color-primary-dark: #32587A;
+  --color-accent-kpi: #6BA870;
+  --kpi-number-color: #0F2336;
+  --chart-bar: #4B7DAB;
+  --chart-bar-rgb: 75, 125, 171;
+  --btn-bg: linear-gradient(135deg, #4B7DAB, #32587A);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(75, 125, 171, 0.14);
+  --nav-active-text: #32587A;
+  --nav-hover-bg: rgba(75, 125, 171, 0.06);
+  --sidebar-border: #B5D4E8;
+  --scrollbar-thumb: rgba(75, 125, 171, 0.4);
+  --text-heading: #32587A;
+  --header-bg: rgba(211, 229, 243, 0.97);
+  --header-border: #CCE2F1;
+  --nav-btn-text: #2C577A;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(75, 125, 171, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-cloud-meadow-full {
+  --bg-page-gradient: linear-gradient(135deg, #EAF3FA 0%, #C7DFEE 45%, #CEE8D3 100%);
+  --shadow-card: 0 8px 30px rgba(75, 125, 171, 0.15);
+  --shadow-primary: 0 4px 18px rgba(75, 125, 171, 0.28);
+}
+.theme-cloud-meadow-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #E4EFF8 0%, #D2E4F2 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(75, 125, 171, 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+ * 12. Soft Blue + White (Sáng - Xanh dịu thanh khiết)
+ * ---------------------------------------------------------------------------- */
+.theme-soft-blue-white-full, .theme-soft-blue-white-minimal,
+.theme-soft-blue-full, .theme-soft-blue-minimal {
+  --bg-page: #E2F0FC;
+  --bg-sidebar: #D2E7F9;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #EBF4FD;
+  --bg-input: #F3F8FE;
+  --bg-overlay: rgba(10, 26, 48, 0.4);
+  --border-color: #B5D7F4;
+  --border-card: #CCE4F9;
+  --text-primary: #0A1C32;
+  --text-secondary: #1F5288;
+  --text-muted: #5286BC;
+  --color-primary: #2070C0;
+  --color-primary-light: #60A5EA;
+  --color-primary-rgb: 32, 112, 192;
+  --color-primary-dark: #155190;
+  --color-accent-kpi: #2070C0;
+  --kpi-number-color: #0A1C32;
+  --chart-bar: #2070C0;
+  --chart-bar-rgb: 32, 112, 192;
+  --btn-bg: linear-gradient(135deg, #2070C0, #155190);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(32, 112, 192, 0.14);
+  --nav-active-text: #155190;
+  --nav-hover-bg: rgba(32, 112, 192, 0.06);
+  --sidebar-border: #B5D7F4;
+  --scrollbar-thumb: rgba(32, 112, 192, 0.4);
+  --text-heading: #155190;
+  --header-bg: rgba(210, 231, 249, 0.97);
+  --header-border: #CCE4F9;
+  --nav-btn-text: #1F5288;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(32, 112, 192, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-soft-blue-white-full, .theme-soft-blue-full {
+  --bg-page-gradient: linear-gradient(135deg, #EAF4FD 0%, #C6E3FB 50%, #B0D7F8 100%);
+  --shadow-card: 0 8px 30px rgba(32, 112, 192, 0.14);
+  --shadow-primary: 0 4px 18px rgba(32, 112, 192, 0.28);
+}
+.theme-soft-blue-white-minimal, .theme-soft-blue-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #E2F0FC 0%, #CDE5F9 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(32, 112, 192, 0.2);
+}
+
+/* ----------------------------------------------------------------------------
+ * 13. Blossom Noir (TỐI)
+ * ---------------------------------------------------------------------------- */
+.theme-blossom-noir-full, .theme-blossom-noir-minimal {
+  --bg-page: #0F0510;
+  --bg-sidebar: rgba(28, 8, 28, 0.95);
+  --bg-card: rgba(28, 8, 28, 0.7);
+  --bg-card-alt: rgba(38, 12, 38, 0.8);
+  --bg-input: rgba(255, 255, 255, 0.05);
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(212, 64, 128, 0.28);
+  --border-card: rgba(212, 64, 128, 0.20);
+  --text-primary: #FFFFFF;
+  --text-secondary: #F0A8CE;
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --color-primary: #D44080;
+  --color-primary-light: #F068A4;
+  --color-primary-rgb: 212, 64, 128;
+  --color-primary-dark: #A8205C;
+  --color-accent-kpi: #F068A4;
+  --kpi-number-color: #FFFFFF;
+  --chart-bar: #D44080;
+  --chart-bar-rgb: 212, 64, 128;
+  --btn-bg: linear-gradient(135deg, #D44080, #A8205C);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(212, 64, 128, 0.20);
+  --nav-active-text: #F0A8CE;
+  --nav-hover-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-border: rgba(212, 64, 128, 0.28);
+  --scrollbar-thumb: rgba(212, 64, 128, 0.4);
+  --text-heading: #F068A4;
+  --header-bg: rgba(18, 5, 20, 0.85);
+  --header-border: rgba(255, 255, 255, 0.08);
+  --nav-btn-text: #E2E8F0;
+  --glass-bg: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.10);
+  --glass-blur: 20px;
+  --glass-inner: rgba(255, 255, 255, 0.08);
+  --glass-inner-border: rgba(255, 255, 255, 0.15);
+  --is-dark-theme: 1;
+}
+.theme-blossom-noir-full {
+  --bg-page-gradient: radial-gradient(ellipse at 45% 25%, #350E28 0%, #120614 65%, #08020A 100%);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-primary: 0 4px 20px rgba(212, 64, 128, 0.35);
+}
+.theme-blossom-noir-minimal {
+  --bg-page-gradient: radial-gradient(circle at 50% 30%, #260A1C 0%, #100512 100%);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-primary: 0 2px 10px rgba(212, 64, 128, 0.25);
+}
+
+/* ----------------------------------------------------------------------------
+ * 14. Violet Planet (TỐI)
+ * ---------------------------------------------------------------------------- */
+.theme-violet-planet-full, .theme-violet-planet-minimal {
+  --bg-page: #0A0520;
+  --bg-sidebar: rgba(18, 8, 48, 0.95);
+  --bg-card: rgba(18, 8, 48, 0.7);
+  --bg-card-alt: rgba(26, 12, 64, 0.8);
+  --bg-input: rgba(255, 255, 255, 0.05);
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(144, 64, 208, 0.28);
+  --border-card: rgba(144, 64, 208, 0.20);
+  --text-primary: #FFFFFF;
+  --text-secondary: #D2A8F0;
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --color-primary: #9040D0;
+  --color-primary-light: #B868F0;
+  --color-primary-rgb: 144, 64, 208;
+  --color-primary-dark: #6820A0;
+  --color-accent-kpi: #B868F0;
+  --kpi-number-color: #FFFFFF;
+  --chart-bar: #9040D0;
+  --chart-bar-rgb: 144, 64, 208;
+  --btn-bg: linear-gradient(135deg, #9040D0, #6820A0);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(144, 64, 208, 0.20);
+  --nav-active-text: #D2A8F0;
+  --nav-hover-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-border: rgba(144, 64, 208, 0.28);
+  --scrollbar-thumb: rgba(144, 64, 208, 0.4);
+  --text-heading: #B868F0;
+  --header-bg: rgba(12, 6, 32, 0.85);
+  --header-border: rgba(255, 255, 255, 0.08);
+  --nav-btn-text: #E2E8F0;
+  --glass-bg: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.10);
+  --glass-blur: 20px;
+  --glass-inner: rgba(255, 255, 255, 0.08);
+  --glass-inner-border: rgba(255, 255, 255, 0.15);
+  --is-dark-theme: 1;
+}
+.theme-violet-planet-full {
+  --bg-page-gradient: radial-gradient(ellipse at 50% 25%, #2A0E4A 0%, #0A0520 65%, #050212 100%);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-primary: 0 4px 20px rgba(144, 64, 208, 0.35);
+}
+.theme-violet-planet-minimal {
+  --bg-page-gradient: radial-gradient(circle at 50% 30%, #1F0A38 0%, #0A0520 100%);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-primary: 0 2px 10px rgba(144, 64, 208, 0.25);
+}
+
+/* ----------------------------------------------------------------------------
+ * 15. Claude (Sáng ấm - Terracotta & Giấy da cổ điển)
+ * ---------------------------------------------------------------------------- */
+.theme-claude-full, .theme-claude-minimal {
+  --bg-page: #F6EFE8;
+  --bg-sidebar: #EDE0D4;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #F8F2EC;
+  --bg-input: #FCF8F5;
+  --bg-overlay: rgba(38, 22, 14, 0.4);
+  --border-color: #DBC5B4;
+  --border-card: #E8D8CA;
+  --text-primary: #28170D;
+  --text-secondary: #6B4228;
+  --text-muted: #9E6C4C;
+  --color-primary: #CC785C;
+  --color-primary-light: #E09E88;
+  --color-primary-rgb: 204, 120, 92;
+  --color-primary-dark: #9E5338;
+  --color-accent-kpi: #CC785C;
+  --kpi-number-color: #28170D;
+  --chart-bar: #CC785C;
+  --chart-bar-rgb: 204, 120, 92;
+  --btn-bg: linear-gradient(135deg, #CC785C, #9E5338);
+  --btn-text: #FFFFFF;
+  --nav-active-bg: rgba(204, 120, 92, 0.14);
+  --nav-active-text: #9E5338;
+  --nav-hover-bg: rgba(204, 120, 92, 0.06);
+  --sidebar-border: #DBC5B4;
+  --scrollbar-thumb: rgba(204, 120, 92, 0.4);
+  --text-heading: #7C3A20;
+  --header-bg: rgba(237, 224, 212, 0.97);
+  --header-border: #E8D8CA;
+  --nav-btn-text: #6B4228;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(204, 120, 92, 0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --glass-blur: 14px;
+  --glass-inner: rgba(255, 255, 255, 0.60);
+  --glass-inner-border: rgba(255, 255, 255, 0.80);
+  --is-dark-theme: 0;
+}
+.theme-claude-full {
+  --bg-page-gradient: linear-gradient(135deg, #FAF4EF 0%, #EEDCD0 45%, #E2C7B4 100%);
+  --shadow-card: 0 8px 30px rgba(204, 120, 92, 0.15);
+  --shadow-primary: 0 4px 18px rgba(204, 120, 92, 0.28);
+}
+.theme-claude-minimal {
+  --bg-page-gradient: linear-gradient(135deg, #F6EFE8 0%, #EBDCCE 100%);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 2px 8px rgba(204, 120, 92, 0.2);
+}
+
+
+/* ============================================================================
+ * THEME SWITCHER PANEL CSS
+ * ============================================================================ */
+.theme-switcher-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.theme-switcher-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.theme-switcher-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 620px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  color: var(--text-primary);
+  animation: themeSwitcherPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes themeSwitcherPop {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.theme-switcher-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  background: var(--bg-card-alt);
+  border-bottom: 1px solid var(--border-card);
+}
+
+.theme-switcher-header h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+}
+
+.theme-switcher-close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all 0.15s;
+}
+
+.theme-switcher-close:hover {
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+.theme-switcher-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.theme-group-label {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+/* Presets row */
+.theme-presets-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 8px;
+}
+
+.theme-preset-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.theme-preset-item:hover {
+  border-color: var(--color-primary);
+  background: var(--nav-hover-bg);
+  transform: translateY(-1px);
+}
+
+.theme-preset-item.active {
+  border-color: var(--color-primary);
+  background: var(--nav-active-bg);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.theme-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.theme-check {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--color-primary);
+  display: none;
+}
+
+.theme-preset-item.active .theme-check,
+.theme-full-item.active .theme-check {
+  display: inline-block;
+}
+
+/* Full themes grid */
+.theme-full-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.theme-full-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-card);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.theme-full-item:hover {
+  border-color: var(--color-primary);
+  background: var(--nav-hover-bg);
+  transform: translateY(-1px);
+}
+
+.theme-full-item.active {
+  border-color: var(--color-primary);
+  background: var(--nav-active-bg);
+}
+
+.theme-orb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.theme-item-meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.theme-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.theme-variant {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Custom color row */
+.theme-custom-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-card);
+  border-radius: 14px;
+  flex-wrap: wrap;
+}
+
+.theme-custom-row input[type="color"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+}
+
+.theme-custom-row input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.theme-custom-row input[type="color"]::-webkit-color-swatch {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.theme-custom-hex {
+  flex: 1;
+  min-width: 120px;
+  padding: 8px 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: monospace;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.theme-custom-hex:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.theme-btn-apply-custom {
+  padding: 8px 16px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.theme-btn-apply-custom:hover {
+  opacity: 0.9;
+}
+
+.theme-switcher-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: var(--bg-card-alt);
+  border-top: 1px solid var(--border-card);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.theme-current-badge {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* Sidebar theme button */
+.sidebar-theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  margin-top: 4px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.sidebar-theme-btn i {
+  font-size: 14px;
+  color: var(--color-primary);
+  width: 18px;
+  text-align: center;
+}
+
+.sidebar-theme-btn:hover {
+  background: var(--nav-hover-bg);
+  border-color: var(--color-primary);
+  color: var(--text-primary);
+}
+
+/* Responsive modal */
+@media (max-width: 640px) {
+  .theme-full-grid {
+    grid-template-columns: 1fr;
+    max-height: 240px;
+  }
+  .theme-switcher-content {
+    max-height: 92vh;
+  }
+}

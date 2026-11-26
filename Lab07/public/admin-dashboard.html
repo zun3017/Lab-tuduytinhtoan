@@ -4,11 +4,13 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
-<title>Trung Tâm Quản Trị Hệ Thống · ZunTutor Lab07</title>
-<link href="favicon.ico" rel="shortcut icon"/>
-<link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-<link href="img/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+<title>Trung Tâm Quản Trị Hệ Thống | ZunTutor Admin Portal</title>
+
+<link href="favicon.ico?v=4" rel="shortcut icon"/>
+<link href="img/favicon-32x32.png?v=4" rel="icon" sizes="32x32" type="image/png"/>
+<link href="img/favicon-16x16.png?v=4" rel="icon" sizes="16x16" type="image/png"/>
+<link href="img/favicon-48x48.png?v=4" rel="icon" sizes="48x48" type="image/png"/>
+
 <link href="manifest.json" rel="manifest"/>
 <meta content="#2563EB" name="theme-color"/>
 <meta content="yes" name="mobile-web-app-capable"/>
@@ -19,8 +21,15 @@
 <link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="192x192"/>
 <link href="img/zuntutor_app_icon_512.png" rel="apple-touch-icon" sizes="512x512"/>
-<link href="css/style.css" rel="stylesheet"/>
-<link href="css/public-theme.css" rel="stylesheet"/>
+
+
+<link href="/vendor/inter.css" rel="stylesheet"/><link href="/vendor/zuntutor-fonts.css" rel="stylesheet"/>
+
+<link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/>
+
+<link href="css/style.css?v=b2da369a69" rel="stylesheet"/>
+
+<link href="css/public-theme.css?v=6b5316f6d5" rel="stylesheet"/>
 <style>
         :root {
             --adm-bg: #F0F7FF;
@@ -870,8 +879,9 @@
             }
         }
     </style>
-<link href="/vendor/inter.css" rel="stylesheet"/><link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/><link href="/css/lab-portals.css" rel="stylesheet"/></head>
+<link href="/css/lab-portals.css" rel="stylesheet"/></head>
 <body class="lab-private" data-page="admin-dashboard">
+
 <div class="header">
 <div class="nav-container">
 <a class="nav-left" href="index.html" style="text-decoration: none; cursor: pointer;">
@@ -887,10 +897,12 @@
 <a class="nav-btn" href="homework.html" id="btnNavHomework"><i class="fa-solid fa-file-arrow-up"></i> <span class="nav-label">BÀI TẬP</span></a>
 <a class="nav-btn active" href="tutor-login.html" id="btnNavTutor"><i class="fa-solid fa-chalkboard-user"></i> <span class="nav-label">GIA SƯ</span></a>
 </div>
+
 <button aria-label="Menu" class="hamburger-btn" id="hamburgerBtn">
 <i class="fa-solid fa-bars" id="hamburgerIcon"></i>
 </button>
 </div>
+
 <div class="mobile-nav-dropdown" id="mobileNavDropdown">
 <a class="mobile-nav-item" href="index.html" id="mobileHome">
 <i class="fa-solid fa-house"></i> Trang chủ
@@ -908,6 +920,7 @@
 </div>
 <div id="adminDashboardBox" style="display: none;">
 <div class="admin-wrapper">
+
 <header class="adm-header-bar">
 <div class="adm-brand-block">
 <div class="adm-brand-icon">
@@ -933,7 +946,9 @@
 </button>
 </div>
 </header>
+
 <div id="adminBillingAlerts"></div>
+
 <nav class="adm-tabs-container">
 <button class="adm-tab-pill active" id="btnAdminTabReport">
 <i class="fa-solid fa-chart-line"></i> Tổng Quan Kinh Doanh
@@ -950,7 +965,9 @@
 <i class="fa-solid fa-sliders"></i> Cài Đặt Hệ Thống
                 </button>
 </nav>
+
 <section class="admin-tab-content" id="adminTabReport">
+
 <div class="adm-kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
 <div class="adm-kpi-card kpi-purple">
 <div class="adm-kpi-icon"><i class="fa-solid fa-wallet"></i></div>
@@ -981,7 +998,9 @@
 </div>
 </div>
 </div>
+
 <div id="adminBillingAlerts" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;"></div>
+
 <div class="adm-card">
 <div class="adm-card-header">
 <h2 class="adm-card-title">
@@ -992,6 +1011,7 @@
 <canvas id="adminRevenueChartCanvas"></canvas>
 </div>
 </div>
+
 <div class="adm-card">
 <div class="adm-card-header">
 <h2 class="adm-card-title">
@@ -1000,14 +1020,28 @@
 </div>
 <div class="adm-table-wrap desktop-table-view">
 <table class="adm-table" id="adminPaymentsTable">
-<thead></thead>
+<thead>
+<tr>
+<th>Mã GD</th>
+<th>Gia Sư</th>
+<th>Số Điện Thoại</th>
+<th>Số Tiền</th>
+<th>Số Tháng</th>
+<th>Chu Kỳ Gia Hạn</th>
+<th>Thời Điểm Thu</th>
+<th>Ghi Chú</th>
+<th style="text-align:center;">Thao Tác</th>
+</tr>
+</thead>
 <tbody>
+
 </tbody>
 </table>
 </div>
 <div class="mobile-cards-view" id="adminPaymentsMobile"></div>
 </div>
 </section>
+
 <section class="admin-tab-content" id="adminTabTutors" style="display: none;">
 <div class="adm-card">
 <div class="adm-card-header">
@@ -1023,6 +1057,7 @@
                             </button>
 </div>
 </div>
+
 <div class="adm-toolbar">
 <div class="adm-search-wrap">
 <i class="fa-solid fa-magnifying-glass"></i>
@@ -1043,14 +1078,29 @@
 </div>
 <div class="adm-table-wrap desktop-table-view">
 <table class="adm-table" id="adminTutorsTable">
-<thead></thead>
+<thead>
+<tr>
+<th>Gia Sư</th>
+<th>Số Điện Thoại</th>
+<th>Email Google</th>
+<th>Nguồn / Trung Tâm</th>
+<th style="text-align: center;">Số HS</th>
+<th>Phí / Tháng</th>
+<th>Hạn Sử Dụng</th>
+<th>Hoạt Động Cuối</th>
+<th style="text-align: center;">Trạng thái</th>
+<th style="width: 170px; text-align: center;">Thao tác</th>
+</tr>
+</thead>
 <tbody>
+
 </tbody>
 </table>
 </div>
 <div class="mobile-cards-view" id="adminTutorsMobile"></div>
 </div>
 </section>
+
 <section class="admin-tab-content" id="adminTabCenters" style="display: none;">
 <div class="adm-card">
 <div class="adm-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
@@ -1070,16 +1120,421 @@
 </div>
 <div class="adm-table-wrap desktop-table-view">
 <table class="adm-table" id="adminCentersTable">
-<thead></thead>
+<thead>
+<tr>
+<th>Tên Nguồn / Trung Tâm</th>
+<th style="text-align: center;">Tổng Số Gia Sư</th>
+<th style="text-align: center;">Đang Hoạt Động</th>
+<th style="text-align: center;">Đang Dùng Thử</th>
+<th style="text-align: center;">Đã Hết Hạn</th>
+<th style="text-align: right;">Tổng Doanh Thu Đã Thu</th>
+<th style="text-align: center; width: 110px;">% Hoa Hồng</th>
+<th style="text-align: right;">Tiền Hoa Hồng</th>
+</tr>
+</thead>
 <tbody>
+
 </tbody>
 </table>
 </div>
 <div class="mobile-cards-view" id="adminCentersMobile"></div>
 </div>
 </section>
-<section class="admin-tab-content" id="adminTabSettings" style="display: none;"></section>
+
+<section class="admin-tab-content" id="adminTabSettings" style="display: none;">
+
+<div class="adm-card" style="margin-bottom: 24px;">
+<div class="adm-card-header">
+<h2 class="adm-card-title">
+<i class="fa-solid fa-bullhorn" style="color: #2563EB;"></i> Thông báo chạy chữ phát thanh tới toàn bộ Gia sư
+                        </h2>
+</div>
+<p style="font-size: 13px; color: #64748B; margin-top: 0; margin-bottom: 14px;">
+                        Nội dung này sẽ hiển thị thành dải chữ chạy đầu trang Dashboard của tất cả gia sư. Để trống sẽ tự động ẩn.
+                    </p>
+<div style="display: flex; gap: 10px; flex-wrap: wrap;">
+<input class="adm-search-input" id="adminMarqueeInput" placeholder="Ví dụ: Hệ thống bảo trì lúc 23h ngày hôm nay..." style="padding-left: 14px; flex: 1; min-width: 260px;" type="text"/>
+<button class="btn-primary-gradient" data-original-action="saveAdminMarquee" style="padding: 9px 18px; font-size: 13px;">
+<i class="fa-solid fa-floppy-disk"></i> Lưu thông báo
+                        </button>
+<button class="adm-action-btn btn-logout" data-original-action="clearAdminMarquee" style="padding: 9px 16px; font-size: 13px;">
+<i class="fa-solid fa-trash-can"></i> Xóa
+                        </button>
 </div>
 </div>
-<script defer="" src="/vendor/chart.umd.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/lang-all.js"></script><script defer="" src="/js/admin.js"></script></body>
+
+<div class="adm-card">
+<div class="adm-card-header">
+<h2 class="adm-card-title">
+<i class="fa-solid fa-headset" style="color: #2563EB;"></i> Thông tin liên hệ Admin (Hiển thị cho gia sư khi hết hạn)
+                        </h2>
+</div>
+<p style="font-size: 13px; color: #64748B; margin-top: 0; margin-bottom: 18px;">
+                        Các thông tin này được dùng để tạo các nút bấm Zalo, Messenger, Hotline trên màn hình khóa khi tài khoản gia sư bị hết hạn.
+                    </p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px;">
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Số Zalo Admin</label>
+<input class="adm-search-input" id="adminContactZalo" placeholder="Ví dụ: 0000700001" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+</div>
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Link Facebook / Messenger Admin</label>
+<input class="adm-search-input" id="adminContactMessenger" placeholder="Tên liên hệ trong bản lab" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+<div style="margin-top: 6px;">
+<a href="/index.html#labSupport" id="adminPreviewFbLink" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #2563EB; font-weight: 600; text-decoration: underline;" target="_blank">
+<i class="fa-brands fa-facebook"></i> Mở thử link Facebook: <span id="txtAdminPreviewFb">Liên hệ Lab07</span>
+</a>
+</div>
+</div>
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Số điện thoại Hotline</label>
+<input class="adm-search-input" id="adminContactPhone" placeholder="Ví dụ: 0000700001" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+</div>
+</div>
+<button class="btn-primary-gradient" data-original-action="saveAdminContactSettings" style="padding: 10px 22px; font-size: 13.5px;" type="button">
+<i class="fa-solid fa-floppy-disk"></i> Lưu cài đặt liên hệ
+                    </button>
+</div>
+</section>
+</div>
+</div>
+
+
+<div class="modal-overlay" id="adminAccountModal" style="z-index: 2000;">
+<div class="modal-content" style="max-width: 460px; background: #FFFFFF; border: 1px solid #DBEAFE; border-radius: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.15);">
+<div class="modal-header" style="border-bottom: 1px solid #E2E8F0; padding-bottom: 16px;">
+<h3 style="color: #0F172A; margin: 0; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-shield" style="color: #2563EB;"></i> Tài khoản Quản trị viên</h3>
+<span class="modal-close">×</span>
+</div>
+<div class="modal-body" style="padding: 20px 0;">
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Họ và tên Quản trị viên</label>
+<input class="adm-search-input" id="adminAccName" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+</div>
+<div class="modal-form-group" style="margin-top: 14px;">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Số điện thoại đăng nhập</label>
+<input class="adm-search-input" id="adminAccPhone" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+</div>
+<div class="modal-form-group" style="margin-top: 14px;">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Mã PIN đăng nhập</label>
+<input autocomplete="current-password" class="adm-search-input" id="adminAccPin" style="padding-left: 14px; margin-top: 6px; letter-spacing: 2px;" type="password"/>
+</div>
+</div>
+<div class="modal-footer" style="border-top: 1px solid #E2E8F0; padding-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+<button class="btn-secondary-ghost">Hủy</button>
+<button class="btn-primary-gradient" id="btnSaveAdminAccount">Cập nhật</button>
+</div>
+</div>
+</div>
+
+
+<div class="modal-overlay" id="adminEditTutorModal" style="z-index: 2000;">
+<div class="modal-content" style="max-width: 500px; background: #FFFFFF; border: 1px solid #DBEAFE; border-radius: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.15);">
+<div class="modal-header" style="border-bottom: 1px solid #E2E8F0; padding-bottom: 16px;">
+<h3 id="adminTutorModalTitle" style="color: #0F172A; margin: 0; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-chalkboard-user" style="color: #2563EB;"></i> Cấu hình Gia sư</h3>
+<span class="modal-close">×</span>
+</div>
+<input id="adminTutorOldPhone" type="hidden"/>
+<div class="modal-body" style="padding: 20px 0; max-height: 65vh; overflow-y: auto;">
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Họ và tên Gia sư</label>
+<input class="adm-search-input" id="adminTutorName" placeholder="Ví dụ: Nguyễn Văn A" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+</div>
+<div class="modal-form-group" style="margin-top: 12px;">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Số điện thoại</label>
+<input class="adm-search-input" id="adminTutorPhone" placeholder="Ví dụ: 0000700001" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+</div>
+<div class="modal-form-group" style="margin-top: 12px;">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Email liên kết Google</label>
+<input class="adm-search-input" id="adminTutorEmail" placeholder="giasu@example.invalid" style="padding-left: 14px; margin-top: 6px;" type="email"/>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;">
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Môn dạy</label>
+<input class="adm-search-input" id="adminTutorSubjects" placeholder="Ví dụ: Toán, Lý" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+</div>
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Cấp dạy</label>
+<input class="adm-search-input" id="adminTutorLevels" placeholder="Ví dụ: Cấp 2, Cấp 3" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;">
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Nguồn / Trung tâm</label>
+<input class="adm-search-input" id="adminTutorReferralCenter" placeholder="Mã nguồn / trung tâm" style="padding-left: 14px; margin-top: 6px; text-transform: uppercase;" type="text"/>
+</div>
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Giá thỏa thuận riêng (đ/tháng - tùy chọn)</label>
+<input class="adm-search-input" id="adminTutorCustomFee" placeholder="Ví dụ: 100000" style="padding-left: 14px; margin-top: 6px;" type="number"/>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;">
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">
+<i class="fa-solid fa-user-shield" style="color: #2563EB;"></i> Loại tài khoản
+                        </label>
+<select class="adm-filter-select" id="adminTutorAccountType" style="width: 100%; margin-top: 6px; font-weight: 600; height: 40px;">
+<option value="Gia sư (gói 30 ngày)">Đang hoạt động (Chính thức)</option>
+<option value="Gia sư dùng thử (15 ngày)">Dùng thử (15 ngày)</option>
+</select>
+</div>
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">
+<i class="fa-regular fa-calendar-check" style="color: #2563EB;"></i> Hạn đóng phí (dd/mm/yyyy)
+                        </label>
+<div class="vn-date-picker-box" style="margin-top: 6px;">
+<input autocomplete="off" class="adm-search-input vn-date-input" id="adminTutorNextBillingDate" maxlength="10" placeholder="Ví dụ: 15/08/2026" style="padding-left: 14px; font-weight: 600; font-size: 13px;" type="text"/>
+<button class="vn-date-picker-icon-btn" tabindex="-1" title="Chọn ngày" type="button"><i class="fa-regular fa-calendar-check" style="color: #2563EB;"></i></button>
+<input aria-hidden="true" class="vn-hidden-native-picker" id="adminTutorNextBillingDatePicker" tabindex="-1" type="date"/>
+</div>
+</div>
+</div>
+<div class="modal-form-group" style="margin-top: 14px; padding: 12px; background: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 12px;">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>
+<div style="font-size: 13px; font-weight: 600; color: #0F172A;">Bảo mật mã PIN</div>
+<div style="font-size: 11.5px; color: #64748B;">Admin không xem mã PIN của gia sư.</div>
+</div>
+<button class="btn-secondary-ghost" style="font-size: 12px; padding: 6px 12px;" type="button">
+<i class="fa-solid fa-key"></i> Đặt lại PIN (1234)
+                        </button>
+</div>
+</div>
+</div>
+<div class="modal-footer" style="border-top: 1px solid #E2E8F0; padding-top: 16px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+<div style="display: flex; gap: 8px;">
+<button class="adm-action-btn btn-logout" id="btnDeleteAdminTutor" style="display: none;">
+<i class="fa-solid fa-trash-can"></i> Xóa gia sư
+                    </button>
+<button class="adm-action-btn" id="btnDeactivateAdminTutor" style="display: none;"></button>
+</div>
+<div style="display: flex; gap: 8px;">
+<button class="btn-secondary-ghost">Hủy</button>
+<button class="btn-primary-gradient" id="btnSaveAdminTutor">Lưu lại</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="adminRenewModal" style="z-index: 2000;">
+<div class="modal-content" style="max-width: 480px; background: #FFFFFF; border: 1px solid #DBEAFE; border-radius: 24px; box-shadow: 0 20px 45px rgba(0,0,0,0.18);">
+<div class="modal-header" style="border-bottom: 1px solid #E2E8F0; padding-bottom: 16px;">
+<h3 style="color: #0F172A; margin: 0; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+<i class="fa-solid fa-crown" style="color: #F59E0B;"></i> Gia hạn gói dịch vụ Gia sư
+                </h3>
+<span class="modal-close">×</span>
+</div>
+<input id="adminRenewTutorPhone" type="hidden"/>
+<div class="modal-body" style="padding: 20px 0;">
+<div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 14px; margin-bottom: 16px;">
+<div id="rnTutorName" style="font-weight: 700; color: #0F172A; font-size: 14.5px;">Gia sư: ...</div>
+<div style="font-size: 12.5px; color: #64748B; margin-top: 4px;">
+                        SĐT: <b id="rnTutorPhone">...</b> · Đang dạy: <b id="rnTutorStudentCount" style="color: #2563EB;">0 học sinh</b>
+</div>
+<div style="font-size: 12.5px; color: #64748B; margin-top: 2px;">
+                        Hạn hiện tại: <b id="rnTutorCurrentDue">...</b>
+</div>
+</div>
+<div id="rnLatestPaymentWrap" style="display:none; background:#FEF2F2; border:1px solid #FECACA; border-radius:14px; padding:12px 14px; margin-bottom:16px;">
+<div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+<div style="font-size:12.5px;">
+<div style="font-weight:700; color:#991B1B;"><i class="fa-solid fa-clock-rotate-left"></i> Đợt gia hạn gần nhất:</div>
+<div id="rnLatestPaymentInfo" style="color:#7F1D1D; margin-top:3px; line-height:1.4;"></div>
+</div>
+<button class="adm-btn-action btn-cancel-renew" style="white-space:nowrap; padding:6px 12px; font-weight:700;" title="Hoàn tác / Hủy đợt gia hạn gần nhất nếu gia hạn nhầm" type="button">
+<i class="fa-solid fa-rotate-left"></i> Hủy gia hạn
+                        </button>
+</div>
+</div>
+<div class="modal-form-group">
+<label style="color: #475569; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+<i class="fa-solid fa-clock-rotate-left" style="color: #2563EB;"></i> Thời gian gia hạn
+                    </label>
+<select class="adm-filter-select" id="rnMonthsSelect" style="width: 100%; margin-top: 6px; font-weight: 600;">
+<option value="1">1 tháng (30 ngày)</option>
+<option value="2">2 tháng (60 ngày)</option>
+<option value="3">3 tháng (1 quý - 90 ngày)</option>
+<option value="6">6 tháng (Nửa năm - 180 ngày)</option>
+<option value="12">12 tháng (1 năm - 365 ngày)</option>
+<option value="custom">✏️ Tùy chỉnh (Từ ngày → Đến ngày)</option>
+</select>
+</div>
+
+<div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 12px 14px; margin-top: 12px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+<span style="font-size: 12px; font-weight: 700; color: #334155;">
+<i class="fa-regular fa-calendar-days" style="color: #2563EB;"></i> ĐIỀU CHỈNH THỜI HẠN GÓI
+                        </span>
+<div style="display: flex; align-items: center; gap: 4px;">
+<span style="font-size: 11.5px; color: #64748B;">Số ngày:</span>
+<input id="rnCustomDaysInput" max="1825" min="1" style="width: 58px; height: 26px; padding: 0 6px; font-size: 12px; font-weight: 700; text-align: center; border: 1px solid #CBD5E1; border-radius: 6px; background: #fff; color: #0F172A;" type="number" value="30"/>
+<span style="font-size: 11.5px; color: #64748B;">ngày</span>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+<div class="modal-form-group" style="margin: 0;">
+<label style="color: #64748B; font-size: 11.5px; font-weight: 600;">Từ ngày (dd/mm/yyyy)</label>
+<div class="vn-date-picker-box" style="margin-top: 4px;">
+<input autocomplete="off" class="adm-search-input vn-date-input" id="rnDateFrom" maxlength="10" placeholder="dd/mm/yyyy" style="padding-left: 10px; font-weight: 600; font-size: 13px;" type="text"/>
+<button class="vn-date-picker-icon-btn" tabindex="-1" title="Chọn ngày" type="button"><i class="fa-regular fa-calendar"></i></button>
+<input aria-hidden="true" class="vn-hidden-native-picker" id="rnDateFrom_picker" tabindex="-1" type="date"/>
+</div>
+</div>
+<div class="modal-form-group" style="margin: 0;">
+<label style="color: #059669; font-size: 11.5px; font-weight: 600;">Đến ngày (dd/mm/yyyy)</label>
+<div class="vn-date-picker-box" style="margin-top: 4px;">
+<input autocomplete="off" class="adm-search-input vn-date-input" id="rnDateTo" maxlength="10" placeholder="dd/mm/yyyy" style="padding-left: 10px; font-weight: 700; color: #059669; font-size: 13px;" type="text"/>
+<button class="vn-date-picker-icon-btn" style="color: #059669;" tabindex="-1" title="Chọn ngày" type="button"><i class="fa-regular fa-calendar-check"></i></button>
+<input aria-hidden="true" class="vn-hidden-native-picker" id="rnDateTo_picker" tabindex="-1" type="date"/>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;">
+<button class="btn-secondary-ghost" style="padding: 3px 8px; font-size: 11.5px; border-radius: 6px; border: 1px solid #CBD5E1; background: #fff; color: #334155;" type="button">+15 ngày</button>
+<button class="btn-secondary-ghost" style="padding: 3px 8px; font-size: 11.5px; border-radius: 6px; border: 1px solid #CBD5E1; background: #fff; color: #334155;" type="button">+30 ngày</button>
+<button class="btn-secondary-ghost" style="padding: 3px 8px; font-size: 11.5px; border-radius: 6px; border: 1px solid #CBD5E1; background: #fff; color: #334155;" type="button">+60 ngày</button>
+<button class="btn-secondary-ghost" style="padding: 3px 8px; font-size: 11.5px; border-radius: 6px; border: 1px solid #CBD5E1; background: #fff; color: #334155;" type="button">+90 ngày</button>
+<button class="btn-secondary-ghost" style="padding: 3px 8px; font-size: 11.5px; border-radius: 6px; border: 1px solid #CBD5E1; background: #fff; color: #334155;" type="button">+180 ngày</button>
+<button class="btn-secondary-ghost" style="padding: 3px 8px; font-size: 11.5px; border-radius: 6px; border: 1px solid #CBD5E1; background: #fff; color: #334155;" type="button">+1 năm</button>
+</div>
+
+<div id="rnPeriodSummary" style="font-size: 12px; color: #1E40AF; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 7px 10px; border-radius: 8px; margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+<i class="fa-solid fa-clock-rotate-left"></i>
+<span id="rnPeriodText">Chu kỳ: Từ ... đến ...</span>
+</div>
+</div>
+<div class="modal-form-group" style="margin-top: 14px;">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Số tiền thu (VNĐ)</label>
+<input class="adm-search-input" id="rnAmountInput" inputmode="numeric" style="padding-left: 14px; margin-top: 6px; font-weight: 700; color: #2563EB;" type="text"/>
+<span id="rnFeeNote" style="font-size: 11.5px; color: #64748B; margin-top: 4px; display: block;">
+                        Tự động tính 15.000đ/học sinh/tháng
+                    </span>
+</div>
+<div class="modal-form-group" style="margin-top: 14px;">
+<label style="color: #475569; font-size: 13px; font-weight: 600;">Ghi chú giao dịch</label>
+<input class="adm-search-input" id="rnNoteInput" placeholder="Ví dụ: Đã nhận tiền qua Zalo / MB Bank" style="padding-left: 14px; margin-top: 6px;" type="text"/>
+</div>
+</div>
+<div class="modal-footer" style="border-top: 1px solid #E2E8F0; padding-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+<button class="btn-secondary-ghost" type="button">Hủy</button>
+<button class="btn-primary-gradient" id="btnSubmitAdminRenew" type="button">
+<i class="fa-solid fa-check"></i> Xác nhận gia hạn
+                </button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="tutorTrashModal" style="z-index: 2000;">
+<div class="modal-content" style="max-width: 620px; width: 92%; background: #FFFFFF; border: 1px solid #DBEAFE; border-radius: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.15);">
+<div class="modal-header" style="border-bottom: 1px solid #E2E8F0; padding-bottom: 16px;">
+<h3 style="color: #0F172A; margin: 0; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-trash-can" style="color: #EF4444;"></i> Thùng rác Gia sư</h3>
+<span class="modal-close">×</span>
+</div>
+<div class="modal-body" style="max-height: 55vh; overflow-y: auto; padding: 18px 0;">
+<div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 12px; padding: 12px 16px; color: #B45309; font-size: 12.5px; line-height: 1.5; margin-bottom: 16px;">
+<i class="fa-solid fa-triangle-exclamation" style="margin-right: 6px;"></i> Các tài khoản gia sư trong thùng rác sẽ bị <b>xóa vĩnh viễn</b> khỏi hệ thống sau <b>10 ngày</b> kể từ ngày đưa vào thùng rác.
+                </div>
+<div id="trashTutorList" style="display: flex; flex-direction: column; gap: 10px;">
+
+</div>
+</div>
+<div class="modal-footer" style="border-top: 1px solid #E2E8F0; padding-top: 16px;">
+<button class="btn-secondary-ghost" style="width: 100%; justify-content: center;">Đóng</button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="adminAddCenterModal" style="z-index: 2000;">
+<div class="modal-content" style="max-width: 480px; width: 92%; background: #FFFFFF; border: 1px solid #DBEAFE; border-radius: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.18);">
+<div class="modal-header" style="border-bottom: 1px solid #E2E8F0; padding-bottom: 16px;">
+<h3 style="color: #0F172A; margin: 0; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+<i class="fa-solid fa-building-circle-check" style="color: #2563EB;"></i> Thêm Trung Tâm / Đối Tác Mới
+                </h3>
+<span class="modal-close">×</span>
+</div>
+<div class="modal-body" style="padding: 18px 0;">
+<div class="modal-form-group">
+<label style="color: #334155; font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">
+                        Mã Trung Tâm (Mã Giới Thiệu) <span style="color: #EF4444;">*</span>
+</label>
+<input class="adm-search-input" id="adminNewCenterCode" placeholder="Mã viết tắt (ví dụ: TT01)" style="padding-left: 14px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;" type="text"/>
+<span style="font-size: 11.5px; color: #64748B; margin-top: 3px; display: block;">
+                        Tự động viết hoa toàn bộ để gia sư nhập chữ hoa hay thường đều khớp 100%.
+                    </span>
+</div>
+<div class="modal-form-group" style="margin-top: 14px;">
+<label style="color: #334155; font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">
+                        Tên Đầy Đủ Trung Tâm / Đối Tác
+                    </label>
+<input class="adm-search-input" id="adminNewCenterFullName" placeholder="Nhập tên đầy đủ trung tâm" style="padding-left: 14px;" type="text"/>
+</div>
+<div class="modal-form-group" style="margin-top: 14px;">
+<label style="color: #334155; font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">
+                        Tỷ Lệ Hoa Hồng Mặc Định (%)
+                    </label>
+<div style="display: flex; align-items: center; gap: 8px;">
+<input class="adm-search-input" id="adminNewCenterRate" max="100" min="0" style="padding-left: 14px; width: 100px; font-weight: 700;" type="number" value="20"/>
+<span style="font-size: 13px; font-weight: 600; color: #64748B;">% (chỉ tính khi gia sư mua gói)</span>
+</div>
+</div>
+<div class="modal-form-group" style="margin-top: 14px;">
+<label style="color: #334155; font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">
+                        Số Điện Thoại / Zalo Liên Hệ (tùy chọn)
+                    </label>
+<input class="adm-search-input" id="adminNewCenterContact" placeholder="Ví dụ: 0000700001" style="padding-left: 14px;" type="text"/>
+</div>
+</div>
+<div class="modal-footer" style="border-top: 1px solid #E2E8F0; padding-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+<button class="btn-secondary-ghost" type="button">Hủy</button>
+<button class="btn-primary-gradient" id="btnSaveAdminCenter" type="button">
+<i class="fa-solid fa-floppy-disk"></i> Lưu Trung Tâm
+                </button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="pinConfirmModal" style="z-index: 2000;">
+<div class="modal-content" style="max-width: 420px; text-align: center; background: #FFFFFF; border: 1px solid #DBEAFE; border-radius: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.15);">
+<div style="font-size: 40px; color: #EF4444; margin-bottom: 14px;"><i class="fa-solid fa-shield-halved"></i></div>
+<h3 style="color: #0F172A; margin: 0 0 8px; font-size: 18px; font-weight: 700;">Xác thực mã PIN Admin</h3>
+<p id="confirmPinModalText" style="color: #64748B; font-size: 13.5px; margin: 0 0 18px; line-height: 1.5;">Vui lòng nhập mã PIN Quản trị viên để xác nhận thao tác bảo mật.</p>
+<input autocomplete="off" class="adm-search-input" id="confirmTutorPinInput" placeholder="Nhập mã PIN" style="text-align: center; font-size: 20px; letter-spacing: 6px; padding: 12px; margin-bottom: 20px;" type="password"/>
+<div style="display: flex; justify-content: center; gap: 10px;">
+<button class="btn-secondary-ghost" style="min-width: 100px;">Hủy</button>
+<button class="btn-primary-gradient" style="min-width: 110px; background: linear-gradient(135deg, #EF4444, #DC2626);">Xác nhận</button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="customConfirmModal" style="z-index: 2000;">
+<div class="modal-content" style="max-width: 420px; text-align: center; background: #FFFFFF; border: 1px solid #DBEAFE; border-radius: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.15);">
+<div style="font-size: 40px; color: #F59E0B; margin-bottom: 14px;"><i class="fa-solid fa-circle-question"></i></div>
+<h3 style="color: #0F172A; margin: 0 0 8px; font-size: 18px; font-weight: 700;">Xác nhận yêu cầu</h3>
+<p id="confirmModalMessage" style="color: #64748B; font-size: 13.5px; line-height: 1.5; margin: 0 0 20px;"></p>
+<div style="display: flex; justify-content: center; gap: 10px;">
+<button class="btn-secondary-ghost" id="btnConfirmCancel" style="min-width: 100px;">Hủy</button>
+<button class="btn-primary-gradient" id="btnConfirmOk" style="min-width: 100px;">Đồng ý</button>
+</div>
+</div>
+</div>
+
+<div id="toastContainer" style="position: fixed; top: 24px; right: 24px; z-index: 2500; display: flex; flex-direction: column; gap: 10px; pointer-events: none;"></div>
+
+<div style="display: none;">
+<input id="maHocSinh" type="hidden"/>
+<input id="maPin" placeholder="Hidden PIN field" type="hidden"/>
+<div id="pinContainer"></div>
+<button id="btnMainSubmit" type="button">Hidden Submit button</button>
+</div>
+
+
+
+
+
+
+
+
+<script defer="" src="/vendor/chart.umd.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/admin.js"></script><script defer="" src="/js/scroll-animations.js"></script></body>
 </html>

@@ -2,29 +2,51 @@
 
 <html lang="vi">
 <head>
+<base target="_top"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
-<title>ZunTutor - Cổng Tra Cứu &amp; Nộp Bài Tập Trực Tuyến · ZunTutor Lab07</title>
+<title>ZunTutor - Cổng Tra Cứu &amp; Nộp Bài Tập Trực Tuyến</title>
 <meta content="Tra cứu danh sách bài tập về nhà, nộp bài làm trực tuyến và xem kết quả chấm điểm chi tiết từ Gia Sư." name="description"/>
 
+<meta content="website" property="og:type"/>
+<meta content="/homework.html" property="og:url"/>
+<meta content="ZunTutor" property="og:site_name"/>
+<meta content="ZunTutor - Cổng Tra Cứu &amp; Nộp Bài Tập Trực Tuyến" property="og:title"/>
+<meta content="Tra cứu danh sách bài tập về nhà, nộp bài làm trực tuyến và xem kết quả chấm điểm chi tiết từ Gia Sư." property="og:description"/>
+<meta content="/img/zuntutor_og_banner.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
 
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="ZunTutor - Cổng Tra Cứu &amp; Nộp Bài Tập Trực Tuyến" name="twitter:title"/>
+<meta content="Tra cứu danh sách bài tập về nhà, nộp bài làm trực tuyến và xem kết quả chấm điểm chi tiết từ Gia Sư." name="twitter:description"/>
+<meta content="/img/zuntutor_og_banner.png" name="twitter:image"/>
 
+<link href="favicon.ico?v=5" rel="shortcut icon"/>
+<link href="img/favicon-32x32.png?v=5" rel="icon" sizes="32x32" type="image/png"/>
+<link href="img/favicon-16x16.png?v=5" rel="icon" sizes="16x16" type="image/png"/>
+<link href="img/favicon-48x48.png?v=5" rel="icon" sizes="48x48" type="image/png"/>
 
-<link href="favicon.ico" rel="shortcut icon"/>
-<link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-<link href="img/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
 <link href="manifest.json" rel="manifest"/>
 <meta content="#2563EB" name="theme-color"/>
 <meta content="yes" name="mobile-web-app-capable"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="ZunTutor" name="apple-mobile-web-app-title"/>
-<link href="img/zuntutor_app_icon.png" rel="apple-touch-icon"/>
-<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="img/zuntutor_app_icon_192.png" rel="apple-touch-icon" sizes="192x192"/>
-<link href="img/zuntutor_app_icon_512.png" rel="apple-touch-icon" sizes="512x512"/>
-<link href="css/public-theme.css" rel="stylesheet"/>
+<link href="img/zuntutor_app_icon.png?v=5" rel="apple-touch-icon"/>
+<link href="img/zuntutor_app_icon_192.png?v=5" rel="apple-touch-icon" sizes="180x180"/>
+<link href="img/zuntutor_app_icon_192.png?v=5" rel="apple-touch-icon" sizes="192x192"/>
+<link href="img/zuntutor_app_icon_512.png?v=5" rel="apple-touch-icon" sizes="512x512"/>
+
+
+<link href="/vendor/inter.css" rel="stylesheet"/>
+<link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/>
+
+
+
+<link href="css/public-theme.css?v=6b5316f6d5" rel="stylesheet"/>
+
+
 <style>
         html.auto-logging-in #mainScreen {
             display: none !important;
@@ -1129,11 +1151,14 @@
           .hw-hero-name { font-size: 16px !important; }
         }
     </style>
-<link href="css/tw.css" rel="stylesheet"/>
-<link href="/vendor/inter.css" rel="stylesheet"/><link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet"/><link href="/css/lab-portals.css" rel="stylesheet"/></head>
+
+<link href="css/tw.css?v=601a5bf8c0" rel="stylesheet"/>
+<link href="/css/lab-portals.css" rel="stylesheet"/></head>
 <body class="relative min-h-screen bg-gradient-to-b from-primary-50 via-white to-primary-50 text-slate-800 antialiased overflow-x-hidden selection:bg-primary-200 selection:text-primary-900" data-page="homework">
+
 <div class="fixed top-[-10%] left-[-5%] w-[40rem] h-[40rem] bg-blue-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 pointer-events-none z-0"></div>
 <div class="fixed top-[30%] right-[-10%] w-[35rem] h-[35rem] bg-cyan-300 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 pointer-events-none z-0"></div>
+
 <div class="header">
 <div class="nav-container">
 <a class="nav-left" href="index.html" style="text-decoration: none; cursor: pointer;">
@@ -1149,10 +1174,12 @@
 <a class="nav-btn active" href="homework.html" id="btnNavHomework"><i class="fa-solid fa-file-arrow-up"></i> <span class="nav-label">BÀI TẬP</span></a>
 <a class="nav-btn" href="tutor-login.html" id="btnNavTutor"><i class="fa-solid fa-chalkboard-user"></i> <span class="nav-label">GIA SƯ</span></a>
 </div>
+
 <button aria-label="Menu" class="hamburger-btn" id="hamburgerBtn">
 <i class="fa-solid fa-bars" id="hamburgerIcon"></i>
 </button>
 </div>
+
 <div class="mobile-nav-dropdown" id="mobileNavDropdown">
 <a class="mobile-nav-item" href="index.html" id="mobileHome">
 <i class="fa-solid fa-house"></i> Trang chủ
@@ -1168,10 +1195,12 @@
             </a>
 </div>
 </div>
+
 <div id="deskSurface" style="display: none;"></div>
 <div id="charBoy" style="display: none;"></div>
 <div id="charGirl" style="display: none;"></div>
 <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 w-full overflow-hidden flex flex-col items-center">
+
 <div id="pageAutoLoading" style="display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 50vh; width: 100%; text-align: center;">
 <div style="display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: 20px; margin-bottom: 18px; box-shadow: 0 8px 24px rgba(59,130,246,0.18);">
 <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 30px; color: #2563EB;"></i>
@@ -1179,6 +1208,7 @@
 <div style="font-size: 17px; font-weight: 800; color: #1E293B; margin-bottom: 6px;">Đang tải trang bài tập...</div>
 <div style="font-size: 13.5px; color: #64748B;">Vui lòng chờ trong giây lát</div>
 </div>
+
 <section class="w-full" id="mainScreen">
 <div class="text-center max-w-3xl mx-auto mb-10">
 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 border border-blue-200 mb-5 shadow-sm reveal" style="transition-delay:0.1s">
@@ -1193,6 +1223,7 @@
                     Nộp bài tập của bạn trực tuyến và theo dõi kết quả chấm điểm nhanh chóng, thuận tiện 🚀
                 </p>
 </div>
+
 <div class="max-w-2xl mx-auto mb-16 reveal" style="transition-delay: 0.15s;">
 <form class="bg-white p-2.5 rounded-full shadow-2xl shadow-primary-500/20 border border-gray-100 flex items-center transition-all duration-300 focus-within:ring-4 focus-within:ring-primary-100 hover:shadow-glow" id="formBaiTap">
 <div class="pl-5 pr-3 text-slate-400">
@@ -1200,7 +1231,7 @@
 <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
 </div>
-<input aria-label="Mã học sinh" autocomplete="username" class="flex-grow bg-transparent text-slate-800 text-base sm:text-lg px-2 py-3 focus:outline-none placeholder-slate-400 font-medium w-full" id="maInput" placeholder="Mã học sinh" required="" type="text"/><input aria-label="Mã PIN" autocomplete="current-password" class="lab-pin" id="studentPin" name="pin" placeholder="Mã PIN" required="" type="password"/>
+<input autocomplete="username" class="flex-grow bg-transparent text-slate-800 text-base sm:text-lg px-2 py-3 focus:outline-none placeholder-slate-400 font-medium w-full" id="maInput" placeholder="Nhập mã bài tập (VD: BT101)..." required="" type="text"/>
 <button class="flex-shrink-0 bg-primary-600 hover:bg-primary-700 text-white font-bold py-3.5 px-6 sm:px-8 rounded-full flex items-center gap-2 transition-all duration-200 active:scale-95" id="btnSubmitBaiTap" type="submit">
 <span class="btn-text">Đăng nhập<span class="btn-text-portal"> cổng</span></span>
 <svg class="btn-icon h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
@@ -1215,7 +1246,9 @@
 <p class="text-red-500 text-sm mt-3 text-center font-medium" id="error" style="display: none;"></p>
 <p class="text-primary-600 text-sm mt-3 text-center italic" id="loadingText" style="display: none;"><i class="fa-solid fa-circle-notch fa-spin"></i> Hệ thống đang xác thực tài khoản...</p>
 </div>
+
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal-stagger">
+
 <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
 <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
 <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -1223,6 +1256,7 @@
 <h3 class="text-lg font-bold text-slate-800 mb-2">Bài giảng</h3>
 <p class="text-sm text-slate-500 leading-relaxed">Tải và xem lại các file bài giảng, slide tiết học một cách dễ dàng.</p>
 </div>
+
 <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
 <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
 <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -1230,6 +1264,7 @@
 <h3 class="text-lg font-bold text-slate-800 mb-2">Bài tập về nhà</h3>
 <p class="text-sm text-slate-500 leading-relaxed">Tra cứu và tải bài tập rèn luyện hàng tuần, nộp bài nhanh chóng.</p>
 </div>
+
 <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
 <div class="w-14 h-14 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
 <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -1237,6 +1272,7 @@
 <h3 class="text-lg font-bold text-slate-800 mb-2">Bài kiểm tra</h3>
 <p class="text-sm text-slate-500 leading-relaxed">Tải xuống và ôn tập các đề kiểm tra định kỳ để chuẩn bị tốt nhất.</p>
 </div>
+
 <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-soft hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
 <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-amber-600 group-hover:text-white transition-colors duration-300">
 <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -1246,7 +1282,9 @@
 </div>
 </div>
 </section>
+
 <div id="homeworkDashboard" style="display: none; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 16px 80px;">
+
 <div class="hw-hero-banner reveal" id="hwHeroBanner">
 <div class="hw-hero-icon"><i class="fa-solid fa-file-arrow-up"></i></div>
 <div class="hw-hero-info">
@@ -1261,6 +1299,7 @@
 <span id="hwLockBadge"></span>
 </div>
 </div>
+
 <div class="hw-kpi-grid reveal-stagger" id="hwKpiGrid">
 <div class="hw-kpi-card">
 <div class="hw-kpi-icon" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8);">
@@ -1299,8 +1338,11 @@
 </div>
 </div>
 </div>
+
 <div class="hw-charts-upload-grid reveal">
+
 <div class="hw-charts-col">
+
 <div class="hw-chart-card" id="hwDonutCard">
 <div class="hw-section-title">
 <i class="fa-solid fa-chart-pie" style="color:#10B981;"></i>
@@ -1317,47 +1359,86 @@
 <div class="hw-donut-legend" id="hwDonutLegend"></div>
 </div>
 </div>
+
 <div class="hw-chart-card" id="hwBarCard">
 <div class="hw-section-title">
-<i class="fa-solid fa-chart-line" style="color:#3B82F6;"></i>
-                            Bài nộp theo tuần (tháng này)
-                        </div>
+<i class="fa-solid fa-chart-line" style="color:#3B82F6;"></i> Bài nộp theo tuần (tháng này)</div>
 <div style="position:relative; height:150px; width:100%;">
 <canvas id="hwBarChart"></canvas>
 </div>
 </div>
 </div>
-<div class="hw-chart-card hw-upload-card" id="hwFormCard">
+
+<div class="hw-chart-card hw-upload-card" id="hwFormCard"><form id="submitWork">
 <div class="hw-section-title">
 <i class="fa-solid fa-cloud-arrow-up" style="color:#3B82F6;"></i>
-Nộp bài mới
+                        Nộp bài mới
+                    </div>
+<div style="margin-bottom: 15px; text-align: left;">
+<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600;">Tên học sinh</label>
+<input id="hwStudentInput" readonly="" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CBD5E1; background: #F1F5F9; color: var(--text-primary); outline: none; font-size: 14px; font-weight: 500;" type="text"/>
 </div>
-<form id="submitWork">
-<div style="margin-bottom: 14px; text-align: left;">
-<label for="workChoice" style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600;">Bài tập được giao <span style="color:#EF4444;">*</span></label>
-<select id="workChoice" name="assignment_id" required="" style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid #CBD5E1; background: #F8FAFF; color: #1E293B; outline: none; font-size: 14px; font-family: 'Inter', sans-serif;"></select>
+<div style="margin-bottom: 15px; text-align: left;">
+<label style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600;">Tên bài học <span style="color:#EF4444;">*</span></label>
+<input id="hwLessonInput" placeholder="Nhập tên bài học (VD: Bài tập Tuần 1, Đề số 2)..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CBD5E1; background: #F8FAFF; color: var(--text-primary); outline: none; font-size: 14px; font-family: 'Inter', sans-serif;" type="hidden"/><select id="workChoice" name="assignment_id" required="" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CBD5E1; background: #F8FAFF; color: var(--text-primary); outline: none; font-size: 14px; font-family: 'Inter', sans-serif;"></select>
 </div>
 <div style="margin-bottom: 14px; text-align: left;">
 <label for="hwContentInput" style="display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600;">Lời giải / Ghi chú</label>
 <textarea id="hwContentInput" name="content" placeholder="Nhập lời giải, kết quả hoặc ghi chú gửi gia sư..." rows="3" style="width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid #CBD5E1; background: #F8FAFF; color: #1E293B; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; box-sizing: border-box;"></textarea>
-</div>
-<div id="uploadAreaWrapper" style="margin-bottom: 14px;">
-<div class="upload-area" id="uploadAreaDesktop" style="cursor: pointer; padding: 24px 18px;">
+</div><div id="uploadAreaWrapper">
+
+<div class="upload-area" id="uploadAreaDesktop">
 <i class="fa-solid fa-file-arrow-up upload-icon" id="uploadAreaIcon"></i>
-<div class="upload-text" id="uploadAreaText">Kéo thả hoặc nhấp chọn hình ảnh / tài liệu bài làm</div>
-<div class="upload-hint drag-hint">Hỗ trợ PDF, Word, PNG, JPG, TXT (Có thể chọn nhiều tệp)</div>
+<div class="upload-text" id="uploadAreaText">Kéo thả hoặc click chọn hình ảnh/tài liệu bài tập của bạn</div>
+<div class="upload-hint drag-hint">Hỗ trợ PDF, Word, PNG, JPG, JPEG (Có thể chọn nhiều tệp)</div>
+<span class="tap-hint" style="display:none; font-size: 13px; color: #3B82F6; font-weight: 600; margin-top: 6px;">📎 Nhấn để chọn file</span>
 <input id="hwFileInputDesktop" multiple="" name="files" style="display: none;" type="file"/>
 </div>
-<div id="hwSelectedFilesBadge" style="display:none; margin-top:8px; padding:8px 12px; background:#EFF6FF; border:1px solid #BFDBFE; border-radius:10px; font-size:12.5px; color:#1D4ED8; font-weight:600;"></div>
+
+<div class="upload-area" id="uploadAreaMobile" style="cursor: default; padding: 25px 15px; background: #F8FAFF; border: 2px dashed #BFDBFE;">
+<i class="fa-solid fa-cloud-arrow-up upload-icon" style="font-size: 32px; margin-bottom: 12px; color: #3B82F6;"></i>
+<div class="upload-text" style="font-size: 14px; font-weight: 600; margin-bottom: 15px; color: var(--text-primary); text-align: center;">Chọn hình ảnh hoặc tài liệu bài tập</div>
+<div style="display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 280px; margin: 0 auto;">
+
+<button class="btn-submit" data-pick-file="hwImageInputMobile" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); border: none; font-size: 13px; padding: 10px 16px; border-radius: 20px; font-weight: bold; width: 100%; justify-content: center; gap: 8px; box-shadow: var(--shadow-primary); display: inline-flex; align-items: center; cursor: pointer; color: #FFF; font-family: 'Inter', sans-serif;" type="button">
+<i class="fa-solid fa-camera"></i> Chụp ảnh / Chọn Thư viện
+                                </button>
+
+<button data-pick-file="hwDocInputMobile" style="background: #EFF6FF; border: 1px solid #BFDBFE; color: #2563EB; font-size: 12px; padding: 8px 16px; border-radius: 20px; font-weight: 600; width: 100%; justify-content: center; gap: 6px; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; font-family: 'Inter', sans-serif;" type="button">
+<i class="fa-solid fa-file-pdf"></i> Tải Tài liệu (PDF, Word...)
+                                </button>
 </div>
-<div style="display: flex; gap: 10px;">
-<button class="btn-submit" id="btnSubmitHomework" style="width: 100%; justify-content: center; height: 46px; display:inline-flex; align-items:center; gap:8px; color:#fff; cursor:pointer;" type="submit">
-<i class="fa-solid fa-paper-plane"></i> <span id="btnSubmitHomeworkLabel">Gửi bài làm</span>
-</button>
-</div>
-</form>
+
+<input accept="image/*" id="hwImageInputMobile" multiple="" style="display: none;" type="file"/>
+<input accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="hwDocInputMobile" multiple="" style="display: none;" type="file"/>
 </div>
 </div>
+
+<div id="fileQueueContainer" style="display: none; margin-top: 15px; text-align: left; max-height: 180px; overflow-y: auto; background: #F8FAFF; border-radius: 8px; padding: 10px; border: 1px solid #E2E8F0;">
+<div style="font-size: 12px; color: #64748B; margin-bottom: 8px; font-weight: 600; display: flex; justify-content: space-between;">
+<span>Danh sách file chuẩn bị nộp:</span>
+<span id="fileQueueCount" style="color: #FFD23F;">0 tệp</span>
+</div>
+<div id="fileQueueList" style="display: flex; flex-direction: column; gap: 6px;"></div>
+<div style="margin-top: 8px; text-align: right;">
+<button class="action-btn-hw btn-delete" data-original-action="clearSelectedFile" style="padding: 2px 8px; font-size: 11px;" type="button"><i class="fa-solid fa-trash-can"></i> Hủy tất cả</button>
+</div>
+</div>
+
+<div class="progress-container" id="progressBarContainer" style="display: none;">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+<div class="progress-text" id="progressText" style="display: none;">0%</div>
+<div style="display: flex; gap: 12px; margin-top: 15px;">
+<button class="btn-submit" id="btnSubmitHomework" style="width: 100%; justify-content: center; height: 45px;" type="submit"><i class="fa-solid fa-paper-plane"></i><span id="btnSubmitHomeworkLabel">Gửi bài làm</span></button>
+<button class="action-btn-hw btn-delete" data-original-action="cancelEdit" id="btnCancelEdit" style="display: none; height: 45px; width: 120px; justify-content: center; align-items: center; gap: 6px; font-size: 13px; border-radius: 8px;" type="button">
+<i class="fa-solid fa-xmark"></i> Hủy sửa
+                        </button>
+</div>
+<p id="uploadStatusText" style="text-align: center; margin-top: 10px; font-size: 13px; display: none; font-weight: 500;"></p>
+</form></div>
+</div>
+
 <div class="hw-section-card" id="hwAssignedCard" style="display: none;">
 <div class="hw-section-title">
 <i class="fa-solid fa-list-check" style="color:#3B82F6;"></i>
@@ -1365,6 +1446,7 @@ Nộp bài mới
                 </div>
 <div id="hwAssignedListContainer"></div>
 </div>
+
 <div class="hw-section-card reveal">
 <div class="hw-section-title">
 <i class="fa-solid fa-clock-rotate-left" style="color:#3B82F6;"></i>
@@ -1382,19 +1464,61 @@ Nộp bài mới
 </tr>
 </thead>
 <tbody id="homeworkListBody">
+
 </tbody>
 </table>
 </div>
 <div class="mobile-cards-view" id="homeworkMobileList">
+
 </div>
 </div>
 </div>
 </main>
+
+<div class="modal-overlay" id="previewSubmissionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.6); z-index:99999; justify-content:center; align-items:center; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);">
+<div class="modal-content" style="background:#FFFFFF; border:1px solid #DBEAFE; border-radius:14px; width:92%; max-width:900px; height:88vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 10px 40px rgba(59, 130, 246, 0.2);">
+<div style="padding:15px 20px; border-bottom:1px solid #DBEAFE; display:flex; justify-content:space-between; align-items:center; background:#F8FAFF;">
+<h3 id="submissionPreviewTitle" style="color:#FFD23F; margin:0; font-size:16px; display:flex; align-items:center; gap:8px;">
+<i class="fa-solid fa-file-lines" style="color:#3B82F6;"></i> Xem bài nộp
+                </h3>
+<div style="display:flex; align-items:center; gap:10px;">
+<a href="#" id="submissionPreviewNewTabBtn" rel="noopener noreferrer" style="color:#2563EB; text-decoration:none; font-size:13px; padding:5px 12px; background:#EFF6FF; border:1px solid #BFDBFE; border-radius:6px; display:flex; align-items:center; gap:5px;" target="_blank">
+<i class="fa-solid fa-arrow-up-right-from-square"></i> Mở tab mới
+                    </a>
+<button data-original-action="closeSubmissionPreviewModal" style="background:none; border:none; color:#EF4444; font-size:20px; cursor:pointer; padding:2px 8px;" type="button"><i class="fa-solid fa-xmark"></i></button>
+</div>
+</div>
+<div style="flex:1; position:relative; overflow:auto; background:#F1F5F9; display:flex; justify-content:center; align-items:stretch;">
+<div id="submissionPreviewSpinner" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#FFD23F; font-size:15px; text-align:center; z-index:10;">
+<i class="fa-solid fa-spinner fa-spin" style="font-size:32px; margin-bottom:10px;"></i>
+<div>Đang tải nội dung bài làm...</div>
+</div>
+<iframe id="submissionPreviewIframe" src="" style="width:100%; height:100%; border:none; display:none;"></iframe>
+<div id="submissionPreviewGallery" style="display:none; width:100%; padding:20px; box-sizing:border-box; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:15px; align-content:start;"></div>
+</div>
+</div>
+</div>
+
+<div data-original-action="closeLightbox" id="fullscreenLightbox" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:999999; justify-content:center; align-items:center; cursor:zoom-out;">
+<img id="lightboxImg" src="" style="max-width:95vw; max-height:95vh; object-fit:contain; border-radius:6px; box-shadow:0 10px 40px rgba(0,0,0,0.8);"/>
+<button data-original-action="closeLightbox" style="position:absolute; top:20px; right:25px; background:rgba(255,255,255,0.15); border:none; color:#FFF; font-size:24px; width:45px; height:45px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;" type="button"><i class="fa-solid fa-xmark"></i></button>
+</div>
+
+
+
+
+
+
+
+
+
 <nav class="bottom-nav">
 <a class="bottom-nav-item" href="index.html"><i class="fa-solid fa-house"></i><span>Trang chủ</span></a>
 <a class="bottom-nav-item" href="student-login.html"><i class="fa-solid fa-graduation-cap"></i><span>PH/HS</span></a>
 <a class="bottom-nav-item active" href="homework.html"><i class="fa-solid fa-file-arrow-up"></i><span>Bài tập</span></a>
 <a class="bottom-nav-item" href="tutor-login.html"><i class="fa-solid fa-chalkboard-user"></i><span>Gia sư</span></a>
 </nav>
-<script defer="" src="/vendor/chart.umd.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/lang-all.js"></script><script defer="" src="/js/homework.js"></script></body>
+
+
+<script defer="" src="/vendor/chart.umd.min.js"></script><script defer="" src="/js/api.js"></script><script defer="" src="/js/navigation.js"></script><script defer="" src="/js/lang-all.js"></script><script defer="" src="/js/homework.js"></script><script defer="" src="/js/scroll-animations.js"></script></body>
 </html>
